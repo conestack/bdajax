@@ -62,10 +62,31 @@ You can define the following attributes in your markup:
         talking about.
 
 
-Provide dependencies
---------------------
+Provide dependencies on server
+------------------------------
 
-You have to load dependent javascript and css in HTML header 
+This package already includes resource configuration for ``Zope`` and ``bfg``.
+This is done due to ZCML. Please include one of the following ZCML include
+statements depending on your platform.
+::
+
+    <include package="bdajax" file="bfg.zcml" />
+
+for use in bfg, and
+::
+    
+    <include package="bdajax" file="zope.zcml" />
+
+for use in Zope.
+
+The expected ``ajacaction`` view is not provided. Thats intended to be a custom
+implementation. See 'Perform actions' below.
+
+
+Load dependencies in markup
+---------------------------
+
+You have to load dependent JavaScripts and CSS in HTML header 
 ::
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
@@ -75,7 +96,7 @@ You have to load dependent javascript and css in HTML header
           rel="stylesheet" type="text/css" media="screen" />
 
 You have to make sure that the contents of ``bdajax.pt`` are rendered in your
-markup.
+markup as well.
 
 
 Define namespace

@@ -1,0 +1,55 @@
+#ajax-spinner {
+    display:none;
+    width: 20px;
+    height: 20px;
+    position: fixed;
+	z-index:10000;
+    background-position: center center;
+    top: 50%;
+    left: 50%;
+    margin-top: -10px;
+    margin-left: -10px;
+}
+.ajax-message {
+    display:none;
+    z-index:10000;
+    background-color:#fff;
+    width:400px;
+	padding: 10px;
+    border:1px solid #666;
+	text-align:center;
+	font-size:12px;
+    -moz-box-shadow:0 0 30px 5px #ccc;
+    -webkit-box-shadow: 0 0 30px #ccc;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+}
+.ajax-message .close {
+    cursor:pointer;
+	border:1px solid #666;
+	background-color:#333;
+	color:#fff;
+	padding: 4px;
+	width: 80px;
+	-moz-border-radius:4px;
+    -webkit-border-radius:4px;
+}
+.ajax-message .message {
+	text-align:left;
+	padding:5px;
+}
+.ajax-message .error {
+	background:url('/++resource++bdajax/error.png') top left no-repeat;
+	padding-left:37px;
+	min-height:32px;
+}
+.ajax-message .warning {
+	background:url('/++resource++bdajax/warning.png') top left no-repeat;
+	padding-left:37px;
+	min-height:32px;
+}
+.ajax-message .info {
+	background:url('/++resource++bdajax/info.png') top left no-repeat;
+	padding-left:37px;
+	min-height:32px;
+}

@@ -1,0 +1,15 @@
+<configure xmlns="http://namespaces.zope.org/browser">
+
+    <resourceDirectory
+	    name="bdajax"
+		directory="resources"
+	/>
+	
+	<page
+	    for="*"
+		name="bdajax"
+		template="bdajax.pt"
+		permission="zope.Public"
+	/>
+
+</configure>

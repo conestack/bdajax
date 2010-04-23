@@ -1,0 +1,8 @@
+<configure xmlns="http://namespaces.repoze.org/bfg">
+	
+	<static
+        name="++resource++bdajax"
+        path="resources"
+    />
+	
+</configure>

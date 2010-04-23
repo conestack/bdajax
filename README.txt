@@ -313,17 +313,16 @@ written to request parameters. If same request parameter is defined
 in URL query AND params object, latter one rules.
 
  
-Credits:
---------
+Credits
+-------
 
     - Robert Niederreiter <rnix@squarewave.at>
 
 
-Dependencies:
--------------
-    - jQuery
-    - jQuery Tools
-    - bdajax.js
-    - bdajax.css
-    - bdajax.images
-    - bdajax.pt
+Changes
+=======
+
+1.0
+---
+
+    - make it work [rnix, 2010-04-23]

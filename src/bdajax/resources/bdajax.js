@@ -15,14 +15,15 @@ jQuery.fn.bdajax = function() {
 	jQuery('[ajax\\:bind]').each(function() {
 		var ajax = jQuery(this);
 		var events = ajax.attr('ajax:bind');
+		ajax.unbind(events);
 		if (ajax.attr('ajax:action')) {
-            ajax.unbind(events).bind(events, bdajax.action);
+            ajax.bind(events, bdajax.action);
         }
 		if (ajax.attr('ajax:event')) {
-            ajax.unbind(events).bind(events, bdajax.event);
+            ajax.bind(events, bdajax.event);
         }
 		if (ajax.attr('ajax:call')) {
-            ajax.unbind(events).bind(events, bdajax.call);
+            ajax.bind(events, bdajax.call);
         }
 	});
 }

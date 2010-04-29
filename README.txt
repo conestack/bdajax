@@ -29,6 +29,13 @@ The main paradigm and at the same time the main difference to KSS is the use
 of an 'event/listener' model, what makes it possible to 'listen' to, and
 trigger 'events' on the DOM tree.
 
+Consider a navtree as example; the idea is to trigger an event when a navigation
+item gets clicked, and listen to this event on all DOM elements which wants to
+get notified if server context changes (what is indicated by the thrown event).
+
+This makes it possible to have completely decoupled "sub-applications" knowing
+nothing but an event contract from each other.
+
 
 Attributes
 ----------

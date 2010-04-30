@@ -123,7 +123,7 @@ bdajax = {
     action: function(event) {
 		event.preventDefault();
 		var target;
-        if (event.target) {
+        if (event.ajaxtarget) {
             target = event.ajaxtarget;
         } else {
             target = bdajax.parsetarget(this);

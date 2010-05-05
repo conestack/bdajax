@@ -319,6 +319,21 @@ Given ``url`` might contain a query string. The query gets parsed and
 written to request parameters. If same request parameter is defined
 in URL query AND params object, latter one rules.
 
+
+3rd Party Javascript
+--------------------
+
+When writing applications, you might have your own set of custom javascrips
+where some actions has to be bound in your markup. Therefor the object
+``binders`` exist on ``bdajax``. Just hook your binding callback to this
+object and it will be called every time bdajax hooks some markup.
+::
+
+    mybinder = function (context) {
+        jQuery('mysel').bind('click', function() { ... });
+    }
+    bdajax.binders.mybinder = mybinder;
+ 
  
 Credits
 -------

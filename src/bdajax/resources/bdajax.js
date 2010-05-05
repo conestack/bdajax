@@ -26,9 +26,14 @@ jQuery.fn.bdajax = function() {
             ajax.bind(events, bdajax.call);
         }
 	});
+	for (var binder in bdajax.binders) {
+		bdajax.binders[binder](this);
+	}
 }
 
 bdajax = {
+	
+	binders: {},
 	
     message: function(message) {
         jQuery('#ajax-message').overlay({

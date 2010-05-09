@@ -14,24 +14,22 @@ jQuery.fn.bdajax = function(context) {
 	jQuery('*', context).each(function() {
 		for (var i in this.attributes) {
 			var attr = this.attributes[i];
-            if (attr) {
-                if (attr.nodeName) {
-					var name = attr.nodeName;
-                    if (name.indexOf('ajax:bind') > -1) {
-						var events = attr.nodeValue;
-						var ajax = jQuery(this);
-				        ajax.unbind(events);
-				        if (ajax.attr('ajax:action')) {
-				            ajax.bind(events, bdajax.action);
-				        }
-				        if (ajax.attr('ajax:event')) {
-				            ajax.bind(events, bdajax.event);
-				        }
-				        if (ajax.attr('ajax:call')) {
-				            ajax.bind(events, bdajax.call);
-				        }
-						
-                    }
+            if (attr && attr.nodeName) {
+				var name = attr.nodeName;
+                if (name.indexOf('ajax:bind') > -1) {
+					var events = attr.nodeValue;
+					var ajax = jQuery(this);
+			        ajax.unbind(events);
+			        if (ajax.attr('ajax:action')) {
+			            ajax.bind(events, bdajax.action);
+			        }
+			        if (ajax.attr('ajax:event')) {
+			            ajax.bind(events, bdajax.event);
+			        }
+			        if (ajax.attr('ajax:call')) {
+			            ajax.bind(events, bdajax.call);
+			        }
+					
                 }
             }
         }

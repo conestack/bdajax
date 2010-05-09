@@ -1,29 +1,39 @@
 jQuery(document).ready(function() {
-	jQuery('#ajax-spinner')
-        .hide()
-        .ajaxStart(function() {
-            jQuery(this).show();
-        })
-        .ajaxStop(function() {
-            jQuery(this).hide();
-        })
-    ;
-	jQuery().bdajax();
+	var spinner = jQuery('#ajax-spinner');
+	spinner.hide();
+	spinner.ajaxStart(function() {
+        jQuery(this).show();
+    });
+	spinner.ajaxStop(function() {
+        jQuery(this).hide();
+    });
+	jQuery().bdajax(document);
 });
 
-jQuery.fn.bdajax = function() {
-	jQuery('[ajax\\:bind]').each(function() {
-		var ajax = jQuery(this);
-		var events = ajax.attr('ajax:bind');
-		ajax.unbind(events);
-		if (ajax.attr('ajax:action')) {
-            ajax.bind(events, bdajax.action);
-        }
-		if (ajax.attr('ajax:event')) {
-            ajax.bind(events, bdajax.event);
-        }
-		if (ajax.attr('ajax:call')) {
-            ajax.bind(events, bdajax.call);
+jQuery.fn.bdajax = function(context) {
+	jQuery('*', context).each(function() {
+		for (var i in this.attributes) {
+			var attr = this.attributes[i];
+            if (attr) {
+                if (attr.nodeName) {
+					var name = attr.nodeName;
+                    if (name.indexOf('ajax:bind') > -1) {
+						var events = attr.nodeValue;
+						var ajax = jQuery(this);
+				        ajax.unbind(events);
+				        if (ajax.attr('ajax:action')) {
+				            ajax.bind(events, bdajax.action);
+				        }
+				        if (ajax.attr('ajax:event')) {
+				            ajax.bind(events, bdajax.event);
+				        }
+				        if (ajax.attr('ajax:call')) {
+				            ajax.bind(events, bdajax.call);
+				        }
+						
+                    }
+                }
+            }
         }
 	});
 	for (var binder in bdajax.binders) {
@@ -141,7 +151,7 @@ bdajax = {
 	            selector: defs[1],
 	            mode: defs[2],
 	            url: target.url,
-	            params: target.params,
+	            params: target.params
 	        });
 		}
     },
@@ -155,7 +165,7 @@ bdajax = {
     
     ajaxerror: function(status) {
         if (status == 'notmodified') { return; }
-        if (status == null) { status = 'unknown' }
+        if (status == null) { status = 'unknown'; }
         return bdajax.ajaxerrors[status];
     },
 	
@@ -215,14 +225,10 @@ bdajax = {
 				var selector = data.selector;
 				if (mode == 'replace') {
 					jQuery(selector).replaceWith(data.payload);
-					jQuery().bdajax();
-					// jQuery(selector).bdajax();
+					jQuery().bdajax(jQuery(selector).parent());
 				} else if (mode == 'inner') {
 					jQuery(selector).html(data.payload);
-					jQuery(selector).each(function() {
-						jQuery().bdajax();
-						// jQuery(this).bdajax();
-					});
+					jQuery().bdajax(jQuery(selector));
 				}
             },
             error: error

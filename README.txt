@@ -335,8 +335,7 @@ Given ``url`` might contain a query string. The query gets parsed and
 written to request parameters. If same request parameter is defined
 in URL query AND params object, latter one rules.
 
-Options
-::
+Options:
 
     ``success`` - Callback if request is successful.
     
@@ -365,8 +364,7 @@ this.
         params: target.params
     });
 
-Options
-::
+Options:
 
     ``name`` - Action name
     

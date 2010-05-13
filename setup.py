@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '1.0'
+version = '1.0b1'
 shortdesc = 'Ajax convenience.'
 longdesc = open(os.path.join(os.path.dirname(__file__), 'README.txt')).read()
 
@@ -10,7 +10,7 @@ setup(name='bdajax',
       description=shortdesc,
       long_description=longdesc,
       classifiers=[
-            'Development Status :: 3 - Alpha',
+            'Development Status :: 4 - Beta',
             'Environment :: Web Environment',
             'Operating System :: OS Independent',
             'Programming Language :: Python', 

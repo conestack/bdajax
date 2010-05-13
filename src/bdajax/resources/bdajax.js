@@ -114,7 +114,7 @@ bdajax = {
 	    });
 	},
 	
-	do_action: function(config) {
+	action: function(config) {
         config.params['bdajax.action'] = config.name;
 		config.params['bdajax.mode'] = config.mode;
 		config.params['bdajax.selector'] = config.selector;
@@ -219,7 +219,7 @@ bdajax = {
         actions = bdajax._defs_to_array(elem.attr('ajax:action'));
         for (var i = 0; i < actions.length; i++) {
             var defs = actions[i].split(':');
-            bdajax.do_action({
+            bdajax.action({
                 name: defs[0],
                 selector: defs[1],
                 mode: defs[2],

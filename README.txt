@@ -3,9 +3,13 @@ bdajax
 
 AJAX convenience.
 
-This library provides some JavaScript helper functions and a simple 
-dispatcher system which is driven by attributes. These attributes are defined
-in a XML namespace extension, placed in your XHTML markup.
+This package bundles required resources for the use of bdajax inside a ``bfg``
+or ``zope`` application. It does NOT include the required server
+implementations.
+
+bdajax provides some JavaScript helper functions and a simple dispatcher system 
+which is driven by attributes. These attributes are defined in a XML namespace 
+extension, placed in your XHTML markup.
 
 You can basically control 3 behaviors with the supported attributes:
 
@@ -26,8 +30,8 @@ The syntax reminds of TAL - attributes are interpreted by JS instead of a TAL
 interpreter - while the functionality is inspired by KSS.
 
 The main paradigm and at the same time the main difference to KSS is the use
-of an 'event/listener' model, what makes it possible to 'listen' to, and
-trigger 'events' on the DOM tree.
+of an ``event/listener`` model, what makes it possible to ``listen`` to, and
+trigger ``events`` on ajaxified DOM components.
 
 Consider a navtree as example; the idea is to trigger an event when a navigation
 item gets clicked, and listen to this event on all DOM elements which wants to
@@ -348,12 +352,12 @@ Options
 Perform action manually
 -----------------------
 
-Sometimes you want to perform actions manually. Use ``bdajax.do_action`` for
+Sometimes you want to perform actions manually. Use ``bdajax.action`` for
 this.
 ::
 
     var target = bdajax.parsetarget('http://fubar.org?param=value');
-    bdajax.do_action({
+    bdajax.action({
         name: 'content',
         selector: '#content',
         mode: 'inner',
@@ -399,10 +403,22 @@ object and it will be called every time bdajax hooks some markup.
         jQuery('mysel').bind('click', function() { ... });
     }
     bdajax.binders.mybinder = mybinder;
- 
+
+
+Browsers
+========
+
+bdajax is tested in:
+
+    - Firefox 3.5
+    
+    - IE 7
+    
+    - to be continued... 
+
  
 Credits
--------
+=======
 
     - Robert Niederreiter <rnix@squarewave.at>
 
@@ -410,7 +426,7 @@ Credits
 Changes
 =======
 
-1.0
----
+1.0b1
+-----
 
-    - make it work [rnix, 2010-04-23]
+    - make it work [rnix]

@@ -255,7 +255,6 @@ performed.
 JavaScript helpers
 ==================
 
-
 Messages, Infos, Warnings and Errors
 ------------------------------------
 
@@ -291,6 +290,19 @@ results in
 
     { param: 'value' }
 
+You can do both at once by calling ``parsetarget``
+::
+
+    bdajax.parsetarget('http://fubar.org?param=value');
+
+This result in
+::
+
+    {
+        url: 'http://fubar.org',
+        params: { param: 'value' }
+    }
+
 
 XMLHTTPRequest convenience
 --------------------------
@@ -318,6 +330,60 @@ a ``bdajax.error`` message if request fails.
 Given ``url`` might contain a query string. The query gets parsed and
 written to request parameters. If same request parameter is defined
 in URL query AND params object, latter one rules.
+
+Options
+::
+
+    config.success - Callback if request is successful.
+    
+    config.url - Request url as string.
+    
+    config.params - Query parameters for request as Object (optional). 
+    
+    config.type - ``xml``, ``json``, ``script``, or ``html`` (optional).
+    
+    config.error - Callback if request fails (optional).
+
+
+Perform action manually
+-----------------------
+
+Sometimes you want to perform actions manually. Use ``bdajax.do_action`` for
+this.
+::
+
+    var target = bdajax.parsetarget('http://fubar.org?param=value');
+    bdajax.do_action({
+        name: 'content',
+        selector: '#content',
+        mode: 'inner',
+        url: target.url,
+        params: target.params
+    });
+
+Options
+::
+
+    name - Action name
+    
+    selector - result selector
+    
+    mode - action mode
+    
+    url - target url
+    
+    params - query params
+
+
+Trigger events manually
+-----------------------
+
+Sometimes you want to trigger an event manually. Since bdajax expects the
+attribute ``ajaxtarget`` on the received event we provide a convenience.
+::
+
+    var url = 'http://fubar.org?param=value';
+    bdajax.trigger('contextchanged', '.contextsensitiv', url)
 
 
 3rd Party Javascript

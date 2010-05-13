@@ -97,8 +97,7 @@ bdajax = {
 		return params;
 	},
 	
-	parsetarget: function(elem) {
-		var target = jQuery(elem).attr('ajax:target');
+	parsetarget: function(target) {
 		var url = bdajax.parseurl(target);
 		var params = bdajax.parsequery(target);
 		if (!params) { params = {}; }
@@ -110,8 +109,9 @@ bdajax = {
 	
     call: function(event) {
         event.preventDefault();
-		var target = bdajax.parsetarget(this);
-		var defs = bdajax._defs_to_array(jQuery(this).attr('ajax:call'));
+		var elem = jQuery(this);
+		var target = bdajax.parsetarget(elem.attr('ajax:target'));
+		var defs = bdajax._defs_to_array(elem.attr('ajax:call'));
         for (var i = 0; i < defs.length; i++) {
 			var def = defs[i];
             def = def.split(':');
@@ -122,29 +122,29 @@ bdajax = {
 	
     event: function(event) {
 		event.preventDefault();
-        var target = bdajax.parsetarget(this);
-		var defs = bdajax._defs_to_array(jQuery(this).attr('ajax:event'));
+		var elem = jQuery(this);
+		var target = elem.attr('ajax:target');
+		var defs = bdajax._defs_to_array(elem.attr('ajax:event'));
         for (var i = 0; i < defs.length; i++) {
 			var def = defs[i];
             def = def.split(':');
-            var evt = jQuery.Event(def[0]);
-            evt.ajaxtarget = target;
-            jQuery(def[1]).trigger(evt);
+			bdajax.trigger(def[0], def[1], target);
         }
     },
     
     action: function(event) {
 		event.preventDefault();
+		var elem = jQuery(this);
 		var target;
         if (event.ajaxtarget) {
             target = event.ajaxtarget;
         } else {
-            target = bdajax.parsetarget(this);
+			target = bdajax.parsetarget(elem.attr('ajax:target'));
         }
-		actions = bdajax._defs_to_array(jQuery(this).attr('ajax:action'));
+		actions = bdajax._defs_to_array(elem.attr('ajax:action'));
 		for (var i = 0; i < actions.length; i++) {
 			var defs = actions[i].split(':');
-			bdajax._ajax({
+			bdajax.do_action({
 	            name: defs[0],
 	            selector: defs[1],
 	            mode: defs[2],
@@ -167,11 +167,6 @@ bdajax = {
         return bdajax.ajaxerrors[status];
     },
 	
-	// config.success: Callback if request is successful.
-	// config.url: Request url as string.
-	// config.params: Query parameters for request as Object (optional). 
-	// config.type: ``xml``, ``json``, ``script``, or ``html`` (optional).
-	// config.error: Callback if request fails (optional).
 	request: function(config) {
 		if (config.url.indexOf('?') != -1) {
 			var addparams = config.params;
@@ -199,12 +194,7 @@ bdajax = {
 	    });
 	},
 	
-    // config.name: Action name
-    // config.selector: result selector
-	// config.mode: action mode
-    // config.url: target url
-    // config.params: query params
-	_ajax: function(config) {
+	do_action: function(config) {
         config.params['bdajax.action'] = config.name;
 		config.params['bdajax.mode'] = config.mode;
 		config.params['bdajax.selector'] = config.selector;
@@ -231,6 +221,12 @@ bdajax = {
             },
             error: error
         });
+	},
+	
+	trigger: function(name, selector, target) {
+        var evt = jQuery.Event(name);
+        evt.ajaxtarget = bdajax.parsetarget(target);
+        jQuery(selector).trigger(evt);
 	},
 	
 	_defs_to_array: function(str) {

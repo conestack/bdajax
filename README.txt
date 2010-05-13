@@ -338,15 +338,15 @@ in URL query AND params object, latter one rules.
 Options
 ::
 
-    config.success - Callback if request is successful.
+    ``success`` - Callback if request is successful.
     
-    config.url - Request url as string.
+    ``url`` - Request url as string.
     
-    config.params - Query parameters for request as Object (optional). 
+    ``params`` - Query parameters for request as Object (optional). 
     
-    config.type - ``xml``, ``json``, ``script``, or ``html`` (optional).
+    ``type`` - ``xml``, ``json``, ``script``, or ``html`` (optional).
     
-    config.error - Callback if request fails (optional).
+    ``error`` - Callback if request fails (optional).
 
 
 Perform action manually
@@ -368,15 +368,15 @@ this.
 Options
 ::
 
-    name - Action name
+    ``name`` - Action name
     
-    selector - result selector
+    ``selector`` - result selector
     
-    mode - action mode
+    ``mode`` - action mode
     
-    url - target url
+    ``url`` - target url
     
-    params - query params
+    ``params`` - query params
 
 
 Trigger events manually

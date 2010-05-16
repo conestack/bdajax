@@ -271,6 +271,18 @@ icon.
     bdajax.message('I am an application Message');
 
 
+Overlay helper
+--------------
+
+You can load ajax action contents into an overlay.
+::
+
+    var overlay_api = bdajax.overlay({
+        action: 'actionname',
+        target: 'http://foobar.org?param=value'
+    });
+
+
 URL Operations
 --------------
 
@@ -424,7 +436,14 @@ Credits
 Changes
 =======
 
+1.0b2
+-----
+
+    - add overlay helper function and corresponding styles
+      [rnix, 2010-05-16]
+
 1.0b1
 -----
 
-    - make it work [rnix]
+    - make it work
+      [rnix]

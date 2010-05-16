@@ -1,38 +1,38 @@
 #ajax-spinner {
     display:none;
-    width: 20px;
-    height: 20px;
-    position: fixed;
+    width:20px;
+    height:20px;
+    position:fixed;
 	z-index:10000;
     background-position: center center;
-    top: 50%;
-    left: 50%;
-    margin-top: -10px;
-    margin-left: -10px;
+    top:50%;
+    left:50%;
+    margin-top:-10px;
+    margin-left:-10px;
 }
 .ajax-message {
     display:none;
     z-index:10000;
     background-color:#fff;
     width:400px;
-	padding: 10px;
-    border:1px solid #666;
+	padding:10px;
+    border:4px solid #ccc;
 	text-align:center;
 	font-size:12px;
-    -moz-box-shadow:0 0 30px 5px #ccc;
-    -webkit-box-shadow: 0 0 30px #ccc;
-    -moz-border-radius:4px;
-    -webkit-border-radius:4px;
+    -moz-box-shadow:0 0 30px 5px #eee;
+    -webkit-box-shadow: 0 0 30px #eee;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
 }
 .ajax-message .close {
     cursor:pointer;
 	border:1px solid #666;
 	background-color:#333;
 	color:#fff;
-	padding: 4px;
+	padding:4px;
 	width: 80px;
-	-moz-border-radius:4px;
-    -webkit-border-radius:4px;
+	-moz-border-radius:3px;
+    -webkit-border-radius:3px;
 }
 .ajax-message .message {
 	text-align:left;
@@ -52,4 +52,27 @@
 	background:url('/++resource++bdajax/info.png') top left no-repeat;
 	padding-left:37px;
 	min-height:32px;
+}
+.ajax-overlay {
+    display:none;
+    z-index:5000;
+    background-color:#fff;
+    min-width:400px;
+    padding:10px;
+    border:4px solid #ccc;
+    font-size:12px;
+    -moz-box-shadow:0 0 30px 5px #eee;
+    -webkit-box-shadow: 0 0 30px #eee;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+}
+.ajax-overlay .close {
+    background-image:url('/++resource++bdajax/close.png');
+    position:absolute;
+	z-index:5001;
+    right:-17px;
+    top:-20px;
+    cursor:pointer;
+    height:35px;
+    width:35px;
 }

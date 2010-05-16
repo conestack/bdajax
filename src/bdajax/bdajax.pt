@@ -6,3 +6,7 @@
   <div class="message">Message</div>
   <button class="close">OK</button>
 </div>
+
+<div class="ajax-overlay" id="ajax-overlay">
+  <div id="ajax-overlay-content"></div>
+</div>

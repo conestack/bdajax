@@ -149,6 +149,33 @@ bdajax = {
         jQuery(selector).trigger(evt);
 	},
 	
+	overlay: function(options) {
+		var overlay = jQuery('#ajax-overlay').overlay({
+            expose: {
+                color: '#fff',
+                loadSpeed: 200
+            },
+            onBeforeLoad: function() {
+				var target = bdajax.parsetarget(options.target);
+				bdajax.action({
+                    name: options.action,
+                    selector: '#ajax-overlay-content',
+                    mode: 'inner',
+                    url: target.url,
+                    params: target.params
+                });
+            },
+			onClose: function() {
+				var overlay = this.getOverlay();
+                jQuery('#ajax-overlay-content', overlay).html('');
+			},
+            closeOnClick: true,
+            api: true
+        });
+		overlay.load();
+		return overlay;
+	},
+	
 	message: function(message) {
         jQuery('#ajax-message').overlay({
             expose: {

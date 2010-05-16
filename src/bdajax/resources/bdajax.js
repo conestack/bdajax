@@ -35,7 +35,7 @@ jQuery.fn.bdajax = function(context) {
         }
 	});
 	for (var binder in bdajax.binders) {
-		bdajax.binders[binder](this);
+		bdajax.binders[binder](context);
 	}
 }
 

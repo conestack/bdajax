@@ -439,6 +439,9 @@ Changes
 1.0b2
 -----
 
+    - call binders with correct context
+      [rnix, 2010-05-16]
+
     - add overlay helper function and corresponding styles
       [rnix, 2010-05-16]
 

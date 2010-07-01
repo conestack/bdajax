@@ -101,7 +101,7 @@ You have to load dependent JavaScripts and CSS in HTML header
 ::
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
-    <script src="http://cdn.jquerytools.org/1.1.2/tiny/jquery.tools.min.js"></script>
+    <script src="http://cdn.jquerytools.org/1.2.3/tiny/jquery.tools.min.js"></script>
     <script src="http://fubar.com/++resource++bdajax/bdajax.js"></script>
     <link href="http://fubar.com/++resource++bdajax/bdajax.css"
           rel="stylesheet" type="text/css" media="screen" />
@@ -438,6 +438,9 @@ Changes
 
 1.0b2
 -----
+
+    - switch to jQuery tools 1.2.3.
+      [rnix, 2010-07-01]
 
     - call binders with correct context
       [rnix, 2010-05-16]

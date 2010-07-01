@@ -90,8 +90,8 @@ bdajax = {
 	request: function(config) {
 		if (config.url.indexOf('?') != -1) {
 			var addparams = config.params;
-			config.params = bdajax.parsequery(url);
-			url = bdajax.parseurl(url);
+			config.params = bdajax.parsequery(config.url);
+			config.url = bdajax.parseurl(config.url);
 			for (var key in addparams) {
                 config.params[key] = addparams[key];
             }

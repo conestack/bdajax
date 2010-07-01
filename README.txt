@@ -436,6 +436,12 @@ Credits
 Changes
 =======
 
+1.0b3
+-----
+
+    - fix bug in bdajax.request when finding url including query params.
+      [rnix, 2010-07-01]
+
 1.0b2
 -----
 

@@ -439,6 +439,9 @@ Changes
 1.0b3
 -----
 
+    - add class ``allowMultiSubmit`` to fit a plone JS contract.
+      [rnix, 2010-07-01]
+
     - fix bug in bdajax.request when finding url including query params.
       [rnix, 2010-07-01]
 

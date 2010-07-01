@@ -4,7 +4,7 @@
 
 <div class="ajax-message" id="ajax-message">
   <div class="message">Message</div>
-  <button class="close">OK</button>
+  <button class="close allowMultiSubmit">OK</button>
 </div>
 
 <div class="ajax-overlay" id="ajax-overlay">

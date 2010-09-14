@@ -1,12 +1,14 @@
 jQuery(document).ready(function() {
 	var spinner = jQuery('#ajax-spinner');
 	spinner.hide();
+	/*
 	spinner.ajaxStart(function() {
         jQuery(this).show();
     });
 	spinner.ajaxStop(function() {
         jQuery(this).hide();
     });
+    */
 	jQuery().bdajax(document);
 });
 
@@ -150,8 +152,9 @@ bdajax = {
 	},
 	
 	overlay: function(options) {
-		var overlay = jQuery('#ajax-overlay').overlay({
-            expose: {
+		var elem = jQuery('#ajax-overlay');
+		elem.overlay({
+            mask: {
                 color: '#fff',
                 loadSpeed: 200
             },
@@ -169,16 +172,18 @@ bdajax = {
 				var overlay = this.getOverlay();
                 jQuery('#ajax-overlay-content', overlay).html('');
 			},
-            closeOnClick: true,
-            api: true
+			oneInstance: false,
+            closeOnClick: true
         });
+		var overlay = elem.data('overlay');
 		overlay.load();
 		return overlay;
 	},
 	
 	message: function(message) {
-        jQuery('#ajax-message').overlay({
-            expose: {
+		var elem = jQuery('#ajax-message');
+        elem.overlay({
+            mask: {
                 color: '#fff',
                 loadSpeed: 200
             },
@@ -186,9 +191,11 @@ bdajax = {
                 var overlay = this.getOverlay();
                 jQuery('.message', overlay).html(message);
             },
+			oneInstance: false,
             closeOnClick: false,
-            api: true
-        }).load();
+			top:'20%'
+        });
+		elem.data('overlay').load();
     },
     
     error: function(message) {

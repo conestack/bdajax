@@ -1,51 +1,52 @@
 jQuery(document).ready(function() {
-	var spinner = jQuery('#ajax-spinner');
-	spinner.hide();
-	/*
-	spinner.ajaxStart(function() {
+    var spinner = jQuery('#ajax-spinner');
+    spinner.hide();
+    /*
+    spinner.ajaxStart(function() {
         jQuery(this).show();
     });
-	spinner.ajaxStop(function() {
+    spinner.ajaxStop(function() {
         jQuery(this).hide();
     });
     */
-	jQuery().bdajax(document);
+    jQuery().bdajax(document);
 });
 
 jQuery.fn.bdajax = function(context) {
-	jQuery('*', context).each(function() {
-		for (var i in this.attributes) {
-			var attr = this.attributes[i];
+    jQuery('*', context).each(function() {
+        for (var i in this.attributes) {
+            var attr = this.attributes[i];
             if (attr && attr.nodeName) {
-				var name = attr.nodeName;
+                var name = attr.nodeName;
                 if (name.indexOf('ajax:bind') > -1) {
-					var events = attr.nodeValue;
-					var ajax = jQuery(this);
-			        ajax.unbind(events);
-			        if (ajax.attr('ajax:action')) {
-			            ajax.bind(events, bdajax._action_handler);
-			        }
-			        if (ajax.attr('ajax:event')) {
-			            ajax.bind(events, bdajax._event_handler);
-			        }
-			        if (ajax.attr('ajax:call')) {
-			            ajax.bind(events, bdajax._call_handler);
-			        }
-					
+                    var events = attr.nodeValue;
+                    var ajax = jQuery(this);
+                    ajax.unbind(events);
+                    if (ajax.attr('ajax:action')) {
+                        ajax.bind(events, bdajax._action_handler);
+                    }
+                    if (ajax.attr('ajax:event')) {
+                        ajax.bind(events, bdajax._event_handler);
+                    }
+                    // 'ajax:call' is deprecated
+                    if (ajax.attr('ajax:call')) {
+                        ajax.bind(events, bdajax._call_handler);
+                    }
+                    
                 }
             }
         }
-	});
-	for (var binder in bdajax.binders) {
-		bdajax.binders[binder](context);
-	}
+    });
+    for (var binder in bdajax.binders) {
+        bdajax.binders[binder](context);
+    }
 }
 
 bdajax = {
-	
-	binders: {},
-	
-	ajaxerrors: {
+    
+    binders: {},
+    
+    ajaxerrors: {
         timeout: 'The request has timed out. Pleasae try again.',
         error: 'An error occoured while processing the request. Aborting.',
         parsererror: 'The Response could not be parsed. Aborting.',
@@ -57,18 +58,18 @@ bdajax = {
         if (status == null) { status = 'unknown'; }
         return bdajax.ajaxerrors[status];
     },
-	
-	parseurl: function(url) {
+    
+    parseurl: function(url) {
         var idx = url.indexOf('?');
         if (idx != -1) {
             url = url.substring(0, idx);
         }
-		return url;
-	},
-	
-	parsequery: function(url) {
-		var params = {};
-		var idx = url.indexOf('?');
+        return url;
+    },
+    
+    parsequery: function(url) {
+        var params = {};
+        var idx = url.indexOf('?');
         if (idx != -1) {
             var parameters = url.slice(idx + 1).split('&');
             for (var i = 0;  i < parameters.length; i++) {
@@ -76,91 +77,91 @@ bdajax = {
                 params[param[0]] = param[1];
             }
         }
-		return params;
-	},
-	
-	parsetarget: function(target) {
-		var url = bdajax.parseurl(target);
-		var params = bdajax.parsequery(target);
-		if (!params) { params = {}; }
-		return {
-			url: url,
-			params: params
-		};
-	},
-	
-	request: function(config) {
-		if (config.url.indexOf('?') != -1) {
-			var addparams = config.params;
-			config.params = bdajax.parsequery(config.url);
-			config.url = bdajax.parseurl(config.url);
-			for (var key in addparams) {
+        return params;
+    },
+    
+    parsetarget: function(target) {
+        var url = bdajax.parseurl(target);
+        var params = bdajax.parsequery(target);
+        if (!params) { params = {}; }
+        return {
+            url: url,
+            params: params
+        };
+    },
+    
+    request: function(config) {
+        if (config.url.indexOf('?') != -1) {
+            var addparams = config.params;
+            config.params = bdajax.parsequery(config.url);
+            config.url = bdajax.parseurl(config.url);
+            for (var key in addparams) {
                 config.params[key] = addparams[key];
             }
-		} else {
-			if (!config.params) { config.params = {}; }
-		}
-		if (!config.type) { config.type = 'html'; }
-	    if (!config.error) {
-	        config.error = function(request, status) {
-				var err = bdajax.ajaxerror(status);
-				if (err) { bdajax.error(err); }
-	        }
-	    }
-	    jQuery.ajax({
-	        url: config.url,
-	        dataType: config.type,
-	        data: config.params,
-	        success: config.success,
-	        error: config.error
-	    });
-	},
-	
-	action: function(config) {
+        } else {
+            if (!config.params) { config.params = {}; }
+        }
+        if (!config.type) { config.type = 'html'; }
+        if (!config.error) {
+            config.error = function(request, status) {
+                var err = bdajax.ajaxerror(status);
+                if (err) { bdajax.error(err); }
+            }
+        }
+        jQuery.ajax({
+            url: config.url,
+            dataType: config.type,
+            data: config.params,
+            success: config.success,
+            error: config.error
+        });
+    },
+    
+    action: function(config) {
         config.params['bdajax.action'] = config.name;
-		config.params['bdajax.mode'] = config.mode;
-		config.params['bdajax.selector'] = config.selector;
-		var error = function(req, status, exception) {
+        config.params['bdajax.mode'] = config.mode;
+        config.params['bdajax.selector'] = config.selector;
+        var error = function(req, status, exception) {
             bdajax.error(exception);
         };
-		bdajax.request({
+        bdajax.request({
             url: bdajax.parseurl(config.url) + '/ajaxaction',
             type: 'json',
             params: config.params,
             success: function(data) {
-				if (!data) {
-					bdajax.error('Empty response');
-				}
-				var mode = data.mode;
-				var selector = data.selector;
-				if (mode == 'replace') {
-					jQuery(selector).replaceWith(data.payload);
-					jQuery().bdajax(jQuery(selector).parent());
-				} else if (mode == 'inner') {
-					jQuery(selector).html(data.payload);
-					jQuery().bdajax(jQuery(selector));
-				}
+                if (!data) {
+                    bdajax.error('Empty response');
+                }
+                var mode = data.mode;
+                var selector = data.selector;
+                if (mode == 'replace') {
+                    jQuery(selector).replaceWith(data.payload);
+                    jQuery().bdajax(jQuery(selector).parent());
+                } else if (mode == 'inner') {
+                    jQuery(selector).html(data.payload);
+                    jQuery().bdajax(jQuery(selector));
+                }
             },
             error: error
         });
-	},
-	
-	trigger: function(name, selector, target) {
+    },
+    
+    trigger: function(name, selector, target) {
         var evt = jQuery.Event(name);
         evt.ajaxtarget = bdajax.parsetarget(target);
         jQuery(selector).trigger(evt);
-	},
-	
-	overlay: function(options) {
-		var elem = jQuery('#ajax-overlay');
-		elem.overlay({
+    },
+    
+    overlay: function(options) {
+        var elem = jQuery('#ajax-overlay');
+        elem.overlay({
             mask: {
                 color: '#fff',
                 loadSpeed: 200
             },
             onBeforeLoad: function() {
-				var target = bdajax.parsetarget(options.target);
-				bdajax.action({
+                var target = bdajax.parsetarget(options.target);
+                bdajax.action({
                     name: options.action,
                     selector: '#ajax-overlay-content',
                     mode: 'inner',
@@ -168,20 +169,20 @@ bdajax = {
                     params: target.params
                 });
             },
-			onClose: function() {
-				var overlay = this.getOverlay();
+            onClose: function() {
+                var overlay = this.getOverlay();
                 jQuery('#ajax-overlay-content', overlay).html('');
-			},
-			oneInstance: false,
+            },
+            oneInstance: false,
             closeOnClick: true
         });
-		var overlay = elem.data('overlay');
-		overlay.load();
-		return overlay;
-	},
-	
-	message: function(message) {
-		var elem = jQuery('#ajax-message');
+        var overlay = elem.data('overlay');
+        overlay.load();
+        return overlay;
+    },
+    
+    message: function(message) {
+        var elem = jQuery('#ajax-message');
         elem.overlay({
             mask: {
                 color: '#fff',
@@ -191,11 +192,11 @@ bdajax = {
                 var overlay = this.getOverlay();
                 jQuery('.message', overlay).html(message);
             },
-			oneInstance: false,
+            oneInstance: false,
             closeOnClick: false,
-			top:'20%'
+            top:'20%'
         });
-		elem.data('overlay').load();
+        elem.data('overlay').load();
     },
     
     error: function(message) {
@@ -215,8 +216,36 @@ bdajax = {
                                         .addClass('warning');
         bdajax.message(message);
     },
-	
-	_call_handler: function(event) {
+    
+    dialog: function(message, callback) {
+        var elem = jQuery('#ajax-dialog');
+        elem.overlay({
+            mask: {
+                color: '#fff',
+                loadSpeed: 200
+            },
+            onBeforeLoad: function() {
+                var overlay = this.getOverlay();
+                var closefunc = this.close;
+                jQuery('.text', overlay).html(message);
+                $('button', overlay).unbind();
+                $('button.submit', overlay).bind('click', function() {
+                    closefunc();
+                    callback();
+                });
+                $('button.cancel', overlay).bind('click', function() {
+                    closefunc();
+                });
+            },
+            oneInstance: false,
+            closeOnClick: false,
+            top:'20%'
+        });
+        elem.data('overlay').load();
+    },
+    
+    // 'ajax:call' is deprecated
+    _call_handler: function(event) {
         event.preventDefault();
         var elem = jQuery(this);
         var target = bdajax.parsetarget(elem.attr('ajax:target'));
@@ -262,14 +291,14 @@ bdajax = {
             });
         }
     },
-	
-	_defs_to_array: function(str) {
+    
+    _defs_to_array: function(str) {
         var arr;
-		if (str.indexOf(' ') != -1) {
+        if (str.indexOf(' ') != -1) {
             arr = str.split(' ');
         } else {
             arr = new Array(str);
         }
         return arr;
-	}
+    }
 };

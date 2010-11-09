@@ -49,6 +49,8 @@ ajax:bind="evt1 evt2"
     Indicate bdajax behavior on DOM element and the event(s) triggering
     it/them.
 
+WARNING: Calling functions appeared to be useless, will be removed in future!
+
 ajax:call="function1:selector1 function2:selector2"
     Call function(s). Each function gets passed a jQuery iterator of
     selector and target object. Target object provides ``url`` and
@@ -133,6 +135,8 @@ Binds this element to events ``keydown`` and ``click``.
 
 Calling functions
 -----------------
+
+WARNING: Calling functions appeared to be useless, will be removed in future!
 
 Provide the function to be called.
 ::
@@ -275,6 +279,16 @@ Load ajax action contents into an overlay.
         action: 'actionname',
         target: 'http://foobar.org?param=value'
     });
+
+
+Modal dialog
+------------
+
+Render a modal dialog inside an overlay. The function expects a message and
+a callback function, which gets executed if user confirms dialog.
+::
+
+    bdajax.dialog('I am an application Message', callback);
 
 
 URL Operations
@@ -439,6 +453,15 @@ Credits
 
 Changes
 =======
+
+1.0b4
+-----
+
+    - add modal dialog to bdajax
+      [rnix, 2010-11-09]
+    
+    - mark ``ajax:call`` API deprecated. Will be removed for 1.0 final
+      [rnix, 2010-11-09]
 
 1.0b3
 -----

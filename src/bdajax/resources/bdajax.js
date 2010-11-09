@@ -108,12 +108,14 @@ bdajax = {
                 if (err) { bdajax.error(err); }
             }
         }
+		if (!config.cache) { config.cache = false; }
         jQuery.ajax({
             url: config.url,
             dataType: config.type,
             data: config.params,
             success: config.success,
-            error: config.error
+            error: config.error,
+			cache: config.cache
         });
     },
     
@@ -219,6 +221,7 @@ bdajax = {
     
     dialog: function(options, callback) {
         var elem = jQuery('#ajax-dialog');
+		elem.removeData('overlay');
         elem.overlay({
             mask: {
                 color: '#fff',

@@ -462,6 +462,13 @@ Changes
 1.0b4
 -----
 
+    - remove overlay data of modal dialog before reloading. otherwise callback
+      options are cached
+      [rnix, 2010-11-09]
+    
+    - disable ajax request caching by default in ``bdajax.request``
+      [rnix, 2010-11-09]
+
     - add modal dialog to bdajax
       [rnix, 2010-11-09]
     

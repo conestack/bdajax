@@ -284,11 +284,16 @@ Load ajax action contents into an overlay.
 Modal dialog
 ------------
 
-Render a modal dialog inside an overlay. The function expects a message and
-a callback function, which gets executed if user confirms dialog.
+Render a modal dialog inside an overlay. The function expects an options object
+and a callback function, which gets executed if user confirms dialog. The
+callback gets passed the given options object as well. ``message`` is mandatory
+in options.
 ::
 
-    bdajax.dialog('I am an application Message', callback);
+    var options = {
+        message: 'I am an application Message'
+    };
+    bdajax.dialog(options, callback);
 
 
 URL Operations

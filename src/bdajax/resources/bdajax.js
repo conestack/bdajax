@@ -217,7 +217,7 @@ bdajax = {
         bdajax.message(message);
     },
     
-    dialog: function(message, callback) {
+    dialog: function(options, callback) {
         var elem = jQuery('#ajax-dialog');
         elem.overlay({
             mask: {
@@ -227,11 +227,11 @@ bdajax = {
             onBeforeLoad: function() {
                 var overlay = this.getOverlay();
                 var closefunc = this.close;
-                jQuery('.text', overlay).html(message);
+                jQuery('.text', overlay).html(options.message);
                 $('button', overlay).unbind();
                 $('button.submit', overlay).bind('click', function() {
                     closefunc();
-                    callback();
+                    callback(options);
                 });
                 $('button.cancel', overlay).bind('click', function() {
                     closefunc();

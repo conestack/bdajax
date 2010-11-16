@@ -1,0 +1,32 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:zcml="http://namespaces.zope.org/zcml"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns:bfg="http://namespaces.repoze.org/bfg">
+    
+    <!-- bfg specific -->
+	
+	<bfg:static
+	    zcml:condition="installed repoze.bfg"
+        name="++resource++bdajax"
+        path="resources"
+    />
+    
+    <!-- XXX: make bdajax.pt available as bfg view -->
+	
+	<!-- Plone specific -->
+	
+	<browser:resourceDirectory
+	    zcml:condition="installed Products.CMFPlone"
+        name="bdajax"
+        directory="resources"
+    />
+    
+    <browser:page
+	    zcml:condition="installed Products.CMFPlone"
+        for="*"
+        name="bdajax"
+        template="bdajax.pt"
+        permission="zope.Public"
+    />
+    
+</configure>

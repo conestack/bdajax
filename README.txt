@@ -450,8 +450,8 @@ bdajax is tested in:
     - to be continued... 
 
  
-Credits
-=======
+Contributors
+============
 
     - Robert Niederreiter <rnix@squarewave.at>
 

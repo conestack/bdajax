@@ -455,6 +455,10 @@ Changes
 1.0b4
 -----
 
+    - add ``configure.zcml`` containing all configuration using
+      ``zcml:condition``
+      [rnix, 2010-11-16]
+
     - remove overlay data of modal dialog before reloading. otherwise callback
       options are cached
       [rnix, 2010-11-09]

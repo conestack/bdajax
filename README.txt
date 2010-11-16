@@ -77,18 +77,11 @@ Provide dependencies on server
 ------------------------------
 
 This package already includes resource configuration for ``Zope`` and ``bfg``.
-This is done due to ZCML. Include one of the following ZCML include statements 
-depending in your web application.
+This is done due to ZCML. Include the following ZCML include statement to your
+ZCML configuration.
 ::
 
-    <include package="bdajax" file="bfg.zcml" />
-
-for use in repoze.bfg, and
-::
-    
-    <include package="bdajax" file="zope.zcml" />
-
-for use in Zope.
+    <include package="bdajax" />
 
 The expected ``ajaxaction`` view is not provided. Its intended to be provided by 
 a custom implementation. See 'Perform actions' below.

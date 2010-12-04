@@ -3,7 +3,7 @@ import sys, os
 
 version = '1.0b4'
 shortdesc = 'Ajax convenience.'
-longdesc = open(os.path.join(os.path.dirname(__file__), 'README.txt')).read()
+longdesc = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
 
 setup(name='bdajax',
       version=version,

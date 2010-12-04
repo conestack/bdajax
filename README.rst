@@ -7,9 +7,7 @@ bdajax provides JavaScript helper functions and a simple dispatcher system
 driven by XML-attributes. Attributes are defined in its own XML namespace, 
 placed in the XHTML markup.
 
-It provides basically three behaviors:
-
-- call functions
+The dispatcher basically provides two behaviors:
 
 - trigger events
 
@@ -18,9 +16,10 @@ It provides basically three behaviors:
 Each behavior is bound to a JavaScript event. 
 
 This package bundles required resources for the use of bdajax inside a 
-``repoze.bfg`` or ``zope`` application. It does NOT include the required server
-implementations. bdajax can be used with other Python or non-Python server 
-backends too.
+``repoze.bfg/pyramid`` or ``zope`` application. It does NOT include the
+required server implementations. bdajax can be used with other Python or 
+non-Python server backends too as long as action performing code is implemented
+and available through browser URL.
 
 Dispatching
 -----------
@@ -48,13 +47,6 @@ Define the following attributes:
 ajax:bind="evt1 evt2"
     Indicate bdajax behavior on DOM element and the event(s) triggering
     it/them.
-
-WARNING: Calling functions appeared to be useless, will be removed in future!
-
-ajax:call="function1:selector1 function2:selector2"
-    Call function(s). Each function gets passed a jQuery iterator of
-    selector and target object. Target object provides ``url`` and
-    ``params``.
 
 ajax:event="evt1:sel1 evt2:sel2"
     Trigger event(s) on selector. The triggered event gets the target
@@ -98,7 +90,7 @@ Load dependent JavaScripts and CSS in HTML header
     <link href="http://fubar.com/++resource++bdajax/bdajax.css"
           rel="stylesheet" type="text/css" media="screen" />
 
-Check if the contents of ``bdajax.pt`` is rendered.
+Make sure the contents of ``bdajax.pt`` are rendered.
 
 Define namespace
 ----------------
@@ -124,33 +116,6 @@ Indicate bdajax behavior on DOM element.
     </a>
 
 Binds this element to events ``keydown`` and ``click``.
-
-
-Calling functions
------------------
-
-WARNING: Calling functions appeared to be useless, will be removed in future!
-
-Provide the function to be called.
-::
-
-    somefunc = function(iter, target) {
-        // do something
-    }
-
-Bind call behavior to DOM element
-::
-
-    <a href="http://fubar.com"
-       ajax:bind="click"
-       ajax:call="somefunc:.someclass"
-       ajax:target="http://fubar.com">
-      fubar
-    </a>
-
-On click ``somefunction`` is called. It get an iterator passed, in this case 
-``jQuery('.someclass')``, and a target object containing ``url`` and ``params`` 
-if ``ajax:target`` is set.
 
 Trigger events
 --------------
@@ -236,16 +201,14 @@ Bind multiple behaviors to the same DOM element
 
     <a href="http://fubar.com/baz?a=a"
        ajax:bind="click"
-       ajax:call="somefunc:.someclass"
        ajax:event="contextchanged:.contextsensitiv"
        ajax:action="rendersomething:.#something:replace"
        ajax:target="http://fubar.com/baz?a=a">
       fubar
     </a>
 
-In this example on click function ``somefunc`` is called. Event 
-``contextchanged`` is triggered and action ``rendersomething`` is performed.
-
+In this example on click event ``contextchanged`` is triggered and action
+``rendersomething`` is performed.
 
 JavaScript helpers
 ==================
@@ -451,6 +414,12 @@ Contributors
 
 Changes
 =======
+
+1.0
+---
+
+    - remove call behaviour
+      [rnix, 2010-12-04]
 
 1.0b4
 -----

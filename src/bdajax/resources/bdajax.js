@@ -31,11 +31,6 @@
                         if (ajax.attr('ajax:event')) {
                             ajax.bind(events, bdajax._event_handler);
                         }
-                        // 'ajax:call' is deprecated
-                        if (ajax.attr('ajax:call')) {
-                            ajax.bind(events, bdajax._call_handler);
-                        }
-                        
                     }
                 }
             }
@@ -248,20 +243,6 @@
                 top:'20%'
             });
             elem.data('overlay').load();
-        },
-        
-        // 'ajax:call' is deprecated
-        _call_handler: function(event) {
-            event.preventDefault();
-            var elem = $(this);
-            var target = bdajax.parsetarget(elem.attr('ajax:target'));
-            var defs = bdajax._defs_to_array(elem.attr('ajax:call'));
-            for (var i = 0; i < defs.length; i++) {
-                var def = defs[i];
-                def = def.split(':');
-                func = eval(def[0]);
-                func($(def[1]), target);
-            }
         },
         
         _event_handler: function(event) {

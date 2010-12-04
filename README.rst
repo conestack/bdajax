@@ -397,15 +397,17 @@ results in a call every time bdajax hooks some markup.
 Browsers
 ========
 
-bdajax is tested in:
+bdajax is tested with:
 
-    - Firefox 3.5
+    - Firefox 3.5, 3.6
     
-    - IE 7
+    - IE 7, 8
     
-    - to be continued... 
+    - Chome 7
+    
+    - Safari 5
 
- 
+
 Contributors
 ============
 
@@ -419,6 +421,9 @@ Changes
 ---
 
     - remove call behaviour
+      [rnix, 2010-12-04]
+    
+    - browser testing
       [rnix, 2010-12-04]
 
 1.0b4

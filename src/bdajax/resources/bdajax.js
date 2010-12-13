@@ -1,3 +1,9 @@
+/* 
+ * bdajax
+ * 
+ * Requires: jquery tools
+ */
+
 (function($) {
 
     $(document).ready(function() {
@@ -38,7 +44,7 @@
         for (var binder in bdajax.binders) {
             bdajax.binders[binder](context);
         }
-		return context;
+        return context;
     }
     
     bdajax = {

@@ -7,16 +7,7 @@
 (function($) {
 
     $(document).ready(function() {
-        var spinner = $('#ajax-spinner');
-        spinner.hide();
-        /*
-        spinner.ajaxStart(function() {
-            $(this).show();
-        });
-        spinner.ajaxStop(function() {
-            $(this).hide();
-        });
-        */
+        bdajax.spinner.hide(true);
         $(document).bdajax(document);
     });
     
@@ -49,7 +40,42 @@
     
     bdajax = {
         
+        // object for 3rd party binders
         binders: {},
+        
+        // ajax spinner handling
+        spinner: {
+            
+            _elem: null,
+            _request_count: 0,
+            
+            elem: function() {
+                if (bdajax.spinner._elem == null) {
+                    bdajax.spinner._elem = $('#ajax-spinner');
+                }
+                return bdajax.spinner._elem;
+            },
+            
+            show: function() {
+                bdajax.spinner._request_count++;
+                if (bdajax.spinner._request_count > 1) {
+                    return;
+                }
+                bdajax.spinner.elem().show();
+            },
+            
+            hide: function(force) {
+                bdajax.spinner._request_count--;
+                if (force) {
+                    bdajax.spinner._request_count = 0;
+                    bdajax.spinner.elem().hide();
+                    return;
+                } else if (bdajax.spinner._request_count <= 0) {
+                    bdajax.spinner._request_count = 0;
+                    bdajax.spinner.elem().hide();
+                }
+            }
+        },
         
         ajaxerrors: {
             timeout: 'The request has timed out. Pleasae try again.',
@@ -114,12 +140,21 @@
                 }
             }
             if (!config.cache) { config.cache = false; }
+            var wrapped_success = function(data, status, request) {
+                config.success(data, status, request);
+                bdajax.spinner.hide();
+            }
+            var wrapped_error = function(request, status, error) {
+                config.error(request, status, error);
+                bdajax.spinner.hide(true);
+            }
+            bdajax.spinner.show();
             $.ajax({
                 url: config.url,
                 dataType: config.type,
                 data: config.params,
-                success: config.success,
-                error: config.error,
+                success: wrapped_success,
+                error: wrapped_error,
                 cache: config.cache
             });
         },

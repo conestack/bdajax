@@ -333,6 +333,8 @@ Options:
 ``error`` (optional)
     Callback if request fails.
 
+Success and error callback functions are wrapped in ``bdajax.request`` to
+consider ajax spinner handling automatically.
 
 Perform action manually
 -----------------------
@@ -419,6 +421,9 @@ Changes
 
 1.0.1
 -----
+
+    - add spinner handling
+      [rnix, 2010-12-13]
 
     - return jquery context by ``jQuery.bdajax``
       [rnix, 2010-12-13]

@@ -38,6 +38,7 @@
         for (var binder in bdajax.binders) {
             bdajax.binders[binder](context);
         }
+		return context;
     }
     
     bdajax = {

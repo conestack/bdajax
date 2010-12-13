@@ -417,6 +417,12 @@ Contributors
 Changes
 =======
 
+1.0.1
+-----
+
+    - return jquery context by ``jQuery.bdajax``
+      [rnix, 2010-12-13]
+
 1.0
 ---
 

@@ -1,2 +1,3 @@
 *.pyc
 src/bdajax.egg-info
+dist

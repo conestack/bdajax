@@ -180,7 +180,7 @@
                         $(selector).replaceWith(data.payload);
                         var context = $(selector);
                         if (context.length) {
-                            context.bdajax();
+                            context.parent().bdajax();
                         } else {
                             $(document).bdajax();
                         }

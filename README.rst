@@ -28,9 +28,8 @@ For those who know KSS (Kinetic Style Sheets) and TAL (Tag Attribute Language):
 The syntax reminds of TAL - attributes are interpreted by JS instead of a TAL
 interpreter - while the functionality is inspired by KSS.
 
-The main paradigm - at the same time the main difference to KSS - is the use
-of an ``event/listener`` model. It enables bdajax to ``listen`` to ``events``
-and trigger ``events`` on ajaxified DOM components.
+The main paradigm is the use of an ``event/listener`` model. It enables bdajax 
+to ``listen`` to ``events`` and trigger ``events`` on ajaxified DOM components.
 
 Consider a navtree as example: the idea is to trigger an event when a navigation
 item gets clicked. Click semantically indicates a changed context. Then listen 
@@ -420,6 +419,13 @@ Contributors
 Changes
 =======
 
+1.0.2
+-----
+
+    - rebind bdajax global if element is not found by selector after replace
+      action.
+      [rnix, 2011-01-14]
+
 1.0.1
 -----
 
@@ -484,4 +490,3 @@ Changes
 
     - make it work
       [rnix]
-

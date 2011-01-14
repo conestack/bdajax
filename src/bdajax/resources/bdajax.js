@@ -7,8 +7,8 @@
 (function($) {
 
     $(document).ready(function() {
-        bdajax.spinner.hide(true);
-        $(document).bdajax(document);
+        bdajax.spinner.hide();
+        $(document).bdajax();
     });
     
     $.fn.bdajax = function() {
@@ -178,7 +178,12 @@
                     var selector = data.selector;
                     if (mode == 'replace') {
                         $(selector).replaceWith(data.payload);
-                        $(selector).parent().bdajax();
+                        var context = $(selector);
+                        if (context.length) {
+                            context.bdajax();
+                        } else {
+                            $(document).bdajax();
+                        }
                     } else if (mode == 'inner') {
                         $(selector).html(data.payload);
                         $(selector).bdajax();

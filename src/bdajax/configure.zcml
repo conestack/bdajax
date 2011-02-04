@@ -1,12 +1,12 @@
 <configure xmlns="http://namespaces.zope.org/zope"
            xmlns:zcml="http://namespaces.zope.org/zcml"
            xmlns:browser="http://namespaces.zope.org/browser"
-           xmlns:bfg="http://namespaces.repoze.org/bfg">
+           xmlns:pyramid="http://pylonshq.com/pyramid">
     
     <!-- bfg specific -->
 	
-	<bfg:static
-	    zcml:condition="installed repoze.bfg"
+	<pyramid:static
+	    zcml:condition="installed pyramid"
         name="++resource++bdajax"
         path="resources"
     />

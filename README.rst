@@ -15,8 +15,8 @@ The dispatcher basically provides two behaviors:
 
 Each behavior is bound to a JavaScript event. 
 
-This package bundles required resources for the use of bdajax inside a 
-``repoze.bfg/pyramid`` or ``zope`` application. It does NOT include the
+This package bundles required resources for the use of bdajax inside a
+``pyramid`` or ``zope`` application. It does NOT include the
 required server implementations. bdajax can be used with other Python or 
 non-Python server backends too as long as action performing code is implemented
 and available through browser URL.
@@ -67,10 +67,9 @@ ajax:target="http://fubar.org?param=value"
 Provide dependencies on server
 ------------------------------
 
-This package already includes resource configuration for ``Zope`` and ``bfg``.
-This is done due to ZCML. Include the following ZCML include statement to your
-ZCML configuration.
-::
+This package already includes resource configuration for ``Zope`` and
+``pyramid``. This is done by ZCML. Include the following ZCML include statement
+to your ZCML configuration.::
 
     <include package="bdajax" />
 
@@ -80,8 +79,7 @@ a custom implementation. See 'Perform actions' below.
 Load dependencies in markup
 ---------------------------
 
-Load dependent JavaScripts and CSS in HTML header 
-::
+Load dependent JavaScripts and CSS in HTML header::
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
     <script src="http://cdn.jquerytools.org/1.2.3/tiny/jquery.tools.min.js"></script>
@@ -95,8 +93,7 @@ Define namespace
 ----------------
 
 In order to keep your XHTML valid when using the XML namespace extension define 
-this namespace in the XHTML document
-::
+this namespace in the XHTML document::
 
     <html xmlns="http://www.w3.org/1999/xhtml"
           xmlns:ajax="http://namesspaces.bluedynamics.eu/ajax">
@@ -106,8 +103,7 @@ this namespace in the XHTML document
 Event binding
 -------------
 
-Indicate bdajax behavior on DOM element.
-::
+Indicate bdajax behavior on DOM element.::
 
     <a href="http://fubar.com"
        ajax:bind="keydown click">
@@ -119,8 +115,7 @@ Binds this element to events ``keydown`` and ``click``.
 Trigger events
 --------------
 
-Bind event behavior to DOM element
-::
+Bind event behavior to DOM element::
 
     <a href="http://fubar.com/baz?a=a"
        ajax:bind="click"
@@ -140,7 +135,7 @@ Perform actions
 An action performs a JSON request to the server and modifies the DOM tree as
 defined.
 
-bdajax expects a resource (i.e a zope/bfg view or some script) named  
+bdajax expects a resource (i.e a zope/pyramid view or some script) named  
 ``ajaxaction`` on server. Resource is called on target url with target query 
 parameters. Three additional arguments are passed:
 
@@ -154,8 +149,7 @@ bdajax.mode
     the manipulation mode. Either ``inner`` or ``replace``
 
 The resource is responsible to return the requested resource as a JSON
-response in the format as follows. 
-::
+response in the format as follows.::
 
     {
         mode: 'inner',            // the passed mode
@@ -163,8 +157,7 @@ response in the format as follows.
         payload: '<div>...</div>' // the rendered action
     }
 
-Bind an action which is triggered directly.
-::
+Bind an action which is triggered directly.::
 
     <a href="http://fubar.com/baz?a=a"
        ajax:bind="click"
@@ -179,8 +172,7 @@ action ``renderfubar``. Request context and request params are taken from
 
 Bind an action acting as event listener. See section 'Trigger events'.
 A triggered event indicates change of context on target with params. 
-Hereupon perform some action.
-::
+Hereupon perform some action.::
 
     <div id="content"
          class="contextsensitiv"
@@ -195,8 +187,7 @@ since it is passed along with the event.
 Multiple behaviors
 ------------------
 
-Bind multiple behaviors to the same DOM element
-::
+Bind multiple behaviors to the same DOM element::
 
     <a href="http://fubar.com/baz?a=a"
        ajax:bind="click"
@@ -218,8 +209,7 @@ Messages, Infos, Warnings and Errors
 ``bdajax`` displays application messages in a jQuery tools overlay. 
 
 ``bdajax.message`` displays a plain message. ``bdajax.info`` ``bdajax.warning`` 
-and ``bdajax.error`` decorates message with appropriate icon.
-::
+and ``bdajax.error`` decorates message with appropriate icon.::
 
     bdajax.message('I am an application Message');
 
@@ -227,8 +217,7 @@ and ``bdajax.error`` decorates message with appropriate icon.
 Overlay helper
 --------------
 
-Load ajax action contents into an overlay.
-::
+Load ajax action contents into an overlay.::
 
     var overlay_api = bdajax.overlay({
         action: 'actionname',
@@ -242,8 +231,7 @@ Modal dialog
 Render a modal dialog inside an overlay. The function expects an options object
 and a callback function, which gets executed if user confirms dialog. The
 callback gets passed the given options object as well. ``message`` is mandatory
-in options.
-::
+in options.::
 
     var options = {
         message: 'I am an application Message'
@@ -254,33 +242,27 @@ in options.
 URL Operations
 --------------
 
-Parse hyperlinks for base URL or request parameters.
-::
+Parse hyperlinks for base URL or request parameters.::
 
     bdajax.parseurl('http://fubar.org?param=value');
 
-results in
-::
+results in::
 
     'http://fubar.org'
 
-while
-::
+while::
 
     bdajax.parsequery('http://fubar.org?param=value');
 
-results in
-::
+results in::
 
     { param: 'value' }
 
-Do both at once by calling ``parsetarget``
-::
+Do both at once by calling ``parsetarget``::
 
     bdajax.parsetarget('http://fubar.org?param=value');
 
-This result in
-::
+This result in::
 
     {
         url: 'http://fubar.org',
@@ -293,8 +275,7 @@ XMLHTTPRequest convenience
 
 ``bdajax`` function ``request`` is convenience for XMLHTTPRequests. By default 
 it sends requests of type ``html`` and displays a ``bdajax.error`` message if 
-request fails.
-::
+request fails.::
 
     bdajax.request({
         success: function(data) {
@@ -340,8 +321,7 @@ Perform action manually
 -----------------------
 
 Sometimes actions need to be performed inside JavaScript code. 
-``bdajax.action`` provides this.
-::
+``bdajax.action`` provides this.::
 
     var target = bdajax.parsetarget('http://fubar.org?param=value');
     bdajax.action({
@@ -374,8 +354,7 @@ Trigger events manually
 -----------------------
 
 Sometimes events need to be triggered manually. Since bdajax expects the
-attribute ``ajaxtarget`` on the received event a convenience is provided.
-::
+attribute ``ajaxtarget`` on the received event a convenience is provided.::
 
     var url = 'http://fubar.org?param=value';
     bdajax.trigger('contextchanged', '.contextsensitiv', url)
@@ -387,8 +366,7 @@ attribute ``ajaxtarget`` on the received event a convenience is provided.
 When writing applications, one might use its own set of custom JavaScripts
 where some actions need to be bound in the markup. Therefore the ``binders`` 
 object on ``bdajax`` is intended. Hooking a binding callback to this object 
-results in a call every time bdajax hooks some markup.
-::
+results in a call every time bdajax hooks some markup.::
 
     mybinder = function (context) {
         jQuery('mysel').bind('click', function() { ... });
@@ -419,74 +397,81 @@ Contributors
 Changes
 =======
 
+1.1
+---
+
+- remove bfg.zcml and zope.zcml, switch to pyramid in configure.zcml with
+  conditional resource registration.
+  [rnix, 2011-02-07]
+
 1.0.2
 -----
 
-    - rebind bdajax global if element is not found by selector after replace
-      action.
-      [rnix, 2011-01-14]
+- rebind bdajax global if element is not found by selector after replace
+  action.
+  [rnix, 2011-01-14]
 
 1.0.1
 -----
 
-    - add spinner handling
-      [rnix, 2010-12-13]
-    
-    - return jquery context by ``jQuery.bdajax``
-      [rnix, 2010-12-13]
+- add spinner handling
+  [rnix, 2010-12-13]
+
+- return jquery context by ``jQuery.bdajax``
+  [rnix, 2010-12-13]
 
 1.0
 ---
 
-    - remove call behaviour
-      [rnix, 2010-12-04]
-    
-    - browser testing
-      [rnix, 2010-12-04]
+- remove call behaviour
+  [rnix, 2010-12-04]
+
+- browser testing
+  [rnix, 2010-12-04]
 
 1.0b4
 -----
 
-    - add ``configure.zcml`` containing all configuration using
-      ``zcml:condition``
-      [rnix, 2010-11-16]
+- add ``configure.zcml`` containing all configuration using
+  ``zcml:condition``
+  [rnix, 2010-11-16]
 
-    - remove overlay data of modal dialog before reloading. otherwise callback
-      options are cached
-      [rnix, 2010-11-09]
-    
-    - disable ajax request caching by default in ``bdajax.request``
-      [rnix, 2010-11-09]
+- remove overlay data of modal dialog before reloading. otherwise callback
+  options are cached
+  [rnix, 2010-11-09]
 
-    - add modal dialog to bdajax
-      [rnix, 2010-11-09]
-    
-    - mark ``ajax:call`` API deprecated. Will be removed for 1.0 final
-      [rnix, 2010-11-09]
+- disable ajax request caching by default in ``bdajax.request``
+  [rnix, 2010-11-09]
+
+- add modal dialog to bdajax
+  [rnix, 2010-11-09]
+
+- mark ``ajax:call`` API deprecated. Will be removed for 1.0 final
+  [rnix, 2010-11-09]
 
 1.0b3
 -----
 
-    - add class ``allowMultiSubmit`` to fit a plone JS contract.
-      [rnix, 2010-07-01]
+- add class ``allowMultiSubmit`` to fit a plone JS contract.
+  [rnix, 2010-07-01]
 
-    - fix bug in bdajax.request when finding url including query params.
-      [rnix, 2010-07-01]
+- fix bug in bdajax.request when finding url including query params.
+  [rnix, 2010-07-01]
 
 1.0b2
 -----
 
-    - switch to jQuery tools 1.2.3.
-      [rnix, 2010-07-01]
+- switch to jQuery tools 1.2.3.
+  [rnix, 2010-07-01]
 
-    - call binders with correct context
-      [rnix, 2010-05-16]
+- call binders with correct context
+  [rnix, 2010-05-16]
 
-    - add overlay helper function and corresponding styles
-      [rnix, 2010-05-16]
+- add overlay helper function and corresponding styles
+  [rnix, 2010-05-16]
 
 1.0b1
 -----
 
-    - make it work
-      [rnix]
+- make it work
+  [rnix]

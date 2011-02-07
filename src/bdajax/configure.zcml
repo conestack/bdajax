@@ -3,7 +3,7 @@
            xmlns:browser="http://namespaces.zope.org/browser"
            xmlns:pyramid="http://pylonshq.com/pyramid">
     
-    <!-- bfg specific -->
+    <!-- pyramid specific -->
 	
 	<pyramid:static
 	    zcml:condition="installed pyramid"
@@ -11,7 +11,7 @@
         path="resources"
     />
     
-    <!-- XXX: make bdajax.pt available as bfg view -->
+    <!-- XXX: make bdajax.pt available as pyramid view -->
 	
 	<!-- Plone specific -->
 	

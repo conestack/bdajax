@@ -164,7 +164,7 @@
             config.params['bdajax.mode'] = config.mode;
             config.params['bdajax.selector'] = config.selector;
             var error = function(req, status, exception) {
-                bdajax.error(exception);
+                bdajax.error(req + ' ' + status + ' ' + exception);
             };
             bdajax.request({
                 url: bdajax.parseurl(config.url) + '/ajaxaction',
@@ -327,6 +327,7 @@
         },
         
         _defs_to_array: function(str) {
+            // XXX: if space in selector when receiving def str, this will fail
             var arr;
             if (str.indexOf(' ') != -1) {
                 arr = str.split(' ');

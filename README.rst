@@ -400,6 +400,12 @@ Changes
 1.1
 ---
 
+- better default error output
+  [rnix, 2011-03-13]
+
+- remove ``ajaxerrors`` and ``ajaxerror`` from bdajax.
+  [rnix, 2011-03-13]
+
 - remove bfg.zcml and zope.zcml, switch to pyramid in configure.zcml with
   conditional resource registration.
   [rnix, 2011-02-07]

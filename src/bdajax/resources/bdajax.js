@@ -77,19 +77,6 @@
             }
         },
         
-        ajaxerrors: {
-            timeout: 'The request has timed out. Pleasae try again.',
-            error: 'An error occoured while processing the request. Aborting.',
-            parsererror: 'The Response could not be parsed. Aborting.',
-            unknown: 'An unknown error occoured while request. Aborting.'
-        },
-        
-        ajaxerror: function(status) {
-            if (status == 'notmodified') { return; }
-            if (status == null) { status = 'unknown'; }
-            return bdajax.ajaxerrors[status];
-        },
-        
         parseurl: function(url) {
             var idx = url.indexOf('?');
             if (idx != -1) {
@@ -134,10 +121,9 @@
             }
             if (!config.type) { config.type = 'html'; }
             if (!config.error) {
-                config.error = function(request, status) {
-                    var err = bdajax.ajaxerror(status);
-                    if (err) { bdajax.error(err); }
-                }
+                config.error = function(req, status, exception) {
+                    bdajax.error(req + ' ' + status + ' ' + exception);
+                };
             }
             if (!config.cache) { config.cache = false; }
             var wrapped_success = function(data, status, request) {

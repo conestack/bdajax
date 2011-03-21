@@ -21,6 +21,7 @@ required server implementations. bdajax can be used with other Python or
 non-Python server backends too as long as action performing code is implemented
 and available through browser URL.
 
+
 Dispatching
 -----------
 
@@ -37,6 +38,7 @@ to this event on all DOM elements to get notified on changing server context.
 
 This makes it possible to have completely decoupled "sub-applications" knowing
 nothing but an event contract from each other.
+
 
 Attributes
 ----------
@@ -64,6 +66,7 @@ ajax:target="http://fubar.org?param=value"
     by bdajax or browser event). See below to get a clue what i am
     talking about.
 
+
 Provide dependencies on server
 ------------------------------
 
@@ -75,6 +78,7 @@ to your ZCML configuration.::
 
 The expected ``ajaxaction`` view is not provided. Its intended to be provided by 
 a custom implementation. See 'Perform actions' below.
+
 
 Load dependencies in markup
 ---------------------------
@@ -89,6 +93,7 @@ Load dependent JavaScripts and CSS in HTML header::
 
 Make sure the contents of ``bdajax.pt`` are rendered.
 
+
 Define namespace
 ----------------
 
@@ -99,6 +104,7 @@ this namespace in the XHTML document::
           xmlns:ajax="http://namesspaces.bluedynamics.eu/ajax">
         ...
     </html>
+
 
 Event binding
 -------------
@@ -111,6 +117,7 @@ Indicate bdajax behavior on DOM element.::
     </a>
 
 Binds this element to events ``keydown`` and ``click``.
+
 
 Trigger events
 --------------
@@ -129,6 +136,7 @@ defining ``contextsensitiv`` css class. The extra attribute ``ajaxtarget`` gets
 written to the event before it is triggered, containing definitions from
 ``ajax:target``.
 
+
 Perform actions
 ---------------
 
@@ -140,22 +148,50 @@ bdajax expects a resource (i.e a zope/pyramid view or some script) named
 parameters. Three additional arguments are passed:
 
 bdajax.action
-    the name of the action
+    name of the action
 
 bdajax.selector
-    the selector must be added to response
+    given selector must be added to response. could be ``NONE``, which means
+    that no Markup is hooked after action (useful i.e. in combination with
+    continuation actions and events).
 
 bdajax.mode
-    the manipulation mode. Either ``inner`` or ``replace``
+    the manipulation mode. Either ``inner`` or ``replace`` or ``NONE``
+    (see above).
 
 The resource is responsible to return the requested resource as a JSON
 response in the format as follows.::
 
     {
-        mode: 'inner',            // the passed mode
-        selector: '#someid',      // the passed selector
-        payload: '<div>...</div>' // the rendered action
+        mode: 'inner',             // the passed mode
+        selector: '#someid',       // the passed selector
+        payload: '<div>...</div>', // the rendered action
+        continuation: [{}]         // continuation actions and events
     }
+
+The ``continuation`` value is an array of actions and/or events which should
+be performed after performed ajaxaction returns. Continuation definitions
+must have this format::
+
+    {
+        'type': 'action',
+        'target': 'http://example.com',
+        'name': 'actionname',
+        'mode': 'inner',
+        'selector': '.foo',
+    }
+
+... for continuation actions, and::
+
+    {
+        'type': 'event',
+        'target': 'http://example.com',
+        'name': 'eventname',
+        'selector': '.foo',
+    }
+
+... for continuation events. Be aware that you can provoke infinite loops
+with continuation stuff, use this feature sparingly.
 
 Bind an action which is triggered directly.::
 
@@ -184,6 +220,7 @@ Hereupon perform some action.::
 Note: If binding actions as event listeners, there's no need to define a target
 since it is passed along with the event.
 
+
 Multiple behaviors
 ------------------
 
@@ -199,6 +236,7 @@ Bind multiple behaviors to the same DOM element::
 
 In this example on click event ``contextchanged`` is triggered and action
 ``rendersomething`` is performed.
+
 
 JavaScript helpers
 ==================
@@ -400,6 +438,9 @@ Changes
 1.1
 ---
 
+- continuation action and event support for ajaxaction.
+  [rnix, 2011-03-21]
+
 - better default error output
   [rnix, 2011-03-13]
 
@@ -410,12 +451,14 @@ Changes
   conditional resource registration.
   [rnix, 2011-02-07]
 
+
 1.0.2
 -----
 
 - rebind bdajax global if element is not found by selector after replace
   action.
   [rnix, 2011-01-14]
+
 
 1.0.1
 -----
@@ -426,6 +469,7 @@ Changes
 - return jquery context by ``jQuery.bdajax``
   [rnix, 2010-12-13]
 
+
 1.0
 ---
 
@@ -434,6 +478,7 @@ Changes
 
 - browser testing
   [rnix, 2010-12-04]
+
 
 1.0b4
 -----
@@ -455,6 +500,7 @@ Changes
 - mark ``ajax:call`` API deprecated. Will be removed for 1.0 final
   [rnix, 2010-11-09]
 
+
 1.0b3
 -----
 
@@ -463,6 +509,7 @@ Changes
 
 - fix bug in bdajax.request when finding url including query params.
   [rnix, 2010-07-01]
+
 
 1.0b2
 -----
@@ -475,6 +522,7 @@ Changes
 
 - add overlay helper function and corresponding styles
   [rnix, 2010-05-16]
+
 
 1.0b1
 -----

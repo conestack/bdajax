@@ -174,9 +174,33 @@
                         $(selector).html(data.payload);
                         $(selector).bdajax();
                     }
+                    bdajax.continuation(data.continuation);
                 },
                 error: error
             });
+        },
+        
+        continuation: function(actions) {
+            if (!actions) {
+                return;
+            }
+            bdajax.spinner.hide();
+            var action, target;
+            for (var idx in actions) {
+                action = actions[idx];
+                if (action.type == 'action') {
+                    target = bdajax.parsetarget(action.target);
+                    bdajax.action({
+                        url: target.url,
+                        params: target.params,
+                        name: action.name,
+                        mode: action.mode,
+                        selector: action.selector
+                    });
+                } else if (action.type == 'event') {
+                    bdajax.trigger(action.name, action.selector, action.target);
+                }
+            }
         },
         
         trigger: function(name, selector, target) {

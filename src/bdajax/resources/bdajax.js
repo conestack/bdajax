@@ -254,6 +254,9 @@
                     var overlay = this.getOverlay();
                     $('.message', overlay).html(message);
                 },
+                onLoad: function() {
+                    elem.find('button:first').focus();
+                },
                 oneInstance: false,
                 closeOnClick: false,
                 top:'20%'

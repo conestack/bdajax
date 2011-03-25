@@ -159,6 +159,7 @@
                 success: function(data) {
                     if (!data) {
                         bdajax.error('Empty response');
+                        bdajax.spinner.hide();
                     }
                     var mode = data.mode;
                     var selector = data.selector;

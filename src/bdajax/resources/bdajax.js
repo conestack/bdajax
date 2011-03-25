@@ -149,9 +149,6 @@
             config.params['bdajax.action'] = config.name;
             config.params['bdajax.mode'] = config.mode;
             config.params['bdajax.selector'] = config.selector;
-            var error = function(req, status, exception) {
-                bdajax.error(req + ' ' + status + ' ' + exception);
-            };
             bdajax.request({
                 url: bdajax.parseurl(config.url) + '/ajaxaction',
                 type: 'json',
@@ -177,8 +174,7 @@
                         }
                         bdajax.continuation(data.continuation);
                     }
-                },
-                error: error
+                }
             });
         },
         

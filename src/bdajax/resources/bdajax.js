@@ -122,7 +122,7 @@
             if (!config.type) { config.type = 'html'; }
             if (!config.error) {
                 config.error = function(req, status, exception) {
-                    bdajax.error(req + ' ' + status + ' ' + exception);
+                    bdajax.error('<strong>' + status + '</strong> ' + exception);
                 };
             }
             if (!config.cache) { config.cache = false; }

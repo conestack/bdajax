@@ -122,7 +122,14 @@
             if (!config.type) { config.type = 'html'; }
             if (!config.error) {
                 config.error = function(req, status, exception) {
-                    bdajax.error(req + ' ' + status + ' ' + exception);
+                    if (parseInt(status, 10) === 403) {
+                        // It looks like we're looged out (perhaps the cookie has timed out?)
+                        // By default, we redirect to the login page (that we assume is on /login).
+                        // Pass your own 'error' callback if you're not fine with this.
+                        window.location.pathname = '/login';
+                    } else {
+                        bdajax.error(req + ' ' + status + ' ' + exception);
+                    }
                 };
             }
             if (!config.cache) { config.cache = false; }

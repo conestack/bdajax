@@ -40,6 +40,10 @@
     
     bdajax = {
         
+        // By default, we redirect to the login page on 403 error.
+        // That we assume at '/login'.
+        default_403: '/login',
+        
         // object for 3rd party binders
         binders: {},
         
@@ -123,12 +127,10 @@
             if (!config.error) {
                 config.error = function(req, status, exception) {
                     if (parseInt(status, 10) === 403) {
-                        // It looks like we're looged out (perhaps the cookie has timed out?)
-                        // By default, we redirect to the login page (that we assume is on /login).
-                        // Pass your own 'error' callback if you're not fine with this.
-                        window.location.pathname = '/login';
+                        window.location.pathname = bdajax.default_403;
                     } else {
-                        bdajax.error('<strong>' + status + '</strong> ' + exception);
+                        bdajax.error(
+                            '<strong>' + status + '</strong> ' + exception);
                     }
                 };
             }
@@ -138,7 +140,9 @@
                 bdajax.spinner.hide();
             }
             var wrapped_error = function(request, status, error) {
-                config.error(request, request.status || status, request.statusText || error);
+                config.error(request,
+                             request.status || status,
+                             request.statusText || error);
                 bdajax.spinner.hide(true);
             }
             bdajax.spinner.show();
@@ -278,7 +282,7 @@
         
         warning: function(message) {
             $("#ajax-message .message").removeClass('error warning info')
-                                            .addClass('warning');
+                                       .addClass('warning');
             bdajax.message(message);
         },
         

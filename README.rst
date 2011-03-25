@@ -429,7 +429,9 @@ bdajax is tested with:
 Contributors
 ============
 
-    - Robert Niederreiter <rnix@squarewave.at>
+    - Robert Niederreiter
+    
+    - Attila Oláh
 
 
 Changes
@@ -437,6 +439,24 @@ Changes
 
 1.1
 ---
+
+- set focus on ok button for dialog boxes, so a user can dismiss the button by
+  pressing return key.
+  [aatiis, 2011-03-25]
+
+- don't define a default error callback twice, just rely on the default handler
+  prowided by ``bdajax.request``.
+  [aatiis, 2011-03-25]
+
+- add default 403 error page redirect.
+  [aatiis, 2011-03-25]
+
+- hide spinner after 'Empty response' message.
+  [aatiis, 2011-03-25]
+
+- used ``request.status`` and ``request.statusText`` in default error if they
+  are defined.
+  [aatiis, 2011-03-25]
 
 - continuation action and event support for ajaxaction.
   [rnix, 2011-03-21]

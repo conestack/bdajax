@@ -131,7 +131,7 @@
                 bdajax.spinner.hide();
             }
             var wrapped_error = function(request, status, error) {
-                config.error(request, status, error);
+                config.error(request, request.status || status, request.statusText || error);
                 bdajax.spinner.hide(true);
             }
             bdajax.spinner.show();

@@ -160,22 +160,23 @@
                     if (!data) {
                         bdajax.error('Empty response');
                         bdajax.spinner.hide();
-                    }
-                    var mode = data.mode;
-                    var selector = data.selector;
-                    if (mode == 'replace') {
-                        $(selector).replaceWith(data.payload);
-                        var context = $(selector);
-                        if (context.length) {
-                            context.parent().bdajax();
-                        } else {
-                            $(document).bdajax();
+                    } else {
+                        var mode = data.mode;
+                        var selector = data.selector;
+                        if (mode == 'replace') {
+                            $(selector).replaceWith(data.payload);
+                            var context = $(selector);
+                            if (context.length) {
+                                context.parent().bdajax();
+                            } else {
+                                $(document).bdajax();
+                            }
+                        } else if (mode == 'inner') {
+                            $(selector).html(data.payload);
+                            $(selector).bdajax();
                         }
-                    } else if (mode == 'inner') {
-                        $(selector).html(data.payload);
-                        $(selector).bdajax();
+                        bdajax.continuation(data.continuation);
                     }
-                    bdajax.continuation(data.continuation);
                 },
                 error: error
             });

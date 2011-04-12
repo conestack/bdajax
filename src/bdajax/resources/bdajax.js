@@ -189,25 +189,53 @@
             });
         },
         
-        continuation: function(actions) {
-            if (!actions) {
+        continuation: function(definitions) {
+            if (!definitions) {
                 return;
             }
             bdajax.spinner.hide();
-            var action, target;
-            for (var idx in actions) {
-                action = actions[idx];
-                if (action.type == 'action') {
-                    target = bdajax.parsetarget(action.target);
+            var definition, target;
+            for (var idx in definitions) {
+                definition = definitions[idx];
+                if (definition.type == 'action') {
+                    target = bdajax.parsetarget(definition.target);
                     bdajax.action({
                         url: target.url,
                         params: target.params,
-                        name: action.name,
-                        mode: action.mode,
-                        selector: action.selector
+                        name: definition.name,
+                        mode: definition.mode,
+                        selector: definition.selector
                     });
-                } else if (action.type == 'event') {
-                    bdajax.trigger(action.name, action.selector, action.target);
+                } else if (definition.type == 'event') {
+                    bdajax.trigger(definition.name,
+                                   definition.selector,
+                                   definition.target);
+                } else if (definition.type == 'message') {
+                    if (definition.flavor) {
+                        var flavors = ['message', 'info', 'warning', 'error'];
+                        if (flavors.indexOf(definition.flavor) == -1) {
+                            throw "Continuation definition.flavor unknown";
+                        }
+                        switch (definition.flavor) {
+                            case 'message':
+                                bdajax.message(definition.payload);
+                                break;
+                            case 'info':
+                                bdajax.info(definition.payload);
+                                break;
+                            case 'warning':
+                                bdajax.warning(definition.payload);
+                                break;
+                            case 'error':
+                                bdajax.error(definition.payload);
+                                break;
+                        }
+                    } else {
+                        if (!definition.selector) {
+                            throw "Continuation definition.selector expected";
+                        }
+                        $(definition.selector).html(definition.payload);
+                    }
                 }
             }
         },

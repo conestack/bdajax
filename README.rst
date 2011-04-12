@@ -166,7 +166,7 @@ response in the format as follows.::
         mode: 'inner',             // the passed mode
         selector: '#someid',       // the passed selector
         payload: '<div>...</div>', // the rendered action
-        continuation: [{}]         // continuation actions and events
+        continuation: [{}],        // continuation actions, events and messages
     }
 
 The ``continuation`` value is an array of actions and/or events which should
@@ -190,8 +190,25 @@ must have this format::
         'selector': '.foo',
     }
 
-... for continuation events. Be aware that you can provoke infinite loops
-with continuation stuff, use this feature sparingly.
+... for continuation events, and::
+
+    {
+        'type': 'message',
+        'payload': 'Text or <strong>Markup</strong>',
+        'flavor': 'error',
+        'selector': null,
+    }
+
+... for continuation messages. Either ``flavor`` or ``selector`` must be given.
+Flavor could be one of 'message', 'info', 'warning', 'error' and map to the
+corresponding bdajax UI helper functions. Selector indicates to hook returned
+payload at a custom location in DOM tree instead of displaying a message. In
+this case, payload is set as contents of DOM element returned by selector.
+
+If both ``flavor`` and ``selector`` are set, ``selector`` is ignored.
+
+Be aware that you can provoke infinite loops with continuation actions and
+events, use this feature sparingly.
 
 Bind an action which is triggered directly.::
 
@@ -436,6 +453,13 @@ Contributors
 
 Changes
 =======
+
+1.2
+---
+
+- add continuation messages
+  [rnix, 2011-04-12]
+
 
 1.1
 ---

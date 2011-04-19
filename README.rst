@@ -457,6 +457,9 @@ Changes
 1.2
 ---
 
+- strip trailing '/' in ``bdajax.parseurl`` to avoid double slashes.
+  [rnix, 2011-04-19]
+
 - add continuation messages
   [rnix, 2011-04-12]
 

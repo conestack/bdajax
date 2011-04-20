@@ -22,11 +22,9 @@
                         var events = attr.nodeValue;
                         var ajax = $(this);
                         ajax.unbind(events);
-                        if (ajax.attr('ajax:action')) {
-                            ajax.bind(events, bdajax._action_handler);
-                        }
-                        if (ajax.attr('ajax:event')) {
-                            ajax.bind(events, bdajax._event_handler);
+                        if (ajax.attr('ajax:action')
+                         || ajax.attr('ajax:event')) {
+                            ajax.bind(events, bdajax._dispatching_handler);
                         }
                     }
                 }
@@ -345,9 +343,33 @@
             elem.data('overlay').load();
         },
         
-        _event_handler: function(event) {
+        _dispatching_handler: function(event) {
             event.preventDefault();
             var elem = $(this);
+            var options = {
+                elem: elem,
+                event: event
+            };
+            if (elem.attr('ajax:confirm')) {
+                options.message = elem.attr('ajax:confirm');
+                bdajax.dialog(options, bdajax._do_dispatching);
+            } else {
+                bdajax._do_dispatching(options);
+            }
+        },
+        
+        _do_dispatching: function(options) {
+            var elem = options.elem;
+            var event = options.event;
+            if (elem.attr('ajax:action')) {
+                bdajax._handle_ajax_action(elem, event);
+            }
+            if (elem.attr('ajax:event')) {
+                bdajax._handle_ajax_event(elem);
+            }
+        },
+        
+        _handle_ajax_event: function(elem) {
             var target = elem.attr('ajax:target');
             var defs = bdajax._defs_to_array(elem.attr('ajax:event'));
             for (var i = 0; i < defs.length; i++) {
@@ -357,9 +379,7 @@
             }
         },
         
-        _action_handler: function(event) {
-            event.preventDefault();
-            var elem = $(this);
+        _handle_ajax_action: function(elem, event) {
             var target;
             if (event.ajaxtarget) {
                 target = event.ajaxtarget;

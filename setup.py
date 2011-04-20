@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '1.1'
+version = '1.2dev'
 shortdesc = 'Ajax convenience.'
 longdesc = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
 longdesc += open(os.path.join(os.path.dirname(__file__), 'LICENSE.rst')).read()
@@ -20,7 +20,7 @@ setup(name='bdajax',
       keywords='',
       author='BlueDynamics Alliance',
       author_email='dev@bluedynamics.com',
-      url=u'https://svn.plone.org/svn/collective/bdajax',
+      url=u'https://github.com/bluedynamics/bdajax',
       license='GNU General Public Licence',
       packages=find_packages('src'),
       package_dir = {'': 'src'},

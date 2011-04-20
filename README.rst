@@ -255,6 +255,25 @@ In this example on click event ``contextchanged`` is triggered and action
 ``rendersomething`` is performed.
 
 
+Confirm actions
+---------------
+
+Bdajax can display a confirmation dialog before performing actions or trigger
+events::
+
+    <a href="http://fubar.com/baz?a=a"
+       ajax:bind="click"
+       ajax:event="contextchanged:.contextsensitiv"
+       ajax:action="rendersomething:.#something:replace"
+       ajax:target="http://fubar.com/baz?a=a"
+       ajax:confirm="Do you really want to do this?">
+      fubar
+    </a>
+
+If ``ajax:confirm`` is set, a modal dialog is displayed before dispatching is
+performed.
+
+
 JavaScript helpers
 ==================
 
@@ -454,8 +473,11 @@ Contributors
 Changes
 =======
 
-1.2
----
+1.2dev
+------
+
+- add ``ajax:confirm`` functionality.
+  [rnix, 2011-04-20]
 
 - strip trailing '/' in ``bdajax.parseurl`` to avoid double slashes.
   [rnix, 2011-04-19]

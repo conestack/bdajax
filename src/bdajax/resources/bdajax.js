@@ -130,8 +130,9 @@
                     if (parseInt(status, 10) === 403) {
                         window.location.pathname = bdajax.default_403;
                     } else {
-                        bdajax.error(
-                            '<strong>' + status + '</strong> ' + exception);
+                        var message = '<strong>' + status + '</strong> ';
+                        message += exception;
+                        bdajax.error(message);
                     }
                 };
             }
@@ -289,6 +290,10 @@
                 },
                 onLoad: function() {
                     elem.find('button:first').focus();
+                },
+                onBeforeClose: function() {
+                    var overlay = this.getOverlay();
+                    $('.message', overlay).empty();
                 },
                 oneInstance: false,
                 closeOnClick: false,

@@ -43,7 +43,7 @@ nothing but an event contract from each other.
 Attributes
 ----------
 
-Define the following attributes:
+Following attributes are available:
 
 ajax:bind="evt1 evt2"
     Indicate bdajax behavior on DOM element and the event(s) triggering
@@ -65,6 +65,10 @@ ajax:target="http://fubar.org?param=value"
     optional when ``ajax:action`` is defined (depends on if event is triggered
     by bdajax or browser event). See below to get a clue what i am
     talking about.
+
+ajax:confirm="Do you really want to do this?"
+    Show confirmation dialog before actually executing actions and trigger
+    events.
 
 
 Provide dependencies on server

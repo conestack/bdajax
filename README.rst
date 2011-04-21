@@ -480,6 +480,9 @@ Changes
 1.2dev
 ------
 
+- delete overlay data from DOM element before reinitializing.
+  [rnix, 2011-04-21]
+
 - add ``ajax:confirm`` functionality.
   [rnix, 2011-04-20]
 

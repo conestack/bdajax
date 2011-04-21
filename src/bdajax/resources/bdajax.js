@@ -250,6 +250,7 @@
         
         overlay: function(options) {
             var elem = $('#ajax-overlay');
+            elem.removeData('overlay');
             elem.overlay({
                 mask: {
                     color: '#fff',
@@ -279,6 +280,7 @@
         
         message: function(message) {
             var elem = $('#ajax-message');
+            elem.removeData('overlay');
             elem.overlay({
                 mask: {
                     color: '#fff',

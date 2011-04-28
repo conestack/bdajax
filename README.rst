@@ -477,8 +477,11 @@ Contributors
 Changes
 =======
 
-1.2dev
-------
+1.2
+---
+
+- add ``bdajax.fiddle`` function.
+  [rnix, 2011-04-28]
 
 - delete overlay data from DOM element before reinitializing.
   [rnix, 2011-04-21]

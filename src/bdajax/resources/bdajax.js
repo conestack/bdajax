@@ -171,24 +171,26 @@
                         bdajax.error('Empty response');
                         bdajax.spinner.hide();
                     } else {
-                        var mode = data.mode;
-                        var selector = data.selector;
-                        if (mode == 'replace') {
-                            $(selector).replaceWith(data.payload);
-                            var context = $(selector);
-                            if (context.length) {
-                                context.parent().bdajax();
-                            } else {
-                                $(document).bdajax();
-                            }
-                        } else if (mode == 'inner') {
-                            $(selector).html(data.payload);
-                            $(selector).bdajax();
-                        }
+                        bdajax.fiddle(data.payload, data.selector, data.mode);
                         bdajax.continuation(data.continuation);
                     }
                 }
             });
+        },
+        
+        fiddle: function(payload, selector, mode) {
+            if (mode == 'replace') {
+                $(selector).replaceWith(payload);
+                var context = $(selector);
+                if (context.length) {
+                    context.parent().bdajax();
+                } else {
+                    $(document).bdajax();
+                }
+            } else if (mode == 'inner') {
+                $(selector).html(payload);
+                $(selector).bdajax();
+            }
         },
         
         continuation: function(definitions) {

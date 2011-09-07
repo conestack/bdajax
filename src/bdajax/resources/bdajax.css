@@ -14,7 +14,8 @@
     display:none;
     z-index:10000;
     background-color:#fff;
-    width:400px;
+    /*width:400px;*/
+    min-width:400px;
 	padding:10px;
     border:4px solid #ccc;
 	text-align:center;

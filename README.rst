@@ -477,6 +477,13 @@ Contributors
 Changes
 =======
 
+1.2.1
+-----
+
+- use CSS 'min-width' instead of 'width' for messages
+  [rnix, 2011-09-07]
+
+
 1.2
 ---
 

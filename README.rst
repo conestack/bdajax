@@ -477,6 +477,13 @@ Contributors
 Changes
 =======
 
+1.2.2dev
+--------
+
+- call ``event.stopPropagation`` in ``bdajax._dispatching_handler``.
+  [rnix, 2011-11-23]
+
+
 1.2.1
 -----
 

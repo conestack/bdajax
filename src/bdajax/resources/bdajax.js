@@ -114,20 +114,20 @@
             };
         },
         
-        request: function(config) {
-            if (config.url.indexOf('?') != -1) {
-                var addparams = config.params;
-                config.params = bdajax.parsequery(config.url);
-                config.url = bdajax.parseurl(config.url);
+        request: function(options) {
+            if (options.url.indexOf('?') != -1) {
+                var addparams = options.params;
+                options.params = bdajax.parsequery(options.url);
+                options.url = bdajax.parseurl(options.url);
                 for (var key in addparams) {
-                    config.params[key] = addparams[key];
+                    options.params[key] = addparams[key];
                 }
             } else {
-                if (!config.params) { config.params = {}; }
+                if (!options.params) { options.params = {}; }
             }
-            if (!config.type) { config.type = 'html'; }
-            if (!config.error) {
-                config.error = function(req, status, exception) {
+            if (!options.type) { options.type = 'html'; }
+            if (!options.error) {
+                options.error = function(req, status, exception) {
                     if (parseInt(status, 10) === 403) {
                         window.location.pathname = bdajax.default_403;
                     } else {
@@ -137,36 +137,36 @@
                     }
                 };
             }
-            if (!config.cache) { config.cache = false; }
+            if (!options.cache) { options.cache = false; }
             var wrapped_success = function(data, status, request) {
-                config.success(data, status, request);
+                options.success(data, status, request);
                 bdajax.spinner.hide();
             }
             var wrapped_error = function(request, status, error) {
-                config.error(request,
-                             request.status || status,
-                             request.statusText || error);
+                options.error(request,
+                              request.status || status,
+                              request.statusText || error);
                 bdajax.spinner.hide(true);
             }
             bdajax.spinner.show();
             $.ajax({
-                url: config.url,
-                dataType: config.type,
-                data: config.params,
+                url: options.url,
+                dataType: options.type,
+                data: options.params,
                 success: wrapped_success,
                 error: wrapped_error,
-                cache: config.cache
+                cache: options.cache
             });
         },
         
-        action: function(config) {
-            config.params['bdajax.action'] = config.name;
-            config.params['bdajax.mode'] = config.mode;
-            config.params['bdajax.selector'] = config.selector;
+        action: function(options) {
+            options.params['bdajax.action'] = options.name;
+            options.params['bdajax.mode'] = options.mode;
+            options.params['bdajax.selector'] = options.selector;
             bdajax.request({
-                url: bdajax.parseurl(config.url) + '/ajaxaction',
+                url: bdajax.parseurl(options.url) + '/ajaxaction',
                 type: 'json',
-                params: config.params,
+                params: options.params,
                 success: function(data) {
                     if (!data) {
                         bdajax.error('Empty response');
@@ -260,13 +260,21 @@
                     loadSpeed: 200
                 },
                 onBeforeLoad: function() {
-                    var target = bdajax.parsetarget(options.target);
+                    var url, params;
+                    if (options.target) {
+                        var target = bdajax.parsetarget(options.target);
+                        url = target.url;
+                        params = target.params;
+                    } else {
+                        url = options.url;
+                        params = options.params;
+                    }
                     bdajax.action({
                         name: options.action,
                         selector: '#ajax-overlay-content',
                         mode: 'inner',
-                        url: target.url,
-                        params: target.params
+                        url: url,
+                        params: params
                     });
                 },
                 onClose: function() {
@@ -378,6 +386,9 @@
             if (elem.attr('ajax:event')) {
                 bdajax._handle_ajax_event(elem);
             }
+            if (elem.attr('ajax:overlay')) {
+                bdajax._handle_ajax_overlay(elem, event);
+            }
         },
         
         _handle_ajax_event: function(elem) {
@@ -397,7 +408,7 @@
             } else {
                 target = bdajax.parsetarget(elem.attr('ajax:target'));
             }
-            actions = bdajax._defs_to_array(elem.attr('ajax:action'));
+            var actions = bdajax._defs_to_array(elem.attr('ajax:action'));
             for (var i = 0; i < actions.length; i++) {
                 var defs = actions[i].split(':');
                 bdajax.action({
@@ -408,6 +419,21 @@
                     params: target.params
                 });
             }
+        },
+        
+        _handle_ajax_overlay: function(elem, event) {
+            var target;
+            if (event.ajaxtarget) {
+                target = event.ajaxtarget;
+            } else {
+                target = bdajax.parsetarget(elem.attr('ajax:target'));
+            }
+            var actionname = elem.attr('ajax:overlay');
+            bdajax.overlay({
+                action: actionname,
+                url: target.url,
+                params: target.params
+            });
         },
         
         _defs_to_array: function(str) {

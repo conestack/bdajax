@@ -321,6 +321,10 @@ Load ajax action contents into an overlay.::
         target: 'http://foobar.org?param=value'
     });
 
+Optionally to ``target``, ``url`` and ``params`` can be given as options to
+the function. If both, ``target`` and ``url/params`` are given,
+``target`` rules.
+
 
 Modal dialog
 ------------

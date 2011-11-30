@@ -90,15 +90,15 @@ a custom implementation. See 'Perform actions' below.
 Load dependencies in markup
 ---------------------------
 
-Load dependent JavaScripts and CSS in HTML header::
+Include dependencies jQuery (1.6.4) and jQuery Tools (1.2.6) to HTML Header.
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
-    <script src="http://cdn.jquerytools.org/1.2.3/tiny/jquery.tools.min.js"></script>
+Load bdajax related Scripts and CSS::
+
     <script src="http://fubar.com/++resource++bdajax/bdajax.js"></script>
     <link href="http://fubar.com/++resource++bdajax/bdajax.css"
           rel="stylesheet" type="text/css" media="screen" />
 
-Make sure the contents of ``bdajax.pt`` are rendered.
+Make sure the content of ``bdajax.pt`` is rendered in Markup.
 
 
 Define namespace

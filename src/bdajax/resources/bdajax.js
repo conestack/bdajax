@@ -1,7 +1,9 @@
 /* 
- * bdajax
+ * bdajax v1.3dev
  * 
- * Requires: jquery tools
+ * Requires:
+ * - jQuery 1.6.4
+ * - jQuery Tools 1.2.6
  */
 
 (function($) {

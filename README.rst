@@ -502,13 +502,14 @@ Changes
 - Add ``ajax:overlay`` functionality
   [rnix, 2011-11-30]
 
+- call ``event.stopPropagation`` in ``bdajax._dispatching_handler``.
+  [rnix, 2011-11-23]
 
 1.2.1
 -----
 
 - Use CSS 'min-width' instead of 'width' for messages.
   [rnix, 2011-09-07]
-
 
 1.2
 ---
@@ -527,7 +528,6 @@ Changes
 
 - Add continuation messages.
   [rnix, 2011-04-12]
-
 
 1.1
 ---
@@ -563,14 +563,12 @@ Changes
   conditional resource registration.
   [rnix, 2011-02-07]
 
-
 1.0.2
 -----
 
 - Rebind bdajax global if element is not found by selector after replace
   action.
   [rnix, 2011-01-14]
-
 
 1.0.1
 -----
@@ -581,7 +579,6 @@ Changes
 - Return jquery context by ``jQuery.bdajax``.
   [rnix, 2010-12-13]
 
-
 1.0
 ---
 
@@ -590,7 +587,6 @@ Changes
 
 - Browser testing.
   [rnix, 2010-12-04]
-
 
 1.0b4
 -----
@@ -612,7 +608,6 @@ Changes
 - Mark ``ajax:call`` API deprecated. Will be removed for 1.0 final.
   [rnix, 2010-11-09]
 
-
 1.0b3
 -----
 
@@ -621,7 +616,6 @@ Changes
 
 - Fix bug in bdajax.request when finding url including query params.
   [rnix, 2010-07-01]
-
 
 1.0b2
 -----
@@ -634,7 +628,6 @@ Changes
 
 - Add overlay helper function and corresponding styles.
   [rnix, 2010-05-16]
-
 
 1.0b1
 -----

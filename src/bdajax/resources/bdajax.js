@@ -355,6 +355,7 @@
         
         _dispatching_handler: function(event) {
             event.preventDefault();
+            event.stopPropagation();
             var elem = $(this);
             var options = {
                 elem: elem,

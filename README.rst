@@ -70,6 +70,9 @@ ajax:confirm="Do you really want to do this?"
     Show confirmation dialog before actually executing actions and trigger
     events.
 
+ajax:overlay="actionname"
+    Renders ajax action to overlay. Uses the ``bdajax.overlay`` API.
+
 
 Provide dependencies on server
 ------------------------------
@@ -278,8 +281,24 @@ If ``ajax:confirm`` is set, a modal dialog is displayed before dispatching is
 performed.
 
 
-JavaScript helpers
-==================
+Overlays
+--------
+
+Ajax actions can be rendered to overlay directly by using ``bdajax:overlay``::
+
+    <a href="http://fubar.com/baz?a=a"
+       ajax:bind="click"
+       ajax:target="http://fubar.com/baz?a=a"
+       ajax:overlay="acionname">
+      fubar
+    </a>
+
+This causes bdajax to perform action ``someaction`` on context defined in
+``ajax:target`` and renders the result to an overlay.
+
+
+JavaScript API
+==============
 
 Messages, Infos, Warnings and Errors
 ------------------------------------
@@ -292,8 +311,8 @@ and ``bdajax.error`` decorates message with appropriate icon.::
     bdajax.message('I am an application Message');
 
 
-Overlay helper
---------------
+Overlay
+-------
 
 Load ajax action contents into an overlay.::
 
@@ -351,7 +370,7 @@ This result in::
 XMLHTTPRequest convenience
 --------------------------
 
-``bdajax`` function ``request`` is convenience for XMLHTTPRequests. By default 
+``bdajax.request`` function is convenience for XMLHTTPRequests. By default 
 it sends requests of type ``html`` and displays a ``bdajax.error`` message if 
 request fails.::
 
@@ -395,8 +414,8 @@ Success and error callback functions are wrapped in ``bdajax.request`` to
 consider ajax spinner handling automatically.
 
 
-Perform action manually
------------------------
+Perform action
+--------------
 
 Sometimes actions need to be performed inside JavaScript code. 
 ``bdajax.action`` provides this.::
@@ -428,8 +447,8 @@ Options:
     query params
 
 
-Trigger events manually
------------------------
+Trigger events
+--------------
 
 Sometimes events need to be triggered manually. Since bdajax expects the
 attribute ``ajaxtarget`` on the received event a convenience is provided.::
@@ -477,63 +496,70 @@ Contributors
 Changes
 =======
 
+1.3dev
+------
+
+- Add ``ajax:overlay`` functionality
+  [rnix, 2011-11-30]
+
+
 1.2.1
 -----
 
-- use CSS 'min-width' instead of 'width' for messages
+- Use CSS 'min-width' instead of 'width' for messages.
   [rnix, 2011-09-07]
 
 
 1.2
 ---
 
-- add ``bdajax.fiddle`` function.
+- Add ``bdajax.fiddle`` function.
   [rnix, 2011-04-28]
 
-- delete overlay data from DOM element before reinitializing.
+- Delete overlay data from DOM element before reinitializing.
   [rnix, 2011-04-21]
 
-- add ``ajax:confirm`` functionality.
+- Add ``ajax:confirm`` functionality.
   [rnix, 2011-04-20]
 
-- strip trailing '/' in ``bdajax.parseurl`` to avoid double slashes.
+- Strip trailing '/' in ``bdajax.parseurl`` to avoid double slashes.
   [rnix, 2011-04-19]
 
-- add continuation messages
+- Add continuation messages.
   [rnix, 2011-04-12]
 
 
 1.1
 ---
 
-- set focus on ok button for dialog boxes, so a user can dismiss the button by
+- Set focus on ok button for dialog boxes, so a user can dismiss the button by
   pressing return key.
   [aatiis, 2011-03-25]
 
-- don't define a default error callback twice, just rely on the default handler
+- Don't define a default error callback twice, just rely on the default handler
   prowided by ``bdajax.request``.
   [aatiis, 2011-03-25]
 
-- add default 403 error page redirect.
+- Add default 403 error page redirect.
   [aatiis, 2011-03-25]
 
-- hide spinner after 'Empty response' message.
+- Hide spinner after 'Empty response' message.
   [aatiis, 2011-03-25]
 
-- used ``request.status`` and ``request.statusText`` in default error if they
+- Used ``request.status`` and ``request.statusText`` in default error if they
   are defined.
   [aatiis, 2011-03-25]
 
-- continuation action and event support for ajaxaction.
+- Continuation action and event support for ajaxaction.
   [rnix, 2011-03-21]
 
-- better default error output
+- Better default error output.
   [rnix, 2011-03-13]
 
-- remove ``ajaxerrors`` and ``ajaxerror`` from bdajax.
+- Remove ``ajaxerrors`` and ``ajaxerror`` from bdajax.
   [rnix, 2011-03-13]
 
-- remove bfg.zcml and zope.zcml, switch to pyramid in configure.zcml with
+- Remove bfg.zcml and zope.zcml, switch to pyramid in configure.zcml with
   conditional resource registration.
   [rnix, 2011-02-07]
 
@@ -541,7 +567,7 @@ Changes
 1.0.2
 -----
 
-- rebind bdajax global if element is not found by selector after replace
+- Rebind bdajax global if element is not found by selector after replace
   action.
   [rnix, 2011-01-14]
 
@@ -549,69 +575,69 @@ Changes
 1.0.1
 -----
 
-- add spinner handling
+- Add spinner handling.
   [rnix, 2010-12-13]
 
-- return jquery context by ``jQuery.bdajax``
+- Return jquery context by ``jQuery.bdajax``.
   [rnix, 2010-12-13]
 
 
 1.0
 ---
 
-- remove call behaviour
+- Remove call behaviour.
   [rnix, 2010-12-04]
 
-- browser testing
+- Browser testing.
   [rnix, 2010-12-04]
 
 
 1.0b4
 -----
 
-- add ``configure.zcml`` containing all configuration using
-  ``zcml:condition``
+- Add ``configure.zcml`` containing all configuration using
+  ``zcml:condition``.
   [rnix, 2010-11-16]
 
-- remove overlay data of modal dialog before reloading. otherwise callback
-  options are cached
+- Remove overlay data of modal dialog before reloading. otherwise callback
+  options are cached.
   [rnix, 2010-11-09]
 
-- disable ajax request caching by default in ``bdajax.request``
+- Disable ajax request caching by default in ``bdajax.request``.
   [rnix, 2010-11-09]
 
-- add modal dialog to bdajax
+- Add modal dialog to bdajax.
   [rnix, 2010-11-09]
 
-- mark ``ajax:call`` API deprecated. Will be removed for 1.0 final
+- Mark ``ajax:call`` API deprecated. Will be removed for 1.0 final.
   [rnix, 2010-11-09]
 
 
 1.0b3
 -----
 
-- add class ``allowMultiSubmit`` to fit a plone JS contract.
+- Add class ``allowMultiSubmit`` to fit a plone JS contract.
   [rnix, 2010-07-01]
 
-- fix bug in bdajax.request when finding url including query params.
+- Fix bug in bdajax.request when finding url including query params.
   [rnix, 2010-07-01]
 
 
 1.0b2
 -----
 
-- switch to jQuery tools 1.2.3.
+- Switch to jQuery tools 1.2.3.
   [rnix, 2010-07-01]
 
-- call binders with correct context
+- Call binders with correct context.
   [rnix, 2010-05-16]
 
-- add overlay helper function and corresponding styles
+- Add overlay helper function and corresponding styles.
   [rnix, 2010-05-16]
 
 
 1.0b1
 -----
 
-- make it work
+- Make it work.
   [rnix]

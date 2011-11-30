@@ -23,7 +23,8 @@
                         var ajax = $(this);
                         ajax.unbind(events);
                         if (ajax.attr('ajax:action')
-                         || ajax.attr('ajax:event')) {
+                         || ajax.attr('ajax:event')
+                         || ajax.attr('ajax:overlay')) {
                             ajax.bind(events, bdajax._dispatching_handler);
                         }
                     }

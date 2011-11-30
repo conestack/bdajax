@@ -162,23 +162,8 @@
         },
         
         action: function(options) {
-            options.params['bdajax.action'] = options.name;
-            options.params['bdajax.mode'] = options.mode;
-            options.params['bdajax.selector'] = options.selector;
-            bdajax.request({
-                url: bdajax.parseurl(options.url) + '/ajaxaction',
-                type: 'json',
-                params: options.params,
-                success: function(data) {
-                    if (!data) {
-                        bdajax.error('Empty response');
-                        bdajax.spinner.hide();
-                    } else {
-                        bdajax.fiddle(data.payload, data.selector, data.mode);
-                        bdajax.continuation(data.continuation);
-                    }
-                }
-            });
+            options.success = bdajax._ajax_action_success;
+            bdajax._perform_ajax_action(options);
         },
         
         fiddle: function(payload, selector, mode) {
@@ -256,39 +241,43 @@
         overlay: function(options) {
             var elem = $('#ajax-overlay');
             elem.removeData('overlay');
-            elem.overlay({
-                mask: {
-                    color: '#fff',
-                    loadSpeed: 200
-                },
-                onBeforeLoad: function() {
-                    var url, params;
-                    if (options.target) {
-                        var target = bdajax.parsetarget(options.target);
-                        url = target.url;
-                        params = target.params;
-                    } else {
-                        url = options.url;
-                        params = options.params;
+            var url, params;
+            if (options.target) {
+                var target = bdajax.parsetarget(options.target);
+                url = target.url;
+                params = target.params;
+            } else {
+                url = options.url;
+                params = options.params;
+            }
+            bdajax._perform_ajax_action({
+                name: options.action,
+                selector: '#ajax-overlay-content',
+                mode: 'inner',
+                url: url,
+                params: params,
+                success: function(data) {
+                    bdajax._ajax_action_success(data);
+                    // overlays are not displayed if no payload is received.
+                    if (!data.payload) {
+                        return;
                     }
-                    bdajax.action({
-                        name: options.action,
-                        selector: '#ajax-overlay-content',
-                        mode: 'inner',
-                        url: url,
-                        params: params
+                    elem.overlay({
+                        mask: {
+                            color: '#fff',
+                            loadSpeed: 200
+                        },
+                        onClose: function() {
+                            var overlay = this.getOverlay();
+                            $('#ajax-overlay-content', overlay).html('');
+                        },
+                        oneInstance: false,
+                        closeOnClick: true
                     });
-                },
-                onClose: function() {
-                    var overlay = this.getOverlay();
-                    $('#ajax-overlay-content', overlay).html('');
-                },
-                oneInstance: false,
-                closeOnClick: true
+                    var overlay = elem.data('overlay');
+                    overlay.load();
+                }
             });
-            var overlay = elem.data('overlay');
-            overlay.load();
-            return overlay;
         },
         
         message: function(message) {
@@ -401,6 +390,28 @@
                 def = def.split(':');
                 bdajax.trigger(def[0], def[1], target);
             }
+        },
+        
+        _ajax_action_success: function(data) {
+            if (!data) {
+                bdajax.error('Empty response');
+                bdajax.spinner.hide();
+            } else {
+                bdajax.fiddle(data.payload, data.selector, data.mode);
+                bdajax.continuation(data.continuation);
+            }
+        },
+        
+        _perform_ajax_action: function(options) {
+            options.params['bdajax.action'] = options.name;
+            options.params['bdajax.mode'] = options.mode;
+            options.params['bdajax.selector'] = options.selector;
+            bdajax.request({
+                url: bdajax.parseurl(options.url) + '/ajaxaction',
+                type: 'json',
+                params: options.params,
+                success: options.success
+            });
         },
         
         _handle_ajax_action: function(elem, event) {

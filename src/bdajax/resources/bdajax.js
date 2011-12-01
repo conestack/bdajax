@@ -272,7 +272,8 @@
                             $('#ajax-overlay-content', overlay).html('');
                         },
                         oneInstance: false,
-                        closeOnClick: true
+                        closeOnClick: true,
+                        fixed: false
                     });
                     var overlay = elem.data('overlay');
                     overlay.load();

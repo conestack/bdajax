@@ -503,10 +503,16 @@ Changes
 1.3dev
 ------
 
-- Add ``ajax:overlay`` functionality
+- All overlays not positional fixed for now.
+  [rnix, 2011-12-02]
+
+- jQuery 1.6.4 and jQuery Tools 1.2.6.
+  [rnix, 2011-12-01]
+
+- Add ``ajax:overlay`` functionality.
   [rnix, 2011-11-30]
 
-- call ``event.stopPropagation`` in ``bdajax._dispatching_handler``.
+- Call ``event.stopPropagation`` in ``bdajax._dispatching_handler``.
   [rnix, 2011-11-23]
 
 1.2.1

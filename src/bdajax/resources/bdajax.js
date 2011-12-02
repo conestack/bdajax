@@ -302,6 +302,7 @@
                 },
                 oneInstance: false,
                 closeOnClick: false,
+                fixed: false,
                 top:'20%'
             });
             elem.data('overlay').load();
@@ -348,6 +349,7 @@
                 },
                 oneInstance: false,
                 closeOnClick: false,
+                fixed: false,
                 top:'20%'
             });
             elem.data('overlay').load();

@@ -500,8 +500,8 @@ Contributors
 Changes
 =======
 
-1.3dev
-------
+1.3
+---
 
 - All overlays not positional fixed for now.
   [rnix, 2011-12-02]

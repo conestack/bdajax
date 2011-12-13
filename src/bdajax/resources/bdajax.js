@@ -1,5 +1,5 @@
 /* 
- * bdajax v1.3dev
+ * bdajax v1.3
  * 
  * Requires:
  * - jQuery 1.6.4

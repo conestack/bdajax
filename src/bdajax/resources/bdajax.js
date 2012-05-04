@@ -259,7 +259,7 @@
             }
             this._perform_ajax_action({
                 name: options.action,
-                selector: '#ajax-overlay-content',
+                selector: selector,
                 mode: 'inner',
                 url: url,
                 params: params,
@@ -275,8 +275,7 @@
                             loadSpeed: 200
                         },
                         onClose: function() {
-                            var overlay = this.getOverlay();
-                            $('#ajax-overlay-content', overlay).html('');
+                            this.getOverlay().html('');
                         },
                         oneInstance: false,
                         closeOnClick: true,
@@ -470,12 +469,24 @@
             } else {
                 target = this.parsetarget(elem.attr('ajax:target'));
             }
-            var actionname = elem.attr('ajax:overlay');
-            this.overlay({
-                action: actionname,
-                url: target.url,
-                params: target.params
-            });
+            var overlay_attr = elem.attr('ajax:overlay');
+            if (overlay_attr.indexOf(':') > -1) {
+                var defs = overlay_attr.split(':');
+                var action = defs[0];
+                var selector = defs[1];
+                this.overlay({
+                    action: defs[0],
+                    selector: defs[1],
+                    url: target.url,
+                    params: target.params
+                });
+            } else {
+                this.overlay({
+                    action: overlay_attr,
+                    url: target.url,
+                    params: target.params
+                });
+            }
         },
         
         _defs_to_array: function(str) {

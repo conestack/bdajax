@@ -2,10 +2,6 @@
   <img src="/++resource++bdajax/spinner.gif" alt="" />
 </div>
 
-<div class="ajax-overlay" id="ajax-overlay">
-  <div id="ajax-overlay-content"></div>
-</div>
-
 <div class="ajax-message" id="ajax-message">
   <div class="message">Message</div>
   <button class="close allowMultiSubmit">OK</button>
@@ -19,6 +15,10 @@
       <button class="cancel allowMultiSubmit">Cancel</button> 
     </div>
 </div>
+
+<div class="ajax-overlay" id="ajax-form"></div>
+
+<div class="ajax-overlay" id="ajax-overlay"></div>
 
 <iframe id="ajaxformresponse"
         name="ajaxformresponse"

@@ -70,8 +70,9 @@ ajax:confirm="Do you really want to do this?"
     Show confirmation dialog before actually executing actions and trigger
     events.
 
-ajax:overlay="actionname"
-    Renders ajax action to overlay. Uses the ``bdajax.overlay`` API.
+ajax:overlay="actionname:selector"
+    Renders ajax action to overlay with selector. The selector is optional and
+    defaults to ``#ajax-overlay``. Uses the ``bdajax.overlay`` API.
 
 
 Provide dependencies on server
@@ -294,7 +295,17 @@ Ajax actions can be rendered to overlay directly by using ``bdajax:overlay``::
     </a>
 
 This causes bdajax to perform action ``someaction`` on context defined in
-``ajax:target`` and renders the result to an overlay.
+``ajax:target`` and renders the result to an overlay element.
+
+In addition a selector for the overlay can be defined. This is useful if
+someone needs to display multiple overlays::
+
+    <a href="http://fubar.com/baz?a=a"
+       ajax:bind="click"
+       ajax:target="http://fubar.com/baz?a=a"
+       ajax:overlay="acionname:#custom-overlay">
+      fubar
+    </a>
 
 
 JavaScript API
@@ -536,6 +547,9 @@ Changes
 
 1.4dev
 ------
+
+- Extend ``ajax:overlay`` to accept an optional selector.
+  [rnix, 2012-05-04]
 
 - Add AJAX form support.
   [rnix, 2012-05-04]

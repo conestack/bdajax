@@ -329,8 +329,11 @@ Load ajax action contents into an overlay.::
 
     var overlay_api = bdajax.overlay({
         action: 'actionname',
-        target: 'http://foobar.org?param=value'
+        target: 'http://foobar.org?param=value',
+        selector: '#ajax-overlay'
     });
+
+Selector is optional and defaults to ``#ajax-overlay``.
 
 Optionally to ``target``, ``url`` and ``params`` can be given as options to
 the function. If both, ``target`` and ``url/params`` are given,

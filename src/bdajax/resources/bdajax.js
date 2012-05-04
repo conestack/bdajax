@@ -423,13 +423,13 @@
             var elem = options.elem;
             var event = options.event;
             if (elem.attr('ajax:action')) {
-                this._handle_ajax_action(elem, event);
+                bdajax._handle_ajax_action(elem, event);
             }
             if (elem.attr('ajax:event')) {
-                this._handle_ajax_event(elem);
+                bdajax._handle_ajax_event(elem);
             }
             if (elem.attr('ajax:overlay')) {
-                this._handle_ajax_overlay(elem, event);
+                bdajax._handle_ajax_overlay(elem, event);
             }
         },
         

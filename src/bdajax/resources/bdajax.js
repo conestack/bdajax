@@ -58,29 +58,29 @@
             _request_count: 0,
             
             elem: function() {
-                if (bdajax.spinner._elem == null) {
-                    bdajax.spinner._elem = $('#ajax-spinner');
+                if (this._elem == null) {
+                    this._elem = $('#ajax-spinner');
                 }
-                return bdajax.spinner._elem;
+                return this._elem;
             },
             
             show: function() {
-                bdajax.spinner._request_count++;
-                if (bdajax.spinner._request_count > 1) {
+                this._request_count++;
+                if (this._request_count > 1) {
                     return;
                 }
-                bdajax.spinner.elem().show();
+                this.elem().show();
             },
             
             hide: function(force) {
-                bdajax.spinner._request_count--;
+                this._request_count--;
                 if (force) {
-                    bdajax.spinner._request_count = 0;
-                    bdajax.spinner.elem().hide();
+                    this._request_count = 0;
+                    this.elem().hide();
                     return;
-                } else if (bdajax.spinner._request_count <= 0) {
-                    bdajax.spinner._request_count = 0;
-                    bdajax.spinner.elem().hide();
+                } else if (this._request_count <= 0) {
+                    this._request_count = 0;
+                    this.elem().hide();
                 }
             }
         },
@@ -110,8 +110,8 @@
         },
         
         parsetarget: function(target) {
-            var url = bdajax.parseurl(target);
-            var params = bdajax.parsequery(target);
+            var url = this.parseurl(target);
+            var params = this.parsequery(target);
             if (!params) { params = {}; }
             return {
                 url: url,
@@ -122,8 +122,8 @@
         request: function(options) {
             if (options.url.indexOf('?') != -1) {
                 var addparams = options.params;
-                options.params = bdajax.parsequery(options.url);
-                options.url = bdajax.parseurl(options.url);
+                options.params = this.parsequery(options.url);
+                options.url = this.parseurl(options.url);
                 for (var key in addparams) {
                     options.params[key] = addparams[key];
                 }
@@ -153,7 +153,7 @@
                               request.statusText || error);
                 bdajax.spinner.hide(true);
             }
-            bdajax.spinner.show();
+            this.spinner.show();
             $.ajax({
                 url: options.url,
                 dataType: options.type,
@@ -165,8 +165,8 @@
         },
         
         action: function(options) {
-            options.success = bdajax._ajax_action_success;
-            bdajax._perform_ajax_action(options);
+            options.success = this._ajax_action_success;
+            this._perform_ajax_action(options);
         },
         
         fiddle: function(payload, selector, mode) {
@@ -188,13 +188,13 @@
             if (!definitions) {
                 return;
             }
-            bdajax.spinner.hide();
+            this.spinner.hide();
             var definition, target;
             for (var idx in definitions) {
                 definition = definitions[idx];
                 if (definition.type == 'action') {
-                    target = bdajax.parsetarget(definition.target);
-                    bdajax.action({
+                    target = this.parsetarget(definition.target);
+                    this.action({
                         url: target.url,
                         params: target.params,
                         name: definition.name,
@@ -202,9 +202,9 @@
                         selector: definition.selector
                     });
                 } else if (definition.type == 'event') {
-                    bdajax.trigger(definition.name,
-                                   definition.selector,
-                                   definition.target);
+                    this.trigger(definition.name,
+                                 definition.selector,
+                                 definition.target);
                 } else if (definition.type == 'message') {
                     if (definition.flavor) {
                         var flavors = ['message', 'info', 'warning', 'error'];
@@ -213,16 +213,16 @@
                         }
                         switch (definition.flavor) {
                             case 'message':
-                                bdajax.message(definition.payload);
+                                this.message(definition.payload);
                                 break;
                             case 'info':
-                                bdajax.info(definition.payload);
+                                this.info(definition.payload);
                                 break;
                             case 'warning':
-                                bdajax.warning(definition.payload);
+                                this.warning(definition.payload);
                                 break;
                             case 'error':
-                                bdajax.error(definition.payload);
+                                this.error(definition.payload);
                                 break;
                         }
                     } else {
@@ -237,7 +237,7 @@
         
         trigger: function(name, selector, target) {
             var evt = $.Event(name);
-            evt.ajaxtarget = bdajax.parsetarget(target);
+            evt.ajaxtarget = this.parsetarget(target);
             $(selector).trigger(evt);
         },
         
@@ -250,14 +250,14 @@
             elem.removeData('overlay');
             var url, params;
             if (options.target) {
-                var target = bdajax.parsetarget(options.target);
+                var target = this.parsetarget(options.target);
                 url = target.url;
                 params = target.params;
             } else {
                 url = options.url;
                 params = options.params;
             }
-            bdajax._perform_ajax_action({
+            this._perform_ajax_action({
                 name: options.action,
                 selector: '#ajax-overlay-content',
                 mode: 'inner',
@@ -318,19 +318,19 @@
         error: function(message) {
             $("#ajax-message .message").removeClass('error warning info')
                                        .addClass('error');
-            bdajax.message(message);
+            this.message(message);
         },
         
         info: function(message) {
             $("#ajax-message .message").removeClass('error warning info')
                                        .addClass('info');
-            bdajax.message(message);
+            this.message(message);
         },
         
         warning: function(message) {
             $("#ajax-message .message").removeClass('error warning info')
                                        .addClass('warning');
-            bdajax.message(message);
+            this.message(message);
         },
         
         dialog: function(options, callback) {
@@ -401,23 +401,23 @@
             var elem = options.elem;
             var event = options.event;
             if (elem.attr('ajax:action')) {
-                bdajax._handle_ajax_action(elem, event);
+                this._handle_ajax_action(elem, event);
             }
             if (elem.attr('ajax:event')) {
-                bdajax._handle_ajax_event(elem);
+                this._handle_ajax_event(elem);
             }
             if (elem.attr('ajax:overlay')) {
-                bdajax._handle_ajax_overlay(elem, event);
+                this._handle_ajax_overlay(elem, event);
             }
         },
         
         _handle_ajax_event: function(elem) {
             var target = elem.attr('ajax:target');
-            var defs = bdajax._defs_to_array(elem.attr('ajax:event'));
+            var defs = this._defs_to_array(elem.attr('ajax:event'));
             for (var i = 0; i < defs.length; i++) {
                 var def = defs[i];
                 def = def.split(':');
-                bdajax.trigger(def[0], def[1], target);
+                this.trigger(def[0], def[1], target);
             }
         },
         
@@ -435,7 +435,7 @@
             options.params['bdajax.action'] = options.name;
             options.params['bdajax.mode'] = options.mode;
             options.params['bdajax.selector'] = options.selector;
-            bdajax.request({
+            this.request({
                 url: bdajax.parseurl(options.url) + '/ajaxaction',
                 type: 'json',
                 params: options.params,
@@ -448,12 +448,12 @@
             if (event.ajaxtarget) {
                 target = event.ajaxtarget;
             } else {
-                target = bdajax.parsetarget(elem.attr('ajax:target'));
+                target = this.parsetarget(elem.attr('ajax:target'));
             }
-            var actions = bdajax._defs_to_array(elem.attr('ajax:action'));
+            var actions = this._defs_to_array(elem.attr('ajax:action'));
             for (var i = 0; i < actions.length; i++) {
                 var defs = actions[i].split(':');
-                bdajax.action({
+                this.action({
                     name: defs[0],
                     selector: defs[1],
                     mode: defs[2],
@@ -468,10 +468,10 @@
             if (event.ajaxtarget) {
                 target = event.ajaxtarget;
             } else {
-                target = bdajax.parsetarget(elem.attr('ajax:target'));
+                target = this.parsetarget(elem.attr('ajax:target'));
             }
             var actionname = elem.attr('ajax:overlay');
-            bdajax.overlay({
+            this.overlay({
                 action: actionname,
                 url: target.url,
                 params: target.params

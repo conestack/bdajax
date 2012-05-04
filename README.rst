@@ -178,8 +178,10 @@ response in the format as follows.::
     }
 
 The ``continuation`` value is an array of actions and/or events which should
-be performed after performed ajaxaction returns. Continuation definitions
-must have this format::
+be performed after performed ajaxaction returns. Available continuation
+definitions are described below.
+
+**actions**::
 
     {
         'type': 'action',
@@ -189,7 +191,7 @@ must have this format::
         'selector': '.foo',
     }
 
-... for continuation actions, and::
+**events**::
 
     {
         'type': 'event',
@@ -198,7 +200,20 @@ must have this format::
         'selector': '.foo',
     }
 
-... for continuation events, and::
+**overlay**::
+
+    {
+        'type': 'overlay',
+        'selector': '#ajax-overlay',
+        'action': 'actionname',
+        'target': 'http://example.com',
+        'close': false,
+    }
+
+Setting close to ``true`` closes overlay at ``selector``. In this case
+``action`` and target are ignored.
+
+**messages**::
 
     {
         'type': 'message',
@@ -207,7 +222,7 @@ must have this format::
         'selector': null,
     }
 
-... for continuation messages. Either ``flavor`` or ``selector`` must be given.
+Either ``flavor`` or ``selector`` must be given.
 Flavor could be one of 'message', 'info', 'warning', 'error' and map to the
 corresponding bdajax UI helper functions. Selector indicates to hook returned
 payload at a custom location in DOM tree instead of displaying a message. In
@@ -550,6 +565,9 @@ Changes
 
 1.4dev
 ------
+
+- Add ``overlay`` continuation support.
+  [rnix, 2012-05-04]
 
 - Extend ``ajax:overlay`` to accept an optional selector.
   [rnix, 2012-05-04]

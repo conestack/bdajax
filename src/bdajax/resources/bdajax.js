@@ -205,6 +205,22 @@
                     this.trigger(definition.name,
                                  definition.selector,
                                  definition.target);
+                } else if (definition.type == 'overlay') {
+                    if (definition.close) {
+                        var elem = $(definition.selector);
+                        var overlay = elem.data('overlay');
+                        if (overlay) {
+                            overlay.close();
+                        }
+                    } else {
+                        var target = this.parsetarget(definition.target);
+                        this.overlay({
+                            action: definition.action,
+                            selector: definition.selector,
+                            url: target.url,
+                            params: target.params
+                        });
+                    }
                 } else if (definition.type == 'message') {
                     if (definition.flavor) {
                         var flavors = ['message', 'info', 'warning', 'error'];

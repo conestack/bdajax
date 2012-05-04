@@ -217,6 +217,7 @@
                         this.overlay({
                             action: definition.action,
                             selector: definition.selector,
+                            content_selector: definition.content_selector,
                             url: target.url,
                             params: target.params
                         });
@@ -262,6 +263,10 @@
             if (options.selector) {
                 selector = options.selector;
             }
+            var content_selector = '.overlay_content';
+            if (options.content_selector) {
+                content_selector = options.content_selector;
+            }
             var elem = $(selector);
             elem.removeData('overlay');
             var url, params;
@@ -275,7 +280,7 @@
             }
             this._perform_ajax_action({
                 name: options.action,
-                selector: selector,
+                selector: selector + ' ' + content_selector,
                 mode: 'inner',
                 url: url,
                 params: params,
@@ -291,7 +296,9 @@
                             loadSpeed: 200
                         },
                         onClose: function() {
-                            this.getOverlay().html('');
+                            var content = $(content_selector,
+                                            this.getOverlay());
+                            content.html('');
                         },
                         oneInstance: false,
                         closeOnClick: true,
@@ -488,14 +495,16 @@
             var overlay_attr = elem.attr('ajax:overlay');
             if (overlay_attr.indexOf(':') > -1) {
                 var defs = overlay_attr.split(':');
-                var action = defs[0];
-                var selector = defs[1];
-                this.overlay({
+                var options = {
                     action: defs[0],
                     selector: defs[1],
                     url: target.url,
                     params: target.params
-                });
+                };
+                if (defs.length == 3) {
+                    options.content_selector = defs[2];
+                }
+                this.overlay(options);
             } else {
                 this.overlay({
                     action: overlay_attr,

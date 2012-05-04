@@ -70,9 +70,10 @@ ajax:confirm="Do you really want to do this?"
     Show confirmation dialog before actually executing actions and trigger
     events.
 
-ajax:overlay="actionname:selector"
-    Renders ajax action to overlay with selector. The selector is optional and
-    defaults to ``#ajax-overlay``. Uses the ``bdajax.overlay`` API.
+ajax:overlay="actionname:selector:content_selector"
+    Renders ajax action to overlay with selector. ``selector`` is optional and
+    defaults to ``#ajax-overlay``. ``content_selector`` is optional to 
+    ``selector`` and defaults to ``.overlay_content``.
 
 
 Provide dependencies on server
@@ -209,10 +210,15 @@ definitions are described below.
     {
         'type': 'overlay',
         'selector': '#ajax-overlay',
+        'content_selector': '.overlay_content',
         'action': 'actionname',
         'target': 'http://example.com',
         'close': false,
     }
+
+Overlays dynamically get a close button. In order to keep overlay contents
+easily alterable inside the overlay element an element exists acting as overlay
+content container. ``content_selector`` defines the selector of this container.
 
 Setting close to ``true`` closes overlay at ``selector``. In this case
 ``action`` and target are ignored.
@@ -334,6 +340,16 @@ someone needs to display multiple overlays::
       fubar
     </a>
 
+Optional to a custom overlay selector a content container selector can be
+defined::
+
+    <a href="http://fubar.com/baz?a=a"
+       ajax:bind="click"
+       ajax:target="http://fubar.com/baz?a=a"
+       ajax:overlay="acionname:#custom-overlay:.custom_overlay_content">
+      fubar
+    </a>
+
 
 JavaScript API
 ==============
@@ -357,10 +373,13 @@ Load ajax action contents into an overlay.::
     var overlay_api = bdajax.overlay({
         action: 'actionname',
         target: 'http://foobar.org?param=value',
-        selector: '#ajax-overlay'
+        selector: '#ajax-overlay',
+        content_selector: '.overlay_ontent'
     });
 
-Selector is optional and defaults to ``#ajax-overlay``.
+``selector`` is optional and defaults to ``#ajax-overlay``.
+``content_selector`` is optional to ``selector`` and defaults to
+``overlay_ontent``.
 
 Optionally to ``target``, ``url`` and ``params`` can be given as options to
 the function. If both, ``target`` and ``url/params`` are given,
@@ -581,7 +600,7 @@ Changes
 - Add ``overlay`` continuation support.
   [rnix, 2012-05-04]
 
-- Extend ``ajax:overlay`` to accept an optional selector.
+- Extend ``ajax:overlay`` to accept an optional overlay and content selector.
   [rnix, 2012-05-04]
 
 - Add AJAX form support.

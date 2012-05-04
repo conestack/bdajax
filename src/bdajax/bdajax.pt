@@ -19,3 +19,9 @@
       <button class="cancel allowMultiSubmit">Cancel</button> 
     </div>
 </div>
+
+<iframe id="ajaxformresponse"
+        name="ajaxformresponse"
+        src="#"
+        style="width:0px;height:0px;display:none">
+</iframe>

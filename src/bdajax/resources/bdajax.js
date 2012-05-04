@@ -1,5 +1,5 @@
 /* 
- * bdajax v1.3
+ * bdajax v1.4
  * 
  * Requires:
  * - jQuery 1.6.4
@@ -33,6 +33,9 @@
                 }
             }
         });
+        // XXX: probably ajax forms get a separate ``ajax:form`` directive
+        //      in markup.
+        bdajax.bind_ajax_form(context);
         for (var binder in bdajax.binders) {
             bdajax.binders[binder](context);
         }
@@ -45,7 +48,7 @@
         // That we assume at '/login'.
         default_403: '/login',
         
-        // object for 3rd party binders
+        // object for hooking up JS binding functions after ajax calls
         binders: {},
         
         // ajax spinner handling
@@ -239,7 +242,11 @@
         },
         
         overlay: function(options) {
-            var elem = $('#ajax-overlay');
+            var selector = '#ajax-overlay';
+            if (options.selector) {
+                selector = options.selector;
+            }
+            var elem = $(selector);
             elem.removeData('overlay');
             var url, params;
             if (options.target) {
@@ -353,6 +360,25 @@
                 top:'20%'
             });
             elem.data('overlay').load();
+        },
+        
+        // bind ajax form handling to all forms providing ajax css class
+        bind_ajax_form: function(context) {
+            var ajaxform = $('form.ajax', context);
+            ajaxform.append('<input type="hidden" name="ajax" value="1" />');
+            ajaxform.attr('target', 'ajaxformresponse');
+            ajaxform.unbind().bind('submit', function(event) {
+                bdajax.spinner.show();
+            });
+        },
+        
+        // called by iframe response, renders form (i.e. if validation errors)
+        render_ajax_form: function(payload, selector, mode) {
+            if (!payload) {
+                return;
+            }
+            this.spinner.hide();
+            this.fiddle(payload, selector, mode);
         },
         
         _dispatching_handler: function(event) {

@@ -461,6 +461,40 @@ attribute ``ajaxtarget`` on the received event a convenience is provided.::
     bdajax.trigger('contextchanged', '.contextsensitiv', url)
 
 
+AJAX Forms
+----------
+
+To process ajax forms, a hidden iframe is used where the form gets triggered to.
+The form must be marked with CSS class ``ajax`` in order to be handled by
+bdajax. The server side must return a response like so::
+
+    <div id="ajaxform">
+        <form class="ajax"
+              method="post"
+              action="http://example.com/myformaction"
+              enctype="multipart/form-data">
+          ...
+        </form>
+    </div>
+    <script language="javascript" type="text/javascript">
+        var container = document.getElementById('ajaxform');
+        var child = container.firstChild;
+        while(child != null && child.nodeType == 3) {
+            child = child.nextSibling;
+        }
+        parent.bdajax.render_ajax_form(child, '#form_selector', 'fiddle_mode');
+        parent.bdajax.continuation({});
+    </script>
+
+If ``div`` with id ``ajaxform`` contains markup, it gets rendered to
+``#form_selector`` with ``fiddle_mode``. This makes it possible to rerender
+forms on validation error or display a success page or similar. Further
+bdajax continuation definitions can be given to ``parent.bdajax.continuation``.
+
+Again, bdajax does not provide any server side implementation, it's up to you
+providing this.
+
+
 3rd Party Javascript
 --------------------
 
@@ -499,6 +533,12 @@ Contributors
 
 Changes
 =======
+
+1.4dev
+------
+
+- Add AJAX form support.
+  [rnix, 2012-05-04]
 
 1.3
 ---

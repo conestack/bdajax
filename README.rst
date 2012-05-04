@@ -177,6 +177,10 @@ response in the format as follows.::
         continuation: [{}],        // continuation actions, events and messages
     }
 
+
+Action Continuation
+~~~~~~~~~~~~~~~~~~~
+
 The ``continuation`` value is an array of actions and/or events which should
 be performed after performed ajaxaction returns. Available continuation
 definitions are described below.
@@ -233,6 +237,10 @@ If both ``flavor`` and ``selector`` are set, ``selector`` is ignored.
 Be aware that you can provoke infinite loops with continuation actions and
 events, use this feature sparingly.
 
+
+Trigger actions directly
+~~~~~~~~~~~~~~~~~~~~~~~~
+
 Bind an action which is triggered directly.::
 
     <a href="http://fubar.com/baz?a=a"
@@ -245,6 +253,10 @@ Bind an action which is triggered directly.::
 On click the DOM element with id ``fubar`` will be replaced by the results of 
 action ``renderfubar``. Request context and request params are taken from 
 ``ajax:target`` definition.
+
+
+Trigger actions as event listener
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Bind an action acting as event listener. See section 'Trigger events'.
 A triggered event indicates change of context on target with params. 

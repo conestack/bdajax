@@ -1,7 +1,3 @@
-.. toctree::
-   :maxdepth: 2
-
-
 bdajax
 ======
 
@@ -24,6 +20,9 @@ This package bundles required resources for the use of bdajax inside a
 required server implementations. bdajax can be used with other Python or 
 non-Python server backends too as long as action performing code is implemented
 and available through browser URL.
+
+.. contents::
+    :depth: 2
 
 
 Dispatching

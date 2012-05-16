@@ -13,7 +13,7 @@ The dispatcher basically provides two behaviors:
 
 - perform actions
 
-Each behavior is bound to a JavaScript event. 
+Behaviors are bound to JavaScript events. 
 
 This package bundles required resources for the use of bdajax inside a
 ``pyramid`` or ``zope`` application. It does NOT include the

@@ -600,6 +600,9 @@ Changes
 1.4dev
 ------
 
+- Nicer spinner image.
+  [rnix, 2012-05-21]
+
 - Add ``overlay`` continuation support.
   [rnix, 2012-05-04]
 

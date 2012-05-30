@@ -577,7 +577,7 @@ Browsers
 
 bdajax is tested with:
 
-    - Firefox 3.5, 3.6
+    - Firefox 3.5, 3.6 and up
     
     - IE 7, 8
     
@@ -597,8 +597,8 @@ Contributors
 Changes
 =======
 
-1.4dev
-------
+1.4
+---
 
 - Nicer spinner image.
   [rnix, 2012-05-21]

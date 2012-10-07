@@ -48,20 +48,20 @@ Attributes
 
 Following attributes are available:
 
-ajax:bind="evt1 evt2"
+**ajax:bind="evt1 evt2"**
     Indicate bdajax behavior on DOM element and the event(s) triggering
     it/them.
 
-ajax:event="evt1:sel1 evt2:sel2"
+**ajax:event="evt1:sel1 evt2:sel2"**
     Trigger event(s) on selector. The triggered event gets the target
     as additional parameter on event.ajaxtarget.
   
-ajax:action="name1:selector1:mode1 name2:selector2:mode2"
+**ajax:action="name1:selector1:mode1 name2:selector2:mode2"**
     Perform AJAX action(s) on selector with mode. Selector points to target
     DOM element, mode defines how to modify the DOM tree. Possible
     mode values are ``inner`` and ``replace``.
   
-ajax:target="http://fubar.org?param=value"
+**ajax:target="http://fubar.org?param=value"**
     AJAX target definition. Consists out of target context URL and a
     query string used for requests on the target context.
     ``ajax:target`` is mandatory when ``ajax:event`` is defined, and
@@ -69,11 +69,11 @@ ajax:target="http://fubar.org?param=value"
     by bdajax or browser event). See below to get a clue what i am
     talking about.
 
-ajax:confirm="Do you really want to do this?"
+**ajax:confirm="Do you really want to do this?"**
     Show confirmation dialog before actually executing actions and trigger
     events.
 
-ajax:overlay="actionname:selector:content_selector"
+**ajax:overlay="actionname:selector:content_selector"**
     Renders ajax action to overlay with selector. ``selector`` is optional and
     defaults to ``#ajax-overlay``. ``content_selector`` is optional to 
     ``selector`` and defaults to ``.overlay_content``.
@@ -121,7 +121,7 @@ this namespace in the XHTML document::
 Event binding
 -------------
 
-Indicate bdajax behavior on DOM element.::
+Indicate bdajax behavior on DOM element::
 
     <a href="http://fubar.com"
        ajax:bind="keydown click">
@@ -159,15 +159,15 @@ bdajax expects a resource (i.e a zope/pyramid view or some script) named
 ``ajaxaction`` on server. Resource is called on target url with target query 
 parameters. Three additional arguments are passed:
 
-bdajax.action
+**bdajax.action**
     name of the action
 
-bdajax.selector
+**bdajax.selector**
     given selector must be added to response. could be ``NONE``, which means
     that no Markup is hooked after action (useful i.e. in combination with
     continuation actions and events).
 
-bdajax.mode
+**bdajax.mode**
     the manipulation mode. Either ``inner`` or ``replace`` or ``NONE``
     (see above).
 
@@ -357,6 +357,7 @@ defined::
 JavaScript API
 ==============
 
+
 Messages, Infos, Warnings and Errors
 ------------------------------------
 
@@ -462,19 +463,19 @@ params object, latter one rules.
 
 Options:
 
-``success``
+**success**
     Callback if request is successful.
 
-``url``
+**url**
     Request url as string.
 
-``params`` (optional)
+**params** (optional)
     Query parameters for request as Object. 
 
-``type`` (optional)
+**type** (optional)
     ``xml``, ``json``, ``script``, or ``html``.
 
-``error`` (optional)
+**error** (optional)
     Callback if request fails.
 
 Success and error callback functions are wrapped in ``bdajax.request`` to
@@ -498,19 +499,19 @@ Sometimes actions need to be performed inside JavaScript code.
 
 Options:
 
-``name``
+**name**
     Action name
     
-``selector``
+**selector**
     result selector
     
-``mode``
+**mode**
     action mode
     
-``url``
+**url**
     target url
     
-``params``
+**params**
     query params
 
 
@@ -762,3 +763,4 @@ Changes
 
 - Make it work.
   [rnix]
+

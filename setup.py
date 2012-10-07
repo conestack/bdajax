@@ -11,7 +11,6 @@ setup(name='bdajax',
       description=shortdesc,
       long_description=longdesc,
       classifiers=[
-            'Development Status :: 5 - Production/Stable',
             'Environment :: Web Environment',
             'Operating System :: OS Independent',
             'Programming Language :: JavaScript', 

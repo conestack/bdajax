@@ -1,9 +1,7 @@
-bdajax
-======
+Overview
+========
 
-AJAX convenience.
-
-bdajax provides JavaScript helper functions and a simple dispatcher system 
+``bdajax`` provides JavaScript helper functions and a simple dispatcher system 
 driven by XML-attributes. Attributes are defined in its own XML namespace, 
 placed in the XHTML markup.
 
@@ -84,7 +82,7 @@ Provide dependencies on server
 
 This package already includes resource configuration for ``Zope`` and
 ``pyramid``. This is done by ZCML. Include the following ZCML include statement
-to your ZCML configuration.::
+to your ZCML configuration::
 
     <include package="bdajax" />
 
@@ -407,7 +405,7 @@ in options.::
 URL Operations
 --------------
 
-Parse hyperlinks for base URL or request parameters.::
+Parse hyperlinks for base URL or request parameters::
 
     bdajax.parseurl('http://fubar.org?param=value');
 
@@ -440,7 +438,7 @@ XMLHTTPRequest convenience
 
 ``bdajax.request`` function is convenience for XMLHTTPRequests. By default 
 it sends requests of type ``html`` and displays a ``bdajax.error`` message if 
-request fails.::
+request fails::
 
     bdajax.request({
         success: function(data) {
@@ -469,13 +467,13 @@ Options:
 **url**
     Request url as string.
 
-**params** (optional)
+**params (optional)**
     Query parameters for request as Object. 
 
-**type** (optional)
+**type (optional)**
     ``xml``, ``json``, ``script``, or ``html``.
 
-**error** (optional)
+**error (optional)**
     Callback if request fails.
 
 Success and error callback functions are wrapped in ``bdajax.request`` to
@@ -486,7 +484,7 @@ Perform action
 --------------
 
 Sometimes actions need to be performed inside JavaScript code. 
-``bdajax.action`` provides this.::
+``bdajax.action`` provides this::
 
     var target = bdajax.parsetarget('http://fubar.org?param=value');
     bdajax.action({
@@ -519,7 +517,7 @@ Trigger events
 --------------
 
 Sometimes events need to be triggered manually. Since bdajax expects the
-attribute ``ajaxtarget`` on the received event a convenience is provided.::
+attribute ``ajaxtarget`` on the received event a convenience is provided::
 
     var url = 'http://fubar.org?param=value';
     bdajax.trigger('contextchanged', '.contextsensitiv', url)

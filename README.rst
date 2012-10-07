@@ -597,8 +597,8 @@ Contributors
 Changes
 =======
 
-1.4.1.dev
----------
+1.4.1
+-----
 
 - Explicit render "about:blank" in hidden form response iframe src.
   [rnix, 2012-08-06]

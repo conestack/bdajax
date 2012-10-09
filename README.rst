@@ -576,21 +576,17 @@ Browsers
 
 bdajax is tested with:
 
-    - Firefox 3.5, 3.6 and up
-    
-    - IE 7, 8
-    
-    - Chome 7
-    
-    - Safari 5
+- Firefox 3.5, 3.6 and up
+- IE 7, 8
+- Chome 7
+- Safari 5
 
 
 Contributors
 ============
 
-    - Robert Niederreiter
-    
-    - Attila Oláh
+- Robert Niederreiter
+- Attila Oláh
 
 
 Changes
@@ -599,7 +595,7 @@ Changes
 1.4.1
 -----
 
-- Explicit render "about:blank" in hidden form response iframe src.
+- Explicit render ``about:blank`` in hidden form response iframe src.
   [rnix, 2012-08-06]
 
 1.4

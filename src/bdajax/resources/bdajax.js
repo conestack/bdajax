@@ -254,7 +254,11 @@
         
         trigger: function(name, selector, target) {
             var evt = $.Event(name);
-            evt.ajaxtarget = this.parsetarget(target);
+            if (target.url) {
+                evt.ajaxtarget = target;
+            } else {
+                evt.ajaxtarget = this.parsetarget(target);
+            }
             $(selector).trigger(evt);
         },
         

@@ -519,8 +519,16 @@ Trigger events
 Sometimes events need to be triggered manually. Since bdajax expects the
 attribute ``ajaxtarget`` on the received event a convenience is provided::
 
+Target might be a URL, then it gets parsed by the trigger function::
+
     var url = 'http://fubar.org?param=value';
-    bdajax.trigger('contextchanged', '.contextsensitiv', url)
+    bdajax.trigger('contextchanged', '.contextsensitiv', url);
+
+Target might be object as returned from ``bdajax.parsetarget``::
+
+    var url = 'http://fubar.org?param=value';
+    var target = bdajax.parsetarget(url);
+    bdajax.trigger('contextchanged', '.contextsensitiv', target);
 
 
 AJAX Forms
@@ -591,6 +599,13 @@ Contributors
 
 Changes
 =======
+
+1.4.2dev
+--------
+
+- ``bdaja.trigger`` also accepts object as returned by ``bdajax.parsetarget``
+  as target argument.
+  [rnix, 2012-10-28]
 
 1.4.1
 -----

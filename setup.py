@@ -1,20 +1,25 @@
-from setuptools import setup, find_packages
-import sys, os
+import os
+from setuptools import (
+    setup,
+    find_packages,
+)
 
-version = '1.4.1'
+
+version = '1.4.2'
 shortdesc = 'Ajax convenience.'
 longdesc = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
 longdesc += open(os.path.join(os.path.dirname(__file__), 'LICENSE.rst')).read()
+
 
 setup(name='bdajax',
       version=version,
       description=shortdesc,
       long_description=longdesc,
       classifiers=[
-            'Environment :: Web Environment',
-            'Operating System :: OS Independent',
-            'Programming Language :: JavaScript', 
-            'Topic :: Internet :: WWW/HTTP :: Dynamic Content',        
+          'Environment :: Web Environment',
+          'Operating System :: OS Independent',
+          'Programming Language :: JavaScript',
+          'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
       ],
       keywords='',
       author='BlueDynamics Alliance',
@@ -22,18 +27,17 @@ setup(name='bdajax',
       url=u'https://github.com/bluedynamics/bdajax',
       license='GNU General Public Licence',
       packages=find_packages('src'),
-      package_dir = {'': 'src'},
+      package_dir={'': 'src'},
       namespace_packages=[],
       include_package_data=True,
       zip_safe=False,
       install_requires=[
           'setuptools',
       ],
-      extras_require = dict(
+      extras_require=dict(
       ),
       tests_require=[
       ],
-      test_suite = "",
-      entry_points = """
-      """
-      )
+      test_suite="",
+      entry_points="""
+      """)

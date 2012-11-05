@@ -600,8 +600,8 @@ Contributors
 Changes
 =======
 
-1.4.2dev
---------
+1.4.2
+-----
 
 - ``bdaja.trigger`` also accepts object as returned by ``bdajax.parsetarget``
   as target argument.

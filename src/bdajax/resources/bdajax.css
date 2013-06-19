@@ -40,6 +40,7 @@
 .ajax-message .message {
     text-align:left;
     padding:5px;
+    border:none;
 }
 .ajax-message .error {
     background:url('/++resource++bdajax/error.png') top left no-repeat;

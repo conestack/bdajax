@@ -8,7 +8,6 @@ placed in the XHTML markup.
 The dispatcher basically provides two behaviors:
 
 - trigger events
-
 - perform actions
 
 Behaviors are bound to JavaScript events. 
@@ -93,11 +92,21 @@ a custom implementation. See 'Perform actions' below.
 Load dependencies in markup
 ---------------------------
 
-Include dependencies jQuery (1.6.4) and jQuery Tools (1.2.6) to HTML Header.
+Include dependencies jQuery (1.6.4+) to HTML Header.
 
 Load bdajax related Scripts and CSS::
 
+    <!--
+      overlay could be included via jquerytools bundle or overlay.js directly
+    -->
+    <script src="http://fubar.com/++resource++bdajax/overlay.js"></script>
+    <!--
+      bdajax related Javascript
+    -->
     <script src="http://fubar.com/++resource++bdajax/bdajax.js"></script>
+    <!--
+      bdajax related styles
+    -->
     <link href="http://fubar.com/++resource++bdajax/bdajax.css"
           rel="stylesheet" type="text/css" media="screen" />
 
@@ -593,12 +602,19 @@ bdajax is tested with:
 Contributors
 ============
 
-- Robert Niederreiter
+- Robert Niederreiter (Author)
 - Attila Oláh
 
 
 Changes
 =======
+
+1.5.0
+-----
+
+- Include customized ``overlay.js`` of jquery tools. Two Reasons; We only need
+  overlay of jquery tools; jquery tools development is pretty slow in migrating
+  newer jQuery versions and not compatible with jquery >= 1.9 (yet).
 
 1.4.2
 -----

@@ -1,9 +1,12 @@
 /* 
- * bdajax v1.4
+ * bdajax v1.5.0
+ * 
+ * Author: Robert Niederreiter
+ * License: GPL
  * 
  * Requires:
- * - jQuery 1.6.4
- * - jQuery Tools 1.2.6
+ * - jQuery 1.6.4+
+ * - jQuery Tools overlay.js
  */
 
 (function($) {
@@ -12,7 +15,7 @@
         bdajax.spinner.hide();
         $(document).bdajax();
     });
-    
+
     $.fn.bdajax = function() {
         var context = $(this);
         $('*', context).each(function() {
@@ -41,29 +44,29 @@
         }
         return context;
     }
-    
+
     bdajax = {
-        
+
         // By default, we redirect to the login page on 403 error.
         // That we assume at '/login'.
         default_403: '/login',
-        
+
         // object for hooking up JS binding functions after ajax calls
         binders: {},
-        
+
         // ajax spinner handling
         spinner: {
-            
+
             _elem: null,
             _request_count: 0,
-            
+
             elem: function() {
                 if (this._elem == null) {
                     this._elem = $('#ajax-spinner');
                 }
                 return this._elem;
             },
-            
+
             show: function() {
                 this._request_count++;
                 if (this._request_count > 1) {
@@ -71,7 +74,7 @@
                 }
                 this.elem().show();
             },
-            
+
             hide: function(force) {
                 this._request_count--;
                 if (force) {
@@ -84,7 +87,7 @@
                 }
             }
         },
-        
+
         parseurl: function(url) {
             var idx = url.indexOf('?');
             if (idx != -1) {
@@ -95,7 +98,7 @@
             }
             return url;
         },
-        
+
         parsequery: function(url) {
             var params = {};
             var idx = url.indexOf('?');
@@ -108,7 +111,7 @@
             }
             return params;
         },
-        
+
         parsetarget: function(target) {
             var url = this.parseurl(target);
             var params = this.parsequery(target);
@@ -118,7 +121,7 @@
                 params: params
             };
         },
-        
+
         request: function(options) {
             if (options.url.indexOf('?') != -1) {
                 var addparams = options.params;
@@ -163,12 +166,12 @@
                 cache: options.cache
             });
         },
-        
+
         action: function(options) {
             options.success = this._ajax_action_success;
             this._perform_ajax_action(options);
         },
-        
+
         fiddle: function(payload, selector, mode) {
             if (mode == 'replace') {
                 $(selector).replaceWith(payload);
@@ -183,7 +186,7 @@
                 $(selector).bdajax();
             }
         },
-        
+
         continuation: function(definitions) {
             if (!definitions) {
                 return;
@@ -251,7 +254,7 @@
                 }
             }
         },
-        
+
         trigger: function(name, selector, target) {
             var evt = $.Event(name);
             if (target.url) {
@@ -261,7 +264,7 @@
             }
             $(selector).trigger(evt);
         },
-        
+
         overlay: function(options) {
             var selector = '#ajax-overlay';
             if (options.selector) {
@@ -313,7 +316,7 @@
                 }
             });
         },
-        
+
         message: function(message) {
             var elem = $('#ajax-message');
             elem.removeData('overlay');
@@ -340,25 +343,25 @@
             });
             elem.data('overlay').load();
         },
-        
+
         error: function(message) {
             $("#ajax-message .message").removeClass('error warning info')
                                        .addClass('error');
             this.message(message);
         },
-        
+
         info: function(message) {
             $("#ajax-message .message").removeClass('error warning info')
                                        .addClass('info');
             this.message(message);
         },
-        
+
         warning: function(message) {
             $("#ajax-message .message").removeClass('error warning info')
                                        .addClass('warning');
             this.message(message);
         },
-        
+
         dialog: function(options, callback) {
             var elem = $('#ajax-dialog');
             elem.removeData('overlay');
@@ -387,7 +390,7 @@
             });
             elem.data('overlay').load();
         },
-        
+
         // bind ajax form handling to all forms providing ajax css class
         bind_ajax_form: function(context) {
             var ajaxform = $('form.ajax', context);
@@ -397,7 +400,7 @@
                 bdajax.spinner.show();
             });
         },
-        
+
         // called by iframe response, renders form (i.e. if validation errors)
         render_ajax_form: function(payload, selector, mode) {
             if (!payload) {
@@ -406,7 +409,7 @@
             this.spinner.hide();
             this.fiddle(payload, selector, mode);
         },
-        
+
         _dispatching_handler: function(event) {
             event.preventDefault();
             event.stopPropagation();
@@ -422,7 +425,7 @@
                 bdajax._do_dispatching(options);
             }
         },
-        
+
         _do_dispatching: function(options) {
             var elem = options.elem;
             var event = options.event;
@@ -436,7 +439,7 @@
                 bdajax._handle_ajax_overlay(elem, event);
             }
         },
-        
+
         _handle_ajax_event: function(elem) {
             var target = elem.attr('ajax:target');
             var defs = this._defs_to_array(elem.attr('ajax:event'));
@@ -446,7 +449,7 @@
                 this.trigger(def[0], def[1], target);
             }
         },
-        
+
         _ajax_action_success: function(data) {
             if (!data) {
                 bdajax.error('Empty response');
@@ -456,7 +459,7 @@
                 bdajax.continuation(data.continuation);
             }
         },
-        
+
         _perform_ajax_action: function(options) {
             options.params['bdajax.action'] = options.name;
             options.params['bdajax.mode'] = options.mode;
@@ -468,7 +471,7 @@
                 success: options.success
             });
         },
-        
+
         _handle_ajax_action: function(elem, event) {
             var target;
             if (event.ajaxtarget) {
@@ -488,7 +491,7 @@
                 });
             }
         },
-        
+
         _handle_ajax_overlay: function(elem, event) {
             var target;
             if (event.ajaxtarget) {
@@ -517,7 +520,7 @@
                 });
             }
         },
-        
+
         _defs_to_array: function(str) {
             // XXX: if space in selector when receiving def str, this will fail
             var arr;

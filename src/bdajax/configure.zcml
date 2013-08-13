@@ -2,31 +2,26 @@
            xmlns:zcml="http://namespaces.zope.org/zcml"
            xmlns:browser="http://namespaces.zope.org/browser"
            xmlns:pyramid="http://pylonshq.com/pyramid">
-    
-    <!-- pyramid specific -->
-	
-	<pyramid:static
-	    zcml:condition="installed pyramid"
-        name="++resource++bdajax"
-        path="resources"
-    />
-    
-    <!-- XXX: make bdajax.pt available as pyramid view -->
-	
-	<!-- Plone specific -->
-	
-	<browser:resourceDirectory
-	    zcml:condition="installed Products.CMFPlone"
-        name="bdajax"
-        directory="resources"
-    />
-    
-    <browser:page
-	    zcml:condition="installed Products.CMFPlone"
-        for="*"
-        name="bdajax"
-        template="bdajax.pt"
-        permission="zope.Public"
-    />
-    
+
+  <!-- pyramid specific -->
+  <pyramid:static
+    zcml:condition="installed pyramid"
+    name="++resource++bdajax"
+    path="resources" />
+
+  <!-- XXX: make bdajax.pt available as pyramid view -->
+
+  <!-- Plone specific -->
+  <browser:resourceDirectory
+    zcml:condition="installed Products.CMFPlone"
+    name="bdajax"
+    directory="resources" />
+
+  <browser:page
+    zcml:condition="installed Products.CMFPlone"
+    for="*"
+    name="bdajax"
+    template="bdajax.pt"
+    permission="zope.Public" />
+
 </configure>

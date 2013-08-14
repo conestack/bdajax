@@ -256,13 +256,25 @@
         },
 
         trigger: function(name, selector, target) {
-            var evt = $.Event(name);
-            if (target.url) {
-                evt.ajaxtarget = target;
-            } else {
-                evt.ajaxtarget = this.parsetarget(target);
+            var create_event = function() {
+                var evt = $.Event(name);
+                if (target.url) {
+                    evt.ajaxtarget = target;
+                } else {
+                    evt.ajaxtarget = bdajax.parsetarget(target);
+                }
+                return evt;
             }
-            $(selector).trigger(evt);
+            // _dispatching_handler calls stopPropagation on event which is
+            // fine in order to prevent weird behavior on parent DOM elements,
+            // especially for standard events. Since upgrade to jQuery 1.9
+            // stopPropagation seem to react on the event instance instead of
+            // the trigger call for each element returned by selector, at least
+            // on custom events, thus we create a separate event instance for
+            // each elem returned by selector.
+            $(selector).each(function() {
+                $(this).trigger(create_event());
+            });
         },
 
         overlay: function(options) {
@@ -523,12 +535,7 @@
 
         _defs_to_array: function(str) {
             // XXX: if space in selector when receiving def str, this will fail
-            var arr;
-            if (str.indexOf(' ') != -1) {
-                arr = str.split(' ');
-            } else {
-                arr = new Array(str);
-            }
+            var arr = str.replace(/\s+/g, ' ').split(' ');
             return arr;
         }
     };

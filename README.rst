@@ -5,12 +5,12 @@ Overview
 driven by XML-attributes. Attributes are defined in its own XML namespace, 
 placed in the XHTML markup.
 
-The dispatcher basically provides two behaviors:
+The dispatcher basically provides two behaviors
 
 - trigger events
 - perform actions
 
-Behaviors are bound to JavaScript events. 
+Behaviors are bound to JavaScript events.
 
 This package bundles required resources for the use of bdajax inside a
 ``pyramid`` or ``zope`` application. It does NOT include the
@@ -25,14 +25,14 @@ and available through browser URL.
 Dispatching
 -----------
 
-For those who know KSS (Kinetic Style Sheets) and TAL (Tag Attribute Language):
+For those who know KSS (Kinetic Style Sheets) and TAL (Tag Attribute Language);
 The syntax reminds of TAL - attributes are interpreted by JS instead of a TAL
 interpreter - while the functionality is inspired by KSS.
 
 The main paradigm is the use of an ``event/listener`` model. It enables bdajax 
 to ``listen`` to ``events`` and trigger ``events`` on ajaxified DOM components.
 
-Consider a navtree as example: the idea is to trigger an event when a navigation
+Consider a navtree as example; the idea is to trigger an event when a navigation
 item gets clicked. Click semantically indicates a changed context. Then listen 
 to this event on all DOM elements to get notified on changing server context.
 
@@ -74,6 +74,8 @@ Following attributes are available:
     Renders ajax action to overlay with selector. ``selector`` is optional and
     defaults to ``#ajax-overlay``. ``content_selector`` is optional to 
     ``selector`` and defaults to ``.overlay_content``.
+
+**NOTE** - No selectors containing spaces are supported at the moment!
 
 
 Provide dependencies on server
@@ -609,12 +611,20 @@ Contributors
 Changes
 =======
 
-1.5.0
------
+1.5.0 (unreleased)
+------------------
+
+- Refactor ``bdajax.trigger`` to create a separate event instace for each
+  element returned by selector.
+  [rnix, 2013-08-14]
 
 - Include customized ``overlay.js`` of jquery tools. Two Reasons; We only need
   overlay of jquery tools; jquery tools development is pretty slow in migrating
   newer jQuery versions and not compatible with jquery >= 1.9 (yet).
+  [rnix, 2013-08-13]
+
+- Update to Jquery 1.9.x
+  [rnix, 2013-08-13]
 
 1.4.2
 -----

@@ -611,8 +611,8 @@ Contributors
 Changes
 =======
 
-1.5.0 (unreleased)
-------------------
+1.5.0
+-----
 
 - Refactor ``bdajax.trigger`` to create a separate event instace for each
   element returned by selector.

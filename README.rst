@@ -528,7 +528,7 @@ Trigger events
 --------------
 
 Sometimes events need to be triggered manually. Since bdajax expects the
-attribute ``ajaxtarget`` on the received event a convenience is provided::
+attribute ``ajaxtarget`` on the received event a convenience is provided.
 
 Target might be a URL, then it gets parsed by the trigger function::
 

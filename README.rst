@@ -194,7 +194,7 @@ response in the format as follows.::
     }
 
 
-Action Continuation
+Action continuation
 ~~~~~~~~~~~~~~~~~~~
 
 The ``continuation`` value is an array of actions and/or events which should
@@ -370,7 +370,7 @@ JavaScript API
 ==============
 
 
-Messages, Infos, Warnings and Errors
+Messages, infos, warnings and errors
 ------------------------------------
 
 ``bdajax`` displays application messages in a jQuery tools overlay. 
@@ -416,7 +416,7 @@ in options.::
     bdajax.dialog(options, callback);
 
 
-URL Operations
+URL operations
 --------------
 
 Parse hyperlinks for base URL or request parameters::
@@ -545,7 +545,7 @@ Target might be object as returned from ``bdajax.parsetarget``::
     bdajax.trigger('contextchanged', '.contextsensitiv', target);
 
 
-AJAX Forms
+Ajax forms
 ----------
 
 Forms must have ``ajax:form`` attribute or CSS class ``ajax`` (deprecated)
@@ -606,7 +606,7 @@ Again, bdajax does not provide any server side implementation, it's up to you
 providing this.
 
 
-3rd Party Javascript
+3rd party javascript
 --------------------
 
 When writing applications, one might use its own set of custom JavaScripts

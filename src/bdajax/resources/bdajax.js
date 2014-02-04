@@ -1,5 +1,5 @@
 /* 
- * bdajax v1.5.0
+ * bdajax v1.5.1
  * 
  * Author: Robert Niederreiter
  * License: GPL
@@ -33,11 +33,13 @@
                             ajax.bind(events, bdajax._dispatching_handler);
                         }
                     }
+                    if (name.indexOf('ajax:form') > -1) {
+                        bdajax.prepare_ajax_form($(this));
+                    }
                 }
             }
         });
-        // XXX: probably ajax forms get a separate ``ajax:form`` directive
-        //      in markup.
+        // B/C: Ajax forms have a dedicated ``ajax:form`` directive now.
         bdajax.bind_ajax_form(context);
         for (var binder in bdajax.binders) {
             bdajax.binders[binder](context);
@@ -403,12 +405,16 @@
             elem.data('overlay').load();
         },
 
-        // bind ajax form handling to all forms providing ajax css class
+        // B/C: bind ajax form handling to all forms providing ajax css class
         bind_ajax_form: function(context) {
-            var ajaxform = $('form.ajax', context);
-            ajaxform.append('<input type="hidden" name="ajax" value="1" />');
-            ajaxform.attr('target', 'ajaxformresponse');
-            ajaxform.unbind().bind('submit', function(event) {
+            bdajax.prepare_ajax_form($('form.ajax', context));
+        },
+
+        // prepare form desired to be an ajax form
+        prepare_ajax_form: function(form) {
+            form.append('<input type="hidden" name="ajax" value="1" />');
+            form.attr('target', 'ajaxformresponse');
+            form.unbind().bind('submit', function(event) {
                 bdajax.spinner.show();
             });
         },

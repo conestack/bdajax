@@ -75,6 +75,9 @@ Following attributes are available:
     defaults to ``#ajax-overlay``. ``content_selector`` is optional to 
     ``selector`` and defaults to ``.overlay_content``.
 
+**ajax:form="True"**
+    Indicate AJAX form. Valid only on ``form`` elements. Value gets ignored.
+
 **NOTE** - No selectors containing spaces are supported at the moment!
 
 
@@ -545,32 +548,59 @@ Target might be object as returned from ``bdajax.parsetarget``::
 AJAX Forms
 ----------
 
-To process ajax forms, a hidden iframe is used where the form gets triggered to.
-The form must be marked with CSS class ``ajax`` in order to be handled by
-bdajax. The server side must return a response like so::
+Forms must have ``ajax:form`` attribute or CSS class ``ajax`` (deprecated)
+set in order to be handled by bdajax::
+
+    <form ajax:form="True"
+          id="my_ajax_form"
+          method="post"
+          action="http://example.com/myformaction"
+          enctype="multipart/form-data">
+      ...
+    </form>
+
+Ajax form processing is done using a hidden iframe where the form gets
+triggered to. The server side must return a response like so on form submit::
 
     <div id="ajaxform">
-        <form class="ajax"
+
+        <!-- this is the rendering payload -->
+        <form ajax:form="True"
+              id="my_ajax_form"
               method="post"
               action="http://example.com/myformaction"
               enctype="multipart/form-data">
           ...
         </form>
+
     </div>
+
     <script language="javascript" type="text/javascript">
+
+        // get response result container
         var container = document.getElementById('ajaxform');
+
+        // extract DOM element to fiddle from result container
         var child = container.firstChild;
         while(child != null && child.nodeType == 3) {
             child = child.nextSibling;
         }
-        parent.bdajax.render_ajax_form(child, '#form_selector', 'fiddle_mode');
+
+        // call ``bdajax.render_ajax_form`` and ``bdajax.continuation`` on
+        // parent frame (remember, we're in iframe here). ``render_ajax_form``
+        // expects the result DOM element, the ``selector`` and the fiddle
+        // ``mode``. ``continuation`` may be used to perform ajax
+        // continuation as described earlier in this document.
+        parent.bdajax.render_ajax_form(child, '#my_ajax_form', 'replace');
         parent.bdajax.continuation({});
+
     </script>
 
 If ``div`` with id ``ajaxform`` contains markup, it gets rendered to
-``#form_selector`` with ``fiddle_mode``. This makes it possible to rerender
-forms on validation error or display a success page or similar. Further
-bdajax continuation definitions can be given to ``parent.bdajax.continuation``.
+``selector`` (#my_ajax_form) with ``mode`` (replace). This makes it possible
+to rerender forms on validation error or display a success page or similar.
+Optional bdajax continuation definitions can be given to
+``parent.bdajax.continuation``.
 
 Again, bdajax does not provide any server side implementation, it's up to you
 providing this.
@@ -610,6 +640,15 @@ Contributors
 
 Changes
 =======
+
+
+1.5.1dev
+--------
+
+- Ajax forms are now marked via ``ajax:form``. Setting ``ajax`` CSS class still
+  works, but is deprecated.
+  [rnix, 2013-02-04]
+
 
 1.5.0
 -----

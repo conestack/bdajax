@@ -642,8 +642,8 @@ Changes
 =======
 
 
-1.5.1dev
---------
+1.5.1
+-----
 
 - Ajax forms are now marked via ``ajax:form``. Setting ``ajax`` CSS class still
   works, but is deprecated.

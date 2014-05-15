@@ -641,6 +641,13 @@ Contributors
 Changes
 =======
 
+1.5.2dev
+--------
+
+- Do not display error message if XHR request gets aborted (e.g. click
+  a url while request is pending)
+  [rnix]
+
 
 1.5.1
 -----

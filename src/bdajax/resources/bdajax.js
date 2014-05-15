@@ -153,9 +153,13 @@
                 bdajax.spinner.hide();
             }
             var wrapped_error = function(request, status, error) {
-                options.error(request,
-                              request.status || status,
-                              request.statusText || error);
+                if (request.status == 0) {
+                    bdajax.spinner.hide(true);
+                    return;
+                }
+                var status = request.status || status;
+                var error = request.statusText || error;
+                options.error(request, status, error);
                 bdajax.spinner.hide(true);
             }
             this.spinner.show();

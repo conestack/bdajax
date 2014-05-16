@@ -5,7 +5,7 @@ from setuptools import (
 )
 
 
-version = '1.5.2'
+version = '1.5.3.dev0'
 shortdesc = 'Ajax convenience.'
 longdesc = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
 longdesc += open(os.path.join(os.path.dirname(__file__), 'LICENSE.rst')).read()

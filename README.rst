@@ -641,8 +641,8 @@ Contributors
 Changes
 =======
 
-1.5.2dev
---------
+1.5.2
+-----
 
 - Do not display error message if XHR request gets aborted (e.g. click
   a url while request is pending)

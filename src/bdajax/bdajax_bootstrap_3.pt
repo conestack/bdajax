@@ -1,0 +1,89 @@
+<div id="ajax-spinner">
+  <img src="/++resource++bdajax/spinner.gif" alt="" />
+</div>
+
+<div class="modal ajax-message" id="ajax-message">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title">Message</h4>
+      </div>
+      <div class="modal-body message">
+        Message
+      </div>
+      <div class="modal-footer">
+        <button type="button"
+                class="close btn btn-default allowMultiSubmit">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal ajax-dialog" id="ajax-dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title">Confirm</h4>
+      </div>
+      <div class="modal-body text">
+        Text
+      </div>
+      <div class="modal-footer">
+        <button class="submit btn btn-default allowMultiSubmit">OK</button> 
+        <button class="cancel btn btn-default allowMultiSubmit">Cancel</button> 
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal ajax-overlay" id="ajax-form">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title">&nbsp;</h4>
+      </div>
+      <div class="modal-body overlay_content">
+        Form Content
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal ajax-overlay" id="ajax-overlay">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title">&nbsp;</h4>
+      </div>
+      <div class="modal-body overlay_content">
+        Overlay Content
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+<iframe id="ajaxformresponse"
+        name="ajaxformresponse"
+        src="about:blank"
+        style="width:0px;height:0px;display:none">
+</iframe>

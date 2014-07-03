@@ -8,17 +8,17 @@
 </div>
 
 <div class="ajax-dialog" id="ajax-dialog">
-    <div class="text">
-    </div>
-    <div class="buttons">
-      <button class="submit allowMultiSubmit">OK</button> 
-      <button class="cancel allowMultiSubmit">Cancel</button> 
-    </div>
+  <div class="text">
+  </div>
+  <div class="buttons">
+    <button class="submit allowMultiSubmit">OK</button>
+    <button class="cancel allowMultiSubmit">Cancel</button>
+  </div>
 </div>
 
 <div class="ajax-overlay" id="ajax-form">
   <div class="overlay_content">
-    <!-- 
+    <!--
       need a container for further overlay DOM manipulation without loosing
       close button.
     -->
@@ -27,7 +27,7 @@
 
 <div class="ajax-overlay" id="ajax-overlay">
   <div class="overlay_content">
-    <!-- 
+    <!--
       need a container for further overlay DOM manipulation without loosing
       close button.
     -->

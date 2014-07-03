@@ -641,11 +641,11 @@ Contributors
 Changes
 =======
 
-1.5.3.dev0
+1.6.0.dev0
 ----------
 
-- nothing changed yet.
-  [rnix]
+- add bdajax integration template for bootstrap 3 styles
+  [rnix, 2014-07-03]
 
 
 1.5.2

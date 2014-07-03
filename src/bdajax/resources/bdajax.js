@@ -1,5 +1,5 @@
 /* 
- * bdajax v1.5.1
+ * bdajax v1.6.0
  * 
  * Author: Robert Niederreiter
  * License: GPL

@@ -644,7 +644,10 @@ Changes
 1.6.0.dev0
 ----------
 
-- add bdajax integration template for bootstrap 3 styles
+- Add bdajax integration template and styles for Twitter Bootstrap 3.
+  [rnix, 2014-07-03]
+
+- Update Ajax Spinner Image.
   [rnix, 2014-07-03]
 
 

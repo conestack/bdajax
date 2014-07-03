@@ -1,0 +1,10 @@
+#ajax-spinner {
+    display:none;
+    position:fixed;
+    z-index:10000;
+    background-position: center center;
+    top:50%;
+    left:50%;
+    margin-top:-32px;
+    margin-left:-32px;
+}

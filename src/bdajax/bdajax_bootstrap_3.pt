@@ -1,5 +1,8 @@
 <div id="ajax-spinner">
-  <img src="/++resource++bdajax/spinner.gif" alt="" />
+  <img src="/++resource++bdajax/loading-spokes.svg"
+       width="64"
+       height="64"
+       alt="" />
 </div>
 
 <div class="modal ajax-message" id="ajax-message">
@@ -10,7 +13,7 @@
           <span aria-hidden="true">&times;</span>
           <span class="sr-only">Close</span>
         </button>
-        <h4 class="modal-title">Message</h4>
+        <h3 class="modal-title">Message</h3>
       </div>
       <div class="modal-body message">
         Message
@@ -31,7 +34,7 @@
           <span aria-hidden="true">&times;</span>
           <span class="sr-only">Close</span>
         </button>
-        <h4 class="modal-title">Confirm</h4>
+        <h3 class="modal-title">Confirm</h3>
       </div>
       <div class="modal-body text">
         Text
@@ -52,7 +55,7 @@
           <span aria-hidden="true">&times;</span>
           <span class="sr-only">Close</span>
         </button>
-        <h4 class="modal-title">&nbsp;</h4>
+        <h3 class="modal-title">&nbsp;</h3>
       </div>
       <div class="modal-body overlay_content">
         Form Content
@@ -71,7 +74,7 @@
           <span aria-hidden="true">&times;</span>
           <span class="sr-only">Close</span>
         </button>
-        <h4 class="modal-title">&nbsp;</h4>
+        <h3 class="modal-title">&nbsp;</h3>
       </div>
       <div class="modal-body overlay_content">
         Overlay Content

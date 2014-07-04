@@ -10,15 +10,23 @@
 (function($) {
 
     $(document).ready(function() {
-        var prepare_modal = function(selector) {
-            $('selector').bind('resize', function(event) {
-                alert('resize');
-            });
-        }
-        prepare_modal('#ajax-message');
-        prepare_modal('#ajax-dialog');
-        prepare_modal('#ajax-form');
-        prepare_modal('#ajax-overlay');
+        $(document).bind('bdajax_overlay_before_load', function(event) {
+            var offset = $(event.elem).offset().top;
+            event.overlay.getConf().top = offset * -1;
+            var dialog = $('.modal-dialog', event.elem);
+            dialog.css('top', offset);
+        });
+        $(document).bind('bdajax_overlay_load', function(event) {
+            var dialog = $('.modal-dialog', event.elem);
+            var dialog_offset = $(dialog).offset().top;
+            var dialog_height = dialog.height();
+            var document_height = $(document).height();
+            if (dialog_offset + dialog_height > document_height) {
+                event.elem.css('height', dialog_offset + dialog_height + 30);
+            } else {
+                event.elem.css('height', document_height);
+            }
+        });
     });
 
 })(jQuery);

@@ -320,6 +320,18 @@
                             color: '#fff',
                             loadSpeed: 200
                         },
+                        onBeforeLoad: function() {
+                            var evt = $.Event('bdajax_overlay_before_load');
+                            evt.overlay = overlay;
+                            evt.elem = elem;
+                            $(document).trigger(evt);
+                        },
+                        onLoad: function() {
+                            var evt = $.Event('bdajax_overlay_load');
+                            evt.overlay = overlay;
+                            evt.elem = elem;
+                            $(document).trigger(evt);
+                        },
                         onClose: function() {
                             var content = $(content_selector,
                                             this.getOverlay());

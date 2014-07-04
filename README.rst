@@ -97,25 +97,45 @@ a custom implementation. See 'Perform actions' below.
 Load dependencies in markup
 ---------------------------
 
-Include dependencies jQuery (1.6.4+) to HTML Header.
+Load bdajax related Scripts::
 
-Load bdajax related Scripts and CSS::
+    <!--
+      include jquery 1.6.4+.
+    -->
+    <script src="http://code.jquery.com/jquery-1.6.4.js"></script>
 
     <!--
       overlay could be included via jquerytools bundle or overlay.js directly
     -->
     <script src="http://fubar.com/++resource++bdajax/overlay.js"></script>
+
     <!--
-      bdajax related Javascript
+      bdajax related Javascript.
     -->
     <script src="http://fubar.com/++resource++bdajax/bdajax.js"></script>
+
     <!--
-      bdajax related styles
+      optionally add bootstrap 3 overlay hook if bootstrap is used.
+    -->
+    <script src="http://fubar.com/++resource++bdajax/bdajax_bs3.js"></script>
+
+Load bdajax related CSS::
+
+    <!--
+      bdajax related default styles.
     -->
     <link href="http://fubar.com/++resource++bdajax/bdajax.css"
           rel="stylesheet" type="text/css" media="screen" />
 
-Make sure the content of ``bdajax.pt`` is rendered in Markup.
+    <!--
+      optionally use bootstrap 3 bdajax related styles if bootstrap is used.
+      no need to include default styles in this case.
+    -->
+    <link href="http://fubar.com/++resource++bdajax/bdajax_bs3.css"
+          rel="stylesheet" type="text/css" media="screen" />
+
+Make sure the content of ``bdajax.pt`` or ``bdajax_bs3.pt`` is rendered in
+Markup.
 
 
 Define namespace
@@ -644,8 +664,14 @@ Changes
 1.6.0.dev0
 ----------
 
-- Add bdajax integration template and styles for Twitter Bootstrap 3.
-  [rnix, 2014-07-03]
+- Add bdajax integration template and styles and overlay hook script for
+  Twitter Bootstrap 3.
+  [rnix, 2014-07-04]
+
+- ``bdajax.overlay`` now triggers ``bdajax_overlay_before_load`` and
+  ``bdajax_overlay_load`` custom events refering to aquivalent jquery tools
+  overlay hook callbacks.
+  [rnix, 2014-07-04]
 
 - Update Ajax Spinner Image.
   [rnix, 2014-07-03]

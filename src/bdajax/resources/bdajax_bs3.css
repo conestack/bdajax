@@ -8,3 +8,7 @@
     margin-top:-32px;
     margin-left:-32px;
 }
+.modal-body {
+    max-height:450px;
+    overflow-y:auto;
+}

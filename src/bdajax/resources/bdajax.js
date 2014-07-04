@@ -1,9 +1,9 @@
-/* 
+/*
  * bdajax v1.6.0
- * 
+ *
  * Author: Robert Niederreiter
  * License: GPL
- * 
+ *
  * Requires:
  * - jQuery 1.6.4+
  * - jQuery Tools overlay.js

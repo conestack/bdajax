@@ -668,9 +668,9 @@ Changes
   Twitter Bootstrap 3.
   [rnix, 2014-07-04]
 
-- ``bdajax.overlay`` now triggers ``bdajax_overlay_before_load`` and
-  ``bdajax_overlay_load`` custom events refering to aquivalent jquery tools
-  overlay hook callbacks.
+- ``bdajax.overlay``, ``bdajax.message`` and ``bdajax.dialog`` now trigger
+  ``bdajax_overlay_before_load`` and ``bdajax_overlay_load`` custom events
+  refering to aquivalent jquery tools overlay callbacks.
   [rnix, 2014-07-04]
 
 - Update Ajax Spinner Image.

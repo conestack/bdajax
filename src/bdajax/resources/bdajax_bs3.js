@@ -12,7 +12,7 @@
     $(document).ready(function() {
         $(document).bind('bdajax_overlay_before_load', function(event) {
             var offset = $(event.elem).offset().top;
-            event.overlay.getConf().top = offset * -1;
+            event.elem.data('overlay').getConf().top = offset * -1;
             var dialog = $('.modal-dialog', event.elem);
             dialog.css('top', offset);
         });

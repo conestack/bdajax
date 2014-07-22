@@ -91,10 +91,9 @@
         },
 
         parseurl: function(url) {
-            var idx = url.indexOf('?');
-            if (idx != -1) {
-                url = url.substring(0, idx);
-            }
+            var parser = document.createElement('a');
+            parser.href = url;
+            url = parser.protocol + '//' + parser.host + parser.pathname;
             if (url.charAt(url.length - 1) == '/') {
                 url = url.substring(0, url.length - 1);
             }
@@ -102,10 +101,12 @@
         },
 
         parsequery: function(url) {
+            var parser = document.createElement('a');
+            parser.href = url;
             var params = {};
-            var idx = url.indexOf('?');
-            if (idx != -1) {
-                var parameters = url.slice(idx + 1).split('&');
+            var search = parser.search;
+            if (search) {
+                var parameters = search.substring(1, search.length).split('&');
                 for (var i = 0;  i < parameters.length; i++) {
                     var param = parameters[i].split('=');
                     params[param[0]] = param[1];
@@ -114,13 +115,21 @@
             return params;
         },
 
+        parsepath: function(url) {
+            var parser = document.createElement('a');
+            parser.href = url;
+            return parser.pathname;
+        },
+
         parsetarget: function(target) {
             var url = this.parseurl(target);
             var params = this.parsequery(target);
+            var path = this.parsepath(target);
             if (!params) { params = {}; }
             return {
                 url: url,
-                params: params
+                params: params,
+                path: path
             };
         },
 
@@ -173,6 +182,16 @@
             });
         },
 
+        path: function(path) {
+            if (typeof(window.history.replaceState) === undefined) {
+                return;
+            }
+            if (path.charAt(0) != '/') {
+                path = '/' + path;
+            }
+            window.history.replaceState({}, '', path);
+        },
+
         action: function(options) {
             options.success = this._ajax_action_success;
             this._perform_ajax_action(options);
@@ -198,10 +217,12 @@
                 return;
             }
             this.spinner.hide();
-            var definition, target;
+            var definition, target, path;
             for (var idx in definitions) {
                 definition = definitions[idx];
-                if (definition.type == 'action') {
+                if (definition.type == 'path') {
+                    this.path(definition.path);
+                } else if (definition.type == 'action') {
                     target = this.parsetarget(definition.target);
                     this.action({
                         url: target.url,
@@ -222,7 +243,7 @@
                             overlay.close();
                         }
                     } else {
-                        var target = this.parsetarget(definition.target);
+                        target = this.parsetarget(definition.target);
                         this.overlay({
                             action: definition.action,
                             selector: definition.selector,
@@ -483,6 +504,23 @@
             if (elem.attr('ajax:overlay')) {
                 bdajax._handle_ajax_overlay(elem, event);
             }
+            if (elem.attr('ajax:path')) {
+                bdajax._handle_ajax_path(elem, event);
+            }
+        },
+
+        _handle_ajax_path: function(elem, event) {
+            var path = elem.attr('ajax:path');
+            if (path == 'target') {
+                var target;
+                if (event.ajaxtarget) {
+                    target = event.ajaxtarget;
+                } else {
+                    target = this.parsetarget(elem.attr('ajax:target'));
+                }
+                path = target.path;
+            }
+            this.path(path);
         },
 
         _handle_ajax_event: function(elem) {

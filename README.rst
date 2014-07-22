@@ -52,12 +52,16 @@ Following attributes are available:
 **ajax:event="evt1:sel1 evt2:sel2"**
     Trigger event(s) on selector. The triggered event gets the target
     as additional parameter on event.ajaxtarget.
-  
+
+**ajax:path="/some/path"**
+    Sets the browser URL path. If value is ``target`` path gets taken
+    from ajax target.
+
 **ajax:action="name1:selector1:mode1 name2:selector2:mode2"**
     Perform AJAX action(s) on selector with mode. Selector points to target
     DOM element, mode defines how to modify the DOM tree. Possible
     mode values are ``inner`` and ``replace``.
-  
+
 **ajax:target="http://fubar.org?param=value"**
     AJAX target definition. Consists out of target context URL and a
     query string used for requests on the target context.
@@ -181,6 +185,27 @@ written to the event before it is triggered, containing definitions from
 ``ajax:target``.
 
 
+Set URL path
+------------
+
+Set path directly::
+
+    <a href="http://fubar.com/baz?a=a"
+       ajax:bind="click"
+       ajax:path="/some/path">
+      fubar
+    </a>
+
+Take path from target::
+
+    <a href="http://fubar.com/baz?a=a"
+       ajax:bind="click"
+       ajax:target="http://fubar.com/baz?a=a"
+       ajax:path="target">
+      fubar
+    </a>
+
+
 Perform actions
 ---------------
 
@@ -228,7 +253,7 @@ definitions are described below.
         'target': 'http://example.com',
         'name': 'actionname',
         'mode': 'inner',
-        'selector': '.foo',
+        'selector': '.foo'
     }
 
 **events**::
@@ -237,7 +262,14 @@ definitions are described below.
         'type': 'event',
         'target': 'http://example.com',
         'name': 'eventname',
-        'selector': '.foo',
+        'selector': '.foo'
+    }
+
+**path**::
+
+    {
+        'type': 'path',
+        'path': '/some/path'
     }
 
 **overlay**::
@@ -248,7 +280,7 @@ definitions are described below.
         'content_selector': '.overlay_content',
         'action': 'actionname',
         'target': 'http://example.com',
-        'close': false,
+        'close': false
     }
 
 Overlays dynamically get a close button. In order to keep overlay contents
@@ -323,12 +355,13 @@ Bind multiple behaviors to the same DOM element::
        ajax:bind="click"
        ajax:event="contextchanged:.contextsensitiv"
        ajax:action="rendersomething:.#something:replace"
-       ajax:target="http://fubar.com/baz?a=a">
+       ajax:target="http://fubar.com/baz?a=a"
+       ajax:path="/some/path">
       fubar
     </a>
 
-In this example on click event ``contextchanged`` is triggered and action
-``rendersomething`` is performed.
+In this example on click event ``contextchanged`` is triggered, action
+``rendersomething`` is performed and URL path ``/some/path`` get set.
 
 
 Confirm actions
@@ -565,6 +598,15 @@ Target might be object as returned from ``bdajax.parsetarget``::
     bdajax.trigger('contextchanged', '.contextsensitiv', target);
 
 
+Set URL path
+------------
+
+To set URL path::
+
+    var path = '/some/path';
+    bdajax.path(path);
+
+
 Ajax forms
 ----------
 
@@ -663,6 +705,9 @@ Changes
 
 1.6.0.dev0
 ----------
+
+- Add ``ajax:path functionality``.
+  [rnix, 2014-07-22]
 
 - Add bdajax integration template and styles and overlay hook script for
   Twitter Bootstrap 3.

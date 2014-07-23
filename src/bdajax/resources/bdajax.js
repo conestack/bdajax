@@ -352,6 +352,9 @@
                             $(document).trigger(evt);
                         },
                         onClose: function() {
+                            var evt = $.Event('bdajax_overlay_close');
+                            evt.elem = elem;
+                            $(document).trigger(evt);
                             var content = $(content_selector,
                                             this.getOverlay());
                             content.html('');

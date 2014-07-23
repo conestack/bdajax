@@ -4,28 +4,25 @@
  * Author: Robert Niederreiter
  * License: GPL
  *
- * Additional script if bootstrap 3 is used.
+ * Additional script if bootstrap 3 is used for adopting overlay behavior.
  */
 
 (function($) {
 
     $(document).ready(function() {
+        $.tools.overlay.conf.top = 0;
+        $.tools.overlay.conf.fixed = true;
         $(document).bind('bdajax_overlay_before_load', function(event) {
-            var offset = $(event.elem).offset().top;
-            event.elem.data('overlay').getConf().top = offset * -1;
-            var dialog = $('.modal-dialog', event.elem);
-            dialog.css('top', offset);
+            event.elem.css('overflow-y', 'scroll');
+            $('body', document)
+                .css('padding-right', '13px')
+                .addClass('modal-open');
         });
-        $(document).bind('bdajax_overlay_load', function(event) {
-            var dialog = $('.modal-dialog', event.elem);
-            var dialog_offset = $(dialog).offset().top;
-            var dialog_height = dialog.height();
-            var document_height = $(document).height();
-            if (dialog_offset + dialog_height > document_height) {
-                event.elem.css('height', dialog_offset + dialog_height + 30);
-            } else {
-                event.elem.css('height', document_height);
-            }
+        $(document).bind('bdajax_overlay_load', function(event) {});
+        $(document).bind('bdajax_overlay_close', function(event) {
+            $('body', document)
+                .css('padding-right', '')
+                .removeClass('modal-open');
         });
     });
 

@@ -18,11 +18,17 @@
                 .css('padding-right', '13px')
                 .addClass('modal-open');
         });
-        $(document).bind('bdajax_overlay_load', function(event) {});
+        $(document).bind('bdajax_overlay_load', function(event) {
+            event.elem.css('position', 'fixed');
+            event.elem.css('top', '0');
+        });
         $(document).bind('bdajax_overlay_close', function(event) {
-            $('body', document)
-                .css('padding-right', '')
-                .removeClass('modal-open');
+            console.log($('.modal:visible').length);
+            if (!$('.modal:visible').length) {
+                $('body', document)
+                    .css('padding-right', '')
+                    .removeClass('modal-open');
+            }
         });
     });
 

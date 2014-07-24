@@ -341,20 +341,7 @@
                             color: '#fff',
                             loadSpeed: 200
                         },
-                        onBeforeLoad: function() {
-                            var evt = $.Event('bdajax_overlay_before_load');
-                            evt.elem = elem;
-                            $(document).trigger(evt);
-                        },
-                        onLoad: function() {
-                            var evt = $.Event('bdajax_overlay_load');
-                            evt.elem = elem;
-                            $(document).trigger(evt);
-                        },
                         onClose: function() {
-                            var evt = $.Event('bdajax_overlay_close');
-                            evt.elem = elem;
-                            $(document).trigger(evt);
                             var content = $(content_selector,
                                             this.getOverlay());
                             content.html('');
@@ -379,24 +366,13 @@
                 onBeforeLoad: function() {
                     var overlay = this.getOverlay();
                     $('.message', overlay).html(message);
-                    var evt = $.Event('bdajax_overlay_before_load');
-                    evt.elem = elem;
-                    $(document).trigger(evt);
                 },
                 onLoad: function() {
                     elem.find('button:first').focus();
-                    var evt = $.Event('bdajax_overlay_load');
-                    evt.elem = elem;
-                    $(document).trigger(evt);
                 },
                 onBeforeClose: function() {
                     var overlay = this.getOverlay();
                     $('.message', overlay).empty();
-                },
-                onClose: function() {
-                    var evt = $.Event('bdajax_overlay_close');
-                    evt.elem = elem;
-                    $(document).trigger(evt);
                 },
                 oneInstance: false,
                 closeOnClick: false,
@@ -444,19 +420,6 @@
                     $('button.cancel', overlay).bind('click', function() {
                         closefunc();
                     });
-                    var evt = $.Event('bdajax_overlay_before_load');
-                    evt.elem = elem;
-                    $(document).trigger(evt);
-                },
-                onLoad: function() {
-                    var evt = $.Event('bdajax_overlay_load');
-                    evt.elem = elem;
-                    $(document).trigger(evt);
-                },
-                onClose: function() {
-                    var evt = $.Event('bdajax_overlay_close');
-                    evt.elem = elem;
-                    $(document).trigger(evt);
                 },
                 oneInstance: false,
                 closeOnClick: false,

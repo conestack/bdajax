@@ -9,35 +9,25 @@
 
 (function($) {
 
-    // bs3 overlay effect
     $.tools.overlay.addEffect('bs3',
         function(pos, onLoad) {
-            this.getOverlay().fadeIn(300);
+            $('body', document).css('padding-right', '13px')
+                               .addClass('modal-open');
+            var overlay = this.getOverlay();
+            overlay.css('overflow-y', 'scroll')
+                   .css('position', 'fixed')
+                   .css('top', '0');
+            overlay.fadeIn(300, onLoad);
         }, function(onClose) {
-            this.getOverlay().fadeOut(300);
+            if ($('.modal:visible').length == 1) {
+                $('body', document).css('padding-right', '')
+                                   .removeClass('modal-open');
+            }
+            var overlay = this.getOverlay();
+            overlay.fadeOut(300, onClose);
         }
     );
 
-    $(document).ready(function() {
-        $.tools.overlay.conf.top = 0;
-        $.tools.overlay.conf.effect = 'bs3';
-
-        $(document).bind('bdajax_overlay_before_load', function(event) {
-            event.elem.css('overflow-y', 'scroll');
-            event.elem.css('position', 'fixed');
-            event.elem.css('top', '0');
-            $('body', document)
-                .css('padding-right', '13px')
-                .addClass('modal-open');
-        });
-
-        $(document).bind('bdajax_overlay_close', function(event) {
-            if (!$('.modal:visible').length) {
-                $('body', document)
-                    .css('padding-right', '')
-                    .removeClass('modal-open');
-            }
-        });
-    });
+    $.tools.overlay.conf.effect = 'bs3';
 
 })(jQuery);

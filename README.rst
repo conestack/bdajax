@@ -706,6 +706,9 @@ Changes
 1.6.0.dev0
 ----------
 
+- Change order of available overlays in template.
+  [rnix, 2014-07-24]
+
 - Add ``ajax:path functionality``.
   [rnix, 2014-07-22]
 
@@ -714,8 +717,9 @@ Changes
   [rnix, 2014-07-04]
 
 - ``bdajax.overlay``, ``bdajax.message`` and ``bdajax.dialog`` now trigger
-  ``bdajax_overlay_before_load`` and ``bdajax_overlay_load`` custom events
-  refering to aquivalent jquery tools overlay callbacks.
+  ``bdajax_overlay_before_load``, ``bdajax_overlay_load`` and
+  ``bdajax_overlay_close`` custom events refering to aquivalent jquery tools
+  overlay callbacks.
   [rnix, 2014-07-04]
 
 - Update Ajax Spinner Image.

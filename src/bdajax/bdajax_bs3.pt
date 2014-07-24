@@ -5,48 +5,6 @@
        alt="" />
 </div>
 
-<div class="modal ajax-message" id="ajax-message">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close">
-          <span aria-hidden="true">&times;</span>
-          <span class="sr-only">Close</span>
-        </button>
-        <h3 class="modal-title">Message</h3>
-      </div>
-      <div class="modal-body message">
-        Message
-      </div>
-      <div class="modal-footer">
-        <button type="button"
-                class="close btn btn-default allowMultiSubmit">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal ajax-dialog" id="ajax-dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close">
-          <span aria-hidden="true">&times;</span>
-          <span class="sr-only">Close</span>
-        </button>
-        <h3 class="modal-title">Confirm</h3>
-      </div>
-      <div class="modal-body text">
-        Text
-      </div>
-      <div class="modal-footer">
-        <button class="submit btn btn-default allowMultiSubmit">OK</button> 
-        <button class="cancel btn btn-default allowMultiSubmit">Cancel</button> 
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="modal ajax-overlay" id="ajax-form">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -80,6 +38,48 @@
         Overlay Content
       </div>
       <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal ajax-dialog" id="ajax-dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+        <h3 class="modal-title">Confirm</h3>
+      </div>
+      <div class="modal-body text">
+        Text
+      </div>
+      <div class="modal-footer">
+        <button class="submit btn btn-default allowMultiSubmit">OK</button> 
+        <button class="cancel btn btn-default allowMultiSubmit">Cancel</button> 
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal ajax-message" id="ajax-message">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+        <h3 class="modal-title">Message</h3>
+      </div>
+      <div class="modal-body message">
+        Message
+      </div>
+      <div class="modal-footer">
+        <button type="button"
+                class="close btn btn-default allowMultiSubmit">Close</button>
       </div>
     </div>
   </div>

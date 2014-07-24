@@ -11,20 +11,13 @@
 
     $.tools.overlay.addEffect('bs3',
         function(pos, onLoad) {
-            $('body', document).css('padding-right', '13px')
-                               .addClass('modal-open');
-            var overlay = this.getOverlay();
-            overlay.css('overflow-y', 'scroll')
-                   .css('position', 'fixed')
-                   .css('top', '0');
-            overlay.fadeIn(300, onLoad);
+            $('body').css('padding-right', '13px').addClass('modal-open');
+            this.getOverlay().fadeIn(300, onLoad);
         }, function(onClose) {
             if ($('.modal:visible').length == 1) {
-                $('body', document).css('padding-right', '')
-                                   .removeClass('modal-open');
+                $('body').css('padding-right', '').removeClass('modal-open');
             }
-            var overlay = this.getOverlay();
-            overlay.fadeOut(300, onClose);
+            this.getOverlay().fadeOut(300, onClose);
         }
     );
 

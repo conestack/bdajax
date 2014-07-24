@@ -393,6 +393,11 @@
                     var overlay = this.getOverlay();
                     $('.message', overlay).empty();
                 },
+                onClose: function() {
+                    var evt = $.Event('bdajax_overlay_close');
+                    evt.elem = elem;
+                    $(document).trigger(evt);
+                },
                 oneInstance: false,
                 closeOnClick: false,
                 fixed: false,
@@ -445,6 +450,11 @@
                 },
                 onLoad: function() {
                     var evt = $.Event('bdajax_overlay_load');
+                    evt.elem = elem;
+                    $(document).trigger(evt);
+                },
+                onClose: function() {
+                    var evt = $.Event('bdajax_overlay_close');
                     evt.elem = elem;
                     $(document).trigger(evt);
                 },

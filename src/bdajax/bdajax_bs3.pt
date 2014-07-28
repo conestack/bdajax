@@ -13,7 +13,7 @@
           <span aria-hidden="true">&times;</span>
           <span class="sr-only">Close</span>
         </button>
-        <h3 class="modal-title">&nbsp;</h3>
+        <h5 class="modal-title">&nbsp;</h5>
       </div>
       <div class="modal-body overlay_content">
         Form Content
@@ -32,7 +32,7 @@
           <span aria-hidden="true">&times;</span>
           <span class="sr-only">Close</span>
         </button>
-        <h3 class="modal-title">&nbsp;</h3>
+        <h5 class="modal-title">&nbsp;</h5>
       </div>
       <div class="modal-body overlay_content">
         Overlay Content
@@ -51,7 +51,7 @@
           <span aria-hidden="true">&times;</span>
           <span class="sr-only">Close</span>
         </button>
-        <h3 class="modal-title">Confirm</h3>
+        <h5 class="modal-title">Confirm</h5>
       </div>
       <div class="modal-body text">
         Text
@@ -72,7 +72,7 @@
           <span aria-hidden="true">&times;</span>
           <span class="sr-only">Close</span>
         </button>
-        <h3 class="modal-title">Message</h3>
+        <h5 class="modal-title">Message</h5>
       </div>
       <div class="modal-body message">
         Message

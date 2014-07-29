@@ -8,3 +8,13 @@
     margin-top:-32px;
     margin-left:-32px;
 }
+.modal-footer button.close {
+    background-image:linear-gradient(to bottom, #fff 0%, #e0e0e0 100%);
+    background-repeat:repeat-x;
+    border:#ccc 1px solid;
+    padding:6px 12px;
+    font-size:14px;
+    font-weight:normal;
+    line-height:1.42857;
+    opacity:1;
+}

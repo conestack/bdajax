@@ -18,3 +18,33 @@
     line-height:1.42857;
     opacity:1;
 }
+.modal-body.info,
+.modal-body.warning,
+.modal-body.error {
+    padding-left:14px;
+    min-height:80px;
+}
+.modal-body.info:before,
+.modal-body.warning:before,
+.modal-body.error:before {
+    top:2px;
+    position:relative;
+    display:inline-block;
+    font-family:'Glyphicons Halflings';
+    font-style:normal;
+    font-weight:400;
+    width:60px;
+    height:60px;
+    font-size:46px;
+    line-height:46px;
+    float:left;
+}
+.modal-body.info:before {
+    content:"";
+}​
+.modal-body.warning:before {
+    content:"";
+}
+.modal-body.error:before {
+    content:"";
+}

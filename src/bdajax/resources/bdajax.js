@@ -183,7 +183,6 @@
         },
 
         path: function(path) {
-            /*
             if (typeof(window.history.replaceState) === undefined) {
                 return;
             }
@@ -191,7 +190,6 @@
                 path = '/' + path;
             }
             window.history.replaceState({}, '', path);
-            */
         },
 
         action: function(options) {

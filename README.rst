@@ -703,8 +703,8 @@ Contributors
 Changes
 =======
 
-1.6.0.dev0
-----------
+1.6.0 (unreleased)
+------------------
 
 - Change order of available overlays in template.
   [rnix, 2014-07-24]

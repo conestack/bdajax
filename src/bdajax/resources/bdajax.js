@@ -1,5 +1,5 @@
 /* jslint browser: true */
-/* global jQuery, bdajax */
+/* global jQuery */
 /*
  * bdajax v1.6.0
  *
@@ -11,44 +11,10 @@
  * - jQuery Tools overlay.js
  */
 
-(function($, bdajax) {
+var bdajax;
+
+(function($) {
     "use strict";
-
-    $(document).ready(function() {
-        bdajax.spinner.hide();
-        $(document).bdajax();
-    });
-
-    $.fn.bdajax = function() {
-        var context = $(this);
-        $('*', context).each(function() {
-            for (var i in this.attributes) {
-                var attr = this.attributes[i];
-                if (attr && attr.nodeName) {
-                    var name = attr.nodeName;
-                    if (name.indexOf('ajax:bind') > -1) {
-                        var events = attr.nodeValue;
-                        var ajax = $(this);
-                        ajax.unbind(events);
-                        if (ajax.attr('ajax:action') || ajax.attr(
-                            'ajax:event') || ajax.attr(
-                            'ajax:overlay')) {
-                            ajax.bind(events, bdajax._dispatching_handler);
-                        }
-                    }
-                    if (name.indexOf('ajax:form') > -1) {
-                        bdajax.prepare_ajax_form($(this));
-                    }
-                }
-            }
-        });
-        // B/C: Ajax forms have a dedicated ``ajax:form`` directive now.
-        bdajax.bind_ajax_form(context);
-        for (var binder in bdajax.binders) {
-            bdajax.binders[binder](context);
-        }
-        return context;
-    };
 
     bdajax = {
 
@@ -601,4 +567,42 @@
         }
     };
 
-}(jQuery, bdajax));
+
+    $.fn.bdajax = function() {
+        var context = $(this);
+        $('*', context).each(function() {
+            for (var i in this.attributes) {
+                var attr = this.attributes[i];
+                if (attr && attr.nodeName) {
+                    var name = attr.nodeName;
+                    if (name.indexOf('ajax:bind') > -1) {
+                        var events = attr.nodeValue;
+                        var ajax = $(this);
+                        ajax.unbind(events);
+                        if (ajax.attr('ajax:action') || ajax.attr(
+                            'ajax:event') || ajax.attr(
+                            'ajax:overlay')) {
+                            ajax.bind(events, bdajax._dispatching_handler);
+                        }
+                    }
+                    if (name.indexOf('ajax:form') > -1) {
+                        bdajax.prepare_ajax_form($(this));
+                    }
+                }
+            }
+        });
+        // B/C: Ajax forms have a dedicated ``ajax:form`` directive now.
+        bdajax.bind_ajax_form(context);
+        for (var binder in bdajax.binders) {
+            bdajax.binders[binder](context);
+        }
+        return context;
+    };
+
+
+    $(document).ready(function() {
+        bdajax.spinner.hide();
+        $(document).bdajax();
+    });
+
+}(jQuery));

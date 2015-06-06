@@ -1,3 +1,5 @@
+/* jslint browser: true */
+/* global jQuery */
 /*
  * bdajax v1.6.0
  *
@@ -9,43 +11,10 @@
  * - jQuery Tools overlay.js
  */
 
+var bdajax;
+
 (function($) {
-
-    $(document).ready(function() {
-        bdajax.spinner.hide();
-        $(document).bdajax();
-    });
-
-    $.fn.bdajax = function() {
-        var context = $(this);
-        $('*', context).each(function() {
-            for (var i in this.attributes) {
-                var attr = this.attributes[i];
-                if (attr && attr.nodeName) {
-                    var name = attr.nodeName;
-                    if (name.indexOf('ajax:bind') > -1) {
-                        var events = attr.nodeValue;
-                        var ajax = $(this);
-                        ajax.unbind(events);
-                        if (ajax.attr('ajax:action')
-                         || ajax.attr('ajax:event')
-                         || ajax.attr('ajax:overlay')) {
-                            ajax.bind(events, bdajax._dispatching_handler);
-                        }
-                    }
-                    if (name.indexOf('ajax:form') > -1) {
-                        bdajax.prepare_ajax_form($(this));
-                    }
-                }
-            }
-        });
-        // B/C: Ajax forms have a dedicated ``ajax:form`` directive now.
-        bdajax.bind_ajax_form(context);
-        for (var binder in bdajax.binders) {
-            bdajax.binders[binder](context);
-        }
-        return context;
-    }
+    "use strict";
 
     bdajax = {
 
@@ -63,7 +32,7 @@
             _request_count: 0,
 
             elem: function() {
-                if (this._elem == null) {
+                if (this._elem === null) {
                     this._elem = $('#ajax-spinner');
                 }
                 return this._elem;
@@ -94,7 +63,7 @@
             var parser = document.createElement('a');
             parser.href = url;
             url = parser.protocol + '//' + parser.host + parser.pathname;
-            if (url.charAt(url.length - 1) == '/') {
+            if (url.charAt(url.length - 1) === '/') {
                 url = url.substring(0, url.length - 1);
             }
             return url;
@@ -106,8 +75,9 @@
             var params = {};
             var search = parser.search;
             if (search) {
-                var parameters = search.substring(1, search.length).split('&');
-                for (var i = 0;  i < parameters.length; i++) {
+                var parameters = search.substring(1, search.length).split(
+                    '&');
+                for (var i = 0; i < parameters.length; i++) {
                     var param = parameters[i].split('=');
                     params[param[0]] = param[1];
                 }
@@ -125,7 +95,9 @@
             var url = this.parseurl(target);
             var params = this.parsequery(target);
             var path = this.parsepath(target);
-            if (!params) { params = {}; }
+            if (!params) {
+                params = {};
+            }
             return {
                 url: url,
                 params: params,
@@ -134,7 +106,7 @@
         },
 
         request: function(options) {
-            if (options.url.indexOf('?') != -1) {
+            if (options.url.indexOf('?') !== -1) {
                 var addparams = options.params;
                 options.params = this.parsequery(options.url);
                 options.url = this.parseurl(options.url);
@@ -142,9 +114,13 @@
                     options.params[key] = addparams[key];
                 }
             } else {
-                if (!options.params) { options.params = {}; }
+                if (!options.params) {
+                    options.params = {};
+                }
             }
-            if (!options.type) { options.type = 'html'; }
+            if (!options.type) {
+                options.type = 'html';
+            }
             if (!options.error) {
                 options.error = function(req, status, exception) {
                     if (parseInt(status, 10) === 403) {
@@ -156,21 +132,23 @@
                     }
                 };
             }
-            if (!options.cache) { options.cache = false; }
+            if (!options.cache) {
+                options.cache = false;
+            }
             var wrapped_success = function(data, status, request) {
                 options.success(data, status, request);
                 bdajax.spinner.hide();
-            }
+            };
             var wrapped_error = function(request, status, error) {
-                if (request.status == 0) {
+                if (request.status === 0) {
                     bdajax.spinner.hide(true);
                     return;
                 }
-                var status = request.status || status;
-                var error = request.statusText || error;
+                status = request.status || status;
+                error = request.statusText || error;
                 options.error(request, status, error);
                 bdajax.spinner.hide(true);
-            }
+            };
             this.spinner.show();
             $.ajax({
                 url: options.url,
@@ -186,7 +164,7 @@
             if (typeof(window.history.replaceState) === undefined) {
                 return;
             }
-            if (path.charAt(0) != '/') {
+            if (path.charAt(0) !== '/') {
                 path = '/' + path;
             }
             window.history.replaceState({}, '', path);
@@ -198,7 +176,7 @@
         },
 
         fiddle: function(payload, selector, mode) {
-            if (mode == 'replace') {
+            if (mode === 'replace') {
                 $(selector).replaceWith(payload);
                 var context = $(selector);
                 if (context.length) {
@@ -206,7 +184,7 @@
                 } else {
                     $(document).bdajax();
                 }
-            } else if (mode == 'inner') {
+            } else if (mode === 'inner') {
                 $(selector).html(payload);
                 $(selector).bdajax();
             }
@@ -217,12 +195,12 @@
                 return;
             }
             this.spinner.hide();
-            var definition, target, path;
+            var definition, target;
             for (var idx in definitions) {
                 definition = definitions[idx];
-                if (definition.type == 'path') {
+                if (definition.type === 'path') {
                     this.path(definition.path);
-                } else if (definition.type == 'action') {
+                } else if (definition.type === 'action') {
                     target = this.parsetarget(definition.target);
                     this.action({
                         url: target.url,
@@ -231,11 +209,11 @@
                         mode: definition.mode,
                         selector: definition.selector
                     });
-                } else if (definition.type == 'event') {
+                } else if (definition.type === 'event') {
                     this.trigger(definition.name,
-                                 definition.selector,
-                                 definition.target);
-                } else if (definition.type == 'overlay') {
+                        definition.selector,
+                        definition.target);
+                } else if (definition.type === 'overlay') {
                     if (definition.close) {
                         var elem = $(definition.selector);
                         var overlay = elem.data('overlay');
@@ -252,10 +230,12 @@
                             params: target.params
                         });
                     }
-                } else if (definition.type == 'message') {
+                } else if (definition.type === 'message') {
                     if (definition.flavor) {
-                        var flavors = ['message', 'info', 'warning', 'error'];
-                        if (flavors.indexOf(definition.flavor) == -1) {
+                        var flavors = ['message', 'info', 'warning',
+                            'error'
+                        ];
+                        if (flavors.indexOf(definition.flavor) === -1) {
                             throw "Continuation definition.flavor unknown";
                         }
                         switch (definition.flavor) {
@@ -284,21 +264,21 @@
 
         trigger: function(name, selector, target) {
             var create_event = function() {
-                var evt = $.Event(name);
-                if (target.url) {
-                    evt.ajaxtarget = target;
-                } else {
-                    evt.ajaxtarget = bdajax.parsetarget(target);
-                }
-                return evt;
-            }
-            // _dispatching_handler calls stopPropagation on event which is
-            // fine in order to prevent weird behavior on parent DOM elements,
-            // especially for standard events. Since upgrade to jQuery 1.9
-            // stopPropagation seem to react on the event instance instead of
-            // the trigger call for each element returned by selector, at least
-            // on custom events, thus we create a separate event instance for
-            // each elem returned by selector.
+                    var evt = $.Event(name);
+                    if (target.url) {
+                        evt.ajaxtarget = target;
+                    } else {
+                        evt.ajaxtarget = bdajax.parsetarget(target);
+                    }
+                    return evt;
+                };
+                // _dispatching_handler calls stopPropagation on event which is
+                // fine in order to prevent weird behavior on parent DOM elements,
+                // especially for standard events. Since upgrade to jQuery 1.9
+                // stopPropagation seem to react on the event instance instead of
+                // the trigger call for each element returned by selector, at least
+                // on custom events, thus we create a separate event instance for
+                // each elem returned by selector.
             $(selector).each(function() {
                 $(this).trigger(create_event());
             });
@@ -343,7 +323,7 @@
                         },
                         onClose: function() {
                             var content = $(content_selector,
-                                            this.getOverlay());
+                                this.getOverlay());
                             content.html('');
                         },
                         oneInstance: false,
@@ -377,26 +357,26 @@
                 oneInstance: false,
                 closeOnClick: false,
                 fixed: false,
-                top:'20%'
+                top: '20%'
             });
             elem.data('overlay').load();
         },
 
         error: function(message) {
             $("#ajax-message .message").removeClass('error warning info')
-                                       .addClass('error');
+                .addClass('error');
             this.message(message);
         },
 
         info: function(message) {
             $("#ajax-message .message").removeClass('error warning info')
-                                       .addClass('info');
+                .addClass('info');
             this.message(message);
         },
 
         warning: function(message) {
             $("#ajax-message .message").removeClass('error warning info')
-                                       .addClass('warning');
+                .addClass('warning');
             this.message(message);
         },
 
@@ -424,7 +404,7 @@
                 oneInstance: false,
                 closeOnClick: false,
                 fixed: false,
-                top:'20%'
+                top: '20%'
             });
             elem.data('overlay').load();
         },
@@ -438,7 +418,7 @@
         prepare_ajax_form: function(form) {
             form.append('<input type="hidden" name="ajax" value="1" />');
             form.attr('target', 'ajaxformresponse');
-            form.unbind().bind('submit', function(event) {
+            form.unbind().bind('submit', function() {
                 bdajax.spinner.show();
             });
         },
@@ -487,7 +467,7 @@
 
         _handle_ajax_path: function(elem, event) {
             var path = elem.attr('ajax:path');
-            if (path == 'target') {
+            if (path === 'target') {
                 var target;
                 if (event.ajaxtarget) {
                     target = event.ajaxtarget;
@@ -567,7 +547,7 @@
                     url: target.url,
                     params: target.params
                 };
-                if (defs.length == 3) {
+                if (defs.length === 3) {
                     options.content_selector = defs[2];
                 }
                 this.overlay(options);
@@ -587,4 +567,42 @@
         }
     };
 
-})(jQuery);
+
+    $.fn.bdajax = function() {
+        var context = $(this);
+        $('*', context).each(function() {
+            for (var i in this.attributes) {
+                var attr = this.attributes[i];
+                if (attr && attr.nodeName) {
+                    var name = attr.nodeName;
+                    if (name.indexOf('ajax:bind') > -1) {
+                        var events = attr.nodeValue;
+                        var ajax = $(this);
+                        ajax.unbind(events);
+                        if (ajax.attr('ajax:action') || ajax.attr(
+                            'ajax:event') || ajax.attr(
+                            'ajax:overlay')) {
+                            ajax.bind(events, bdajax._dispatching_handler);
+                        }
+                    }
+                    if (name.indexOf('ajax:form') > -1) {
+                        bdajax.prepare_ajax_form($(this));
+                    }
+                }
+            }
+        });
+        // B/C: Ajax forms have a dedicated ``ajax:form`` directive now.
+        bdajax.bind_ajax_form(context);
+        for (var binder in bdajax.binders) {
+            bdajax.binders[binder](context);
+        }
+        return context;
+    };
+
+
+    $(document).ready(function() {
+        bdajax.spinner.hide();
+        $(document).bdajax();
+    });
+
+}(jQuery));

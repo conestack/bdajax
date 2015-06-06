@@ -1,44 +1,46 @@
-<div id="ajax-spinner">
-  <img src="/++resource++bdajax/loading-spokes.svg"
-       width="64"
-       height="64"
-       alt="" />
-</div>
-
-<div class="ajax-overlay" id="ajax-form">
-  <div class="overlay_content">
-    <!--
-      need a container for further overlay DOM manipulation without loosing
-      close button.
-    -->
+<div id="bdajax-overlays">
+  <div id="ajax-spinner">
+    <img src="/++resource++bdajax/loading-spokes.svg"
+         width="64"
+         height="64"
+         alt="" />
   </div>
-</div>
 
-<div class="ajax-overlay" id="ajax-overlay">
-  <div class="overlay_content">
-    <!--
-      need a container for further overlay DOM manipulation without loosing
-      close button.
-    -->
+  <div class="ajax-overlay" id="ajax-form">
+    <div class="overlay_content">
+      <!--
+        need a container for further overlay DOM manipulation without loosing
+        close button.
+      -->
+    </div>
   </div>
-</div>
 
-<div class="ajax-dialog" id="ajax-dialog">
-  <div class="text">
+  <div class="ajax-overlay" id="ajax-overlay">
+    <div class="overlay_content">
+      <!--
+        need a container for further overlay DOM manipulation without loosing
+        close button.
+      -->
+    </div>
   </div>
-  <div class="buttons">
-    <button class="submit allowMultiSubmit">OK</button>
-    <button class="cancel allowMultiSubmit">Cancel</button>
+
+  <div class="ajax-dialog" id="ajax-dialog">
+    <div class="text">
+    </div>
+    <div class="buttons">
+      <button class="submit allowMultiSubmit">OK</button>
+      <button class="cancel allowMultiSubmit">Cancel</button>
+    </div>
   </div>
-</div>
 
-<div class="ajax-message" id="ajax-message">
-  <div class="message">Message</div>
-  <button class="close allowMultiSubmit">OK</button>
-</div>
+  <div class="ajax-message" id="ajax-message">
+    <div class="message">Message</div>
+    <button class="close allowMultiSubmit">OK</button>
+  </div>
 
-<iframe id="ajaxformresponse"
-        name="ajaxformresponse"
-        src="about:blank"
-        style="width:0px;height:0px;display:none">
-</iframe>
+  <iframe id="ajaxformresponse"
+          name="ajaxformresponse"
+          src="about:blank"
+          style="width:0px;height:0px;display:none">
+  </iframe>
+</div>

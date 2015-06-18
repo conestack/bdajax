@@ -1,3 +1,5 @@
+/* jslint browser: true */
+/* global jQuery */
 /*
  * bdajax_bs3 v1.6.0
  *
@@ -8,13 +10,14 @@
  */
 
 (function($) {
+    "use strict";
 
     $.tools.overlay.addEffect('bs3',
         function(pos, onLoad) {
             $('body').css('padding-right', '13px').addClass('modal-open');
             this.getOverlay().fadeIn(300, onLoad);
         }, function(onClose) {
-            if ($('.modal:visible').length == 1) {
+            if ($('.modal:visible').length === 1) {
                 $('body').css('padding-right', '').removeClass('modal-open');
             }
             this.getOverlay().fadeOut(300, onClose);

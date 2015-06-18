@@ -1,3 +1,5 @@
+/* jslint browser: true */
+/* global jQuery */
 /*
  * bdajax v1.6.0
  *
@@ -9,7 +11,14 @@
  * - jQuery Tools overlay.js
  */
 
+if (window.bdajax === undefined) {
+    window.bdajax = {};
+}
+
 (function($) {
+    "use strict";
+
+    var bdajax = window.bdajax;
 
     $(document).ready(function() {
         bdajax.spinner.hide();
@@ -27,9 +36,9 @@
                         var events = attr.nodeValue;
                         var ajax = $(this);
                         ajax.unbind(events);
-                        if (ajax.attr('ajax:action')
-                         || ajax.attr('ajax:event')
-                         || ajax.attr('ajax:overlay')) {
+                        if (ajax.attr('ajax:action') ||
+                            ajax.attr('ajax:event')  ||
+                            ajax.attr('ajax:overlay')) {
                             ajax.bind(events, bdajax._dispatching_handler);
                         }
                     }
@@ -45,7 +54,7 @@
             bdajax.binders[binder](context);
         }
         return context;
-    }
+    };
 
     bdajax = {
 
@@ -63,7 +72,7 @@
             _request_count: 0,
 
             elem: function() {
-                if (this._elem == null) {
+                if (this._elem === null) {
                     this._elem = $('#ajax-spinner');
                 }
                 return this._elem;
@@ -94,7 +103,7 @@
             var parser = document.createElement('a');
             parser.href = url;
             url = parser.protocol + '//' + parser.host + parser.pathname;
-            if (url.charAt(url.length - 1) == '/') {
+            if (url.charAt(url.length - 1) === '/') {
                 url = url.substring(0, url.length - 1);
             }
             return url;
@@ -134,7 +143,7 @@
         },
 
         request: function(options) {
-            if (options.url.indexOf('?') != -1) {
+            if (options.url.indexOf('?') !== -1) {
                 var addparams = options.params;
                 options.params = this.parsequery(options.url);
                 options.url = this.parseurl(options.url);
@@ -160,17 +169,17 @@
             var wrapped_success = function(data, status, request) {
                 options.success(data, status, request);
                 bdajax.spinner.hide();
-            }
+            };
             var wrapped_error = function(request, status, error) {
-                if (request.status == 0) {
+                if (request.status === 0) {
                     bdajax.spinner.hide(true);
                     return;
                 }
-                var status = request.status || status;
-                var error = request.statusText || error;
+                status = request.status || status;
+                error = request.statusText || error;
                 options.error(request, status, error);
                 bdajax.spinner.hide(true);
-            }
+            };
             this.spinner.show();
             $.ajax({
                 url: options.url,
@@ -186,7 +195,7 @@
             if (typeof(window.history.replaceState) === undefined) {
                 return;
             }
-            if (path.charAt(0) != '/') {
+            if (path.charAt(0) !== '/') {
                 path = '/' + path;
             }
             window.history.replaceState({}, '', path);
@@ -198,7 +207,7 @@
         },
 
         fiddle: function(payload, selector, mode) {
-            if (mode == 'replace') {
+            if (mode === 'replace') {
                 $(selector).replaceWith(payload);
                 var context = $(selector);
                 if (context.length) {
@@ -206,7 +215,7 @@
                 } else {
                     $(document).bdajax();
                 }
-            } else if (mode == 'inner') {
+            } else if (mode === 'inner') {
                 $(selector).html(payload);
                 $(selector).bdajax();
             }
@@ -217,12 +226,12 @@
                 return;
             }
             this.spinner.hide();
-            var definition, target, path;
+            var definition, target;
             for (var idx in definitions) {
                 definition = definitions[idx];
-                if (definition.type == 'path') {
+                if (definition.type === 'path') {
                     this.path(definition.path);
-                } else if (definition.type == 'action') {
+                } else if (definition.type === 'action') {
                     target = this.parsetarget(definition.target);
                     this.action({
                         url: target.url,
@@ -231,11 +240,11 @@
                         mode: definition.mode,
                         selector: definition.selector
                     });
-                } else if (definition.type == 'event') {
+                } else if (definition.type === 'event') {
                     this.trigger(definition.name,
                                  definition.selector,
                                  definition.target);
-                } else if (definition.type == 'overlay') {
+                } else if (definition.type === 'overlay') {
                     if (definition.close) {
                         var elem = $(definition.selector);
                         var overlay = elem.data('overlay');
@@ -252,10 +261,10 @@
                             params: target.params
                         });
                     }
-                } else if (definition.type == 'message') {
+                } else if (definition.type === 'message') {
                     if (definition.flavor) {
                         var flavors = ['message', 'info', 'warning', 'error'];
-                        if (flavors.indexOf(definition.flavor) == -1) {
+                        if (flavors.indexOf(definition.flavor) === -1) {
                             throw "Continuation definition.flavor unknown";
                         }
                         switch (definition.flavor) {
@@ -291,7 +300,7 @@
                     evt.ajaxtarget = bdajax.parsetarget(target);
                 }
                 return evt;
-            }
+            };
             // _dispatching_handler calls stopPropagation on event which is
             // fine in order to prevent weird behavior on parent DOM elements,
             // especially for standard events. Since upgrade to jQuery 1.9
@@ -487,7 +496,7 @@
 
         _handle_ajax_path: function(elem, event) {
             var path = elem.attr('ajax:path');
-            if (path == 'target') {
+            if (path === 'target') {
                 var target;
                 if (event.ajaxtarget) {
                     target = event.ajaxtarget;
@@ -567,7 +576,7 @@
                     url: target.url,
                     params: target.params
                 };
-                if (defs.length == 3) {
+                if (defs.length === 3) {
                     options.content_selector = defs[2];
                 }
                 this.overlay(options);

@@ -1,5 +1,5 @@
 /* jslint browser: true */
-/* global jQuery */
+/* global jQuery, bdajax */
 /*
  * bdajax v1.6.0
  *
@@ -15,10 +15,8 @@ if (window.bdajax === undefined) {
     window.bdajax = {};
 }
 
-(function($) {
+(function($, bdajax) {
     "use strict";
-
-    var bdajax = window.bdajax;
 
     $(document).ready(function() {
         bdajax.spinner.hide();
@@ -596,4 +594,6 @@ if (window.bdajax === undefined) {
         }
     };
 
-})(jQuery);
+    window.bdajax = bdajax;
+
+})(jQuery, bdajax);

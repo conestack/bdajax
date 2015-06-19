@@ -11,11 +11,8 @@
  * - jQuery Tools overlay.js
  */
 
-if (window.bdajax === undefined) {
-    window.bdajax = {};
-}
 
-(function($, bdajax) {
+(function($) {
     "use strict";
 
     $(document).ready(function() {
@@ -54,6 +51,7 @@ if (window.bdajax === undefined) {
         return context;
     };
 
+    // global bdajax object
     bdajax = {
 
         // By default, we redirect to the login page on 403 error.
@@ -114,7 +112,7 @@ if (window.bdajax === undefined) {
             var search = parser.search;
             if (search) {
                 var parameters = search.substring(1, search.length).split('&');
-                for (var i = 0;  i < parameters.length; i++) {
+                for (var i = 0; i < parameters.length; i++) {
                     var param = parameters[i].split('=');
                     params[param[0]] = param[1];
                 }
@@ -594,6 +592,4 @@ if (window.bdajax === undefined) {
         }
     };
 
-    window.bdajax = bdajax;
-
-})(jQuery, bdajax);
+})(jQuery);

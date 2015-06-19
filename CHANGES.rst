@@ -4,6 +4,9 @@ Changelog
 1.6.0 (unreleased)
 ------------------
 
+- Resolve JSHint errors and warnings.
+  [thet]
+
 - Add wrapper with class ``bdajax-overlays`` around ``bdajax`` browser views.
   That way, all structures can be selected at once with Diazo.
   [thet]

@@ -1,5 +1,5 @@
 /* jslint browser: true */
-/* global jQuery */
+/* global jQuery, bdajax */
 /*
  * bdajax v1.6.0
  *
@@ -11,11 +11,47 @@
  * - jQuery Tools overlay.js
  */
 
-var bdajax;
 
 (function($) {
     "use strict";
 
+    $(document).ready(function() {
+        bdajax.spinner.hide();
+        $(document).bdajax();
+    });
+
+    $.fn.bdajax = function() {
+        var context = $(this);
+        $('*', context).each(function() {
+            for (var i in this.attributes) {
+                var attr = this.attributes[i];
+                if (attr && attr.nodeName) {
+                    var name = attr.nodeName;
+                    if (name.indexOf('ajax:bind') > -1) {
+                        var events = attr.nodeValue;
+                        var ajax = $(this);
+                        ajax.unbind(events);
+                        if (ajax.attr('ajax:action') ||
+                            ajax.attr('ajax:event')  ||
+                            ajax.attr('ajax:overlay')) {
+                            ajax.bind(events, bdajax._dispatching_handler);
+                        }
+                    }
+                    if (name.indexOf('ajax:form') > -1) {
+                        bdajax.prepare_ajax_form($(this));
+                    }
+                }
+            }
+        });
+        // B/C: Ajax forms have a dedicated ``ajax:form`` directive now.
+        bdajax.bind_ajax_form(context);
+        for (var binder in bdajax.binders) {
+            bdajax.binders[binder](context);
+        }
+        return context;
+    };
+
+    // global bdajax object
     bdajax = {
 
         // By default, we redirect to the login page on 403 error.
@@ -75,8 +111,7 @@ var bdajax;
             var params = {};
             var search = parser.search;
             if (search) {
-                var parameters = search.substring(1, search.length).split(
-                    '&');
+                var parameters = search.substring(1, search.length).split('&');
                 for (var i = 0; i < parameters.length; i++) {
                     var param = parameters[i].split('=');
                     params[param[0]] = param[1];
@@ -95,9 +130,7 @@ var bdajax;
             var url = this.parseurl(target);
             var params = this.parsequery(target);
             var path = this.parsepath(target);
-            if (!params) {
-                params = {};
-            }
+            if (!params) { params = {}; }
             return {
                 url: url,
                 params: params,
@@ -114,13 +147,9 @@ var bdajax;
                     options.params[key] = addparams[key];
                 }
             } else {
-                if (!options.params) {
-                    options.params = {};
-                }
+                if (!options.params) { options.params = {}; }
             }
-            if (!options.type) {
-                options.type = 'html';
-            }
+            if (!options.type) { options.type = 'html'; }
             if (!options.error) {
                 options.error = function(req, status, exception) {
                     if (parseInt(status, 10) === 403) {
@@ -132,9 +161,7 @@ var bdajax;
                     }
                 };
             }
-            if (!options.cache) {
-                options.cache = false;
-            }
+            if (!options.cache) { options.cache = false; }
             var wrapped_success = function(data, status, request) {
                 options.success(data, status, request);
                 bdajax.spinner.hide();
@@ -211,8 +238,8 @@ var bdajax;
                     });
                 } else if (definition.type === 'event') {
                     this.trigger(definition.name,
-                        definition.selector,
-                        definition.target);
+                                 definition.selector,
+                                 definition.target);
                 } else if (definition.type === 'overlay') {
                     if (definition.close) {
                         var elem = $(definition.selector);
@@ -232,9 +259,7 @@ var bdajax;
                     }
                 } else if (definition.type === 'message') {
                     if (definition.flavor) {
-                        var flavors = ['message', 'info', 'warning',
-                            'error'
-                        ];
+                        var flavors = ['message', 'info', 'warning', 'error'];
                         if (flavors.indexOf(definition.flavor) === -1) {
                             throw "Continuation definition.flavor unknown";
                         }
@@ -264,21 +289,21 @@ var bdajax;
 
         trigger: function(name, selector, target) {
             var create_event = function() {
-                    var evt = $.Event(name);
-                    if (target.url) {
-                        evt.ajaxtarget = target;
-                    } else {
-                        evt.ajaxtarget = bdajax.parsetarget(target);
-                    }
-                    return evt;
-                };
-                // _dispatching_handler calls stopPropagation on event which is
-                // fine in order to prevent weird behavior on parent DOM elements,
-                // especially for standard events. Since upgrade to jQuery 1.9
-                // stopPropagation seem to react on the event instance instead of
-                // the trigger call for each element returned by selector, at least
-                // on custom events, thus we create a separate event instance for
-                // each elem returned by selector.
+                var evt = $.Event(name);
+                if (target.url) {
+                    evt.ajaxtarget = target;
+                } else {
+                    evt.ajaxtarget = bdajax.parsetarget(target);
+                }
+                return evt;
+            };
+            // _dispatching_handler calls stopPropagation on event which is
+            // fine in order to prevent weird behavior on parent DOM elements,
+            // especially for standard events. Since upgrade to jQuery 1.9
+            // stopPropagation seem to react on the event instance instead of
+            // the trigger call for each element returned by selector, at least
+            // on custom events, thus we create a separate event instance for
+            // each elem returned by selector.
             $(selector).each(function() {
                 $(this).trigger(create_event());
             });
@@ -323,7 +348,7 @@ var bdajax;
                         },
                         onClose: function() {
                             var content = $(content_selector,
-                                this.getOverlay());
+                                            this.getOverlay());
                             content.html('');
                         },
                         oneInstance: false,
@@ -357,26 +382,26 @@ var bdajax;
                 oneInstance: false,
                 closeOnClick: false,
                 fixed: false,
-                top: '20%'
+                top:'20%'
             });
             elem.data('overlay').load();
         },
 
         error: function(message) {
             $("#ajax-message .message").removeClass('error warning info')
-                .addClass('error');
+                                       .addClass('error');
             this.message(message);
         },
 
         info: function(message) {
             $("#ajax-message .message").removeClass('error warning info')
-                .addClass('info');
+                                       .addClass('info');
             this.message(message);
         },
 
         warning: function(message) {
             $("#ajax-message .message").removeClass('error warning info')
-                .addClass('warning');
+                                       .addClass('warning');
             this.message(message);
         },
 
@@ -404,7 +429,7 @@ var bdajax;
                 oneInstance: false,
                 closeOnClick: false,
                 fixed: false,
-                top: '20%'
+                top:'20%'
             });
             elem.data('overlay').load();
         },
@@ -418,7 +443,7 @@ var bdajax;
         prepare_ajax_form: function(form) {
             form.append('<input type="hidden" name="ajax" value="1" />');
             form.attr('target', 'ajaxformresponse');
-            form.unbind().bind('submit', function() {
+            form.unbind().bind('submit', function(event) {
                 bdajax.spinner.show();
             });
         },
@@ -567,42 +592,4 @@ var bdajax;
         }
     };
 
-
-    $.fn.bdajax = function() {
-        var context = $(this);
-        $('*', context).each(function() {
-            for (var i in this.attributes) {
-                var attr = this.attributes[i];
-                if (attr && attr.nodeName) {
-                    var name = attr.nodeName;
-                    if (name.indexOf('ajax:bind') > -1) {
-                        var events = attr.nodeValue;
-                        var ajax = $(this);
-                        ajax.unbind(events);
-                        if (ajax.attr('ajax:action') || ajax.attr(
-                            'ajax:event') || ajax.attr(
-                            'ajax:overlay')) {
-                            ajax.bind(events, bdajax._dispatching_handler);
-                        }
-                    }
-                    if (name.indexOf('ajax:form') > -1) {
-                        bdajax.prepare_ajax_form($(this));
-                    }
-                }
-            }
-        });
-        // B/C: Ajax forms have a dedicated ``ajax:form`` directive now.
-        bdajax.bind_ajax_form(context);
-        for (var binder in bdajax.binders) {
-            bdajax.binders[binder](context);
-        }
-        return context;
-    };
-
-
-    $(document).ready(function() {
-        bdajax.spinner.hide();
-        $(document).bdajax();
-    });
-
-}(jQuery));
+})(jQuery);

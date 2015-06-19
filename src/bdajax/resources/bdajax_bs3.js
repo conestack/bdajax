@@ -18,8 +18,7 @@
             this.getOverlay().fadeIn(300, onLoad);
         }, function(onClose) {
             if ($('.modal:visible').length === 1) {
-                $('body').css('padding-right', '').removeClass(
-                    'modal-open');
+                $('body').css('padding-right', '').removeClass('modal-open');
             }
             this.getOverlay().fadeOut(300, onClose);
         }
@@ -27,4 +26,4 @@
 
     $.tools.overlay.conf.effect = 'bs3';
 
-}(jQuery));
+})(jQuery);

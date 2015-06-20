@@ -11,6 +11,7 @@
  * - jQuery Tools overlay.js
  */
 
+var bdajax;
 
 (function($) {
     "use strict";

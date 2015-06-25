@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.6.0 (unreleased)
+1.6.0 (2015-06-25)
 ------------------
 
 - Resolve JSHint errors and warnings.

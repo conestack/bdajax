@@ -99,7 +99,12 @@ var bdajax;
         parseurl: function(url) {
             var parser = document.createElement('a');
             parser.href = url;
-            url = parser.protocol + '//' + parser.host + parser.pathname;
+            var path = parser.pathname;
+            if (parser.pathname.startsWith('/') === false) {
+                // Internet Explorer 11 doesn't startsWith '/'
+                path = '/' + path;
+            }
+            url = parser.protocol + '//' + parser.host + '/' + path;
             if (url.charAt(url.length - 1) === '/') {
                 url = url.substring(0, url.length - 1);
             }

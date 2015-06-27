@@ -4,7 +4,9 @@ Changelog
 1.6.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix Internet Explorer 11 problem, where the pathname attribute on URL parsing
+  on an "a" element doesn't start with '/'.
+  [thet]
 
 
 1.6.0 (2015-06-25)

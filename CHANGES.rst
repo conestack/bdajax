@@ -4,7 +4,8 @@ Changelog
 1.6.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix brown bag release.
+  [thet]
 
 
 1.6.1 (2015-06-27)

@@ -100,7 +100,7 @@ var bdajax;
             var parser = document.createElement('a');
             parser.href = url;
             var path = parser.pathname;
-            if (parser.pathname.startsWith('/') === false) {
+            if (path.startsWith('/') === false) {
                 // Internet Explorer 11 doesn't startsWith '/'
                 path = '/' + path;
             }

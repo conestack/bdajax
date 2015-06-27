@@ -1,14 +1,8 @@
 Changelog
 =========
 
-1.6.2 (2015-06-27)
-------------------
 
-- Fix brown bag release.
-  [thet]
-
-
-1.6.1 (2015-06-27)
+1.6.1 (unreleased)
 ------------------
 
 - Fix Internet Explorer 11 problem, where the pathname attribute on URL parsing

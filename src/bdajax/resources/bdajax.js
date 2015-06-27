@@ -4,7 +4,7 @@
  * bdajax v1.6.0
  *
  * Author: Robert Niederreiter
- * License: GPL
+ * License: Simplified BSD
  *
  * Requires:
  * - jQuery 1.6.4+

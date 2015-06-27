@@ -698,3 +698,4 @@ Contributors
 
 - Robert Niederreiter (Author)
 - Attila Oláh
+- Johannes Raggam

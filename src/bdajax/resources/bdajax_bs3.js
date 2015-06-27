@@ -4,7 +4,7 @@
  * bdajax_bs3 v1.6.0
  *
  * Author: Robert Niederreiter
- * License: GPL
+ * License: Simplified BSD
  *
  * Additional script if bootstrap 3 is used for adopting overlay behavior.
  */

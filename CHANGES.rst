@@ -5,6 +5,10 @@ Changelog
 1.6.2 (unreleased)
 ------------------
 
+- Check path starts with '/' via ``indexOf`` function instead of
+  IE-unsupported ``startsWith`` function in ``bdajax.parseurl``.
+  [rnix, 2015-07-29]
+
 - Fix license in JS files.
 
 

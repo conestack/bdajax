@@ -100,8 +100,8 @@ var bdajax;
             var parser = document.createElement('a');
             parser.href = url;
             var path = parser.pathname;
-            if (path.startsWith('/') === false) {
-                // Internet Explorer 11 doesn't startsWith '/'
+            if (path.indexOf('/') !== 0) {
+                // Internet Explorer 11 doesn't starts with '/'
                 path = '/' + path;
             }
             url = parser.protocol + '//' + parser.host + '/' + path;

@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-1.6.2 (unreleased)
+1.6.2 (2015-07-31)
 ------------------
 
 - Check path starts with '/' via ``indexOf`` function instead of

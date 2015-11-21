@@ -4,7 +4,8 @@ Changelog
 1.6.3 (unreleased)
 ------------------
 
-- No changes yet.
+- Fix ``bdajax.parseurl``.
+  [rnix, 2015-11-21]
 
 
 1.6.2 (2015-07-31)

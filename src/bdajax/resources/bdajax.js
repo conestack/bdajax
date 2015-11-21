@@ -104,7 +104,7 @@ var bdajax;
                 // Internet Explorer 11 doesn't starts with '/'
                 path = '/' + path;
             }
-            url = parser.protocol + '//' + parser.host + '/' + path;
+            url = parser.protocol + '//' + parser.host + path;
             if (url.charAt(url.length - 1) === '/') {
                 url = url.substring(0, url.length - 1);
             }

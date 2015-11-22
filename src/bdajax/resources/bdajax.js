@@ -1,7 +1,7 @@
 /* jslint browser: true */
 /* global jQuery, bdajax */
 /*
- * bdajax v1.6.0
+ * bdajax v1.6.3
  *
  * Author: Robert Niederreiter
  * License: Simplified BSD
@@ -243,9 +243,11 @@ var bdajax;
                         selector: definition.selector
                     });
                 } else if (definition.type === 'event') {
-                    this.trigger(definition.name,
-                                 definition.selector,
-                                 definition.target);
+                    this.trigger(
+                        definition.name,
+                        definition.selector,
+                        definition.target
+                    );
                 } else if (definition.type === 'overlay') {
                     if (definition.close) {
                         var elem = $(definition.selector);

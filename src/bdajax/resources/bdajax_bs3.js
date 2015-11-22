@@ -1,7 +1,7 @@
 /* jslint browser: true */
 /* global jQuery */
 /*
- * bdajax_bs3 v1.6.0
+ * bdajax_bs3 v1.6.3
  *
  * Author: Robert Niederreiter
  * License: Simplified BSD

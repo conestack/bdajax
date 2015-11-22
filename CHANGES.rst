@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.6.3 (unreleased)
+1.6.3 (2015-11-22)
 ------------------
 
 - Fix ``bdajax.parseurl``.

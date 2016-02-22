@@ -11,15 +11,28 @@
  * - jQuery Tools overlay.js
  */
 
-var bdajax;
-
-(function($) {
+(function (root, factory) {
     "use strict";
 
-    $(document).ready(function() {
-        bdajax.spinner.hide();
-        $(document).bdajax();
-    });
+    if (typeof define === 'function' && define.amd) {
+        // Make this module AMD (Asynchronous Module Definition) compatible,
+        // so that it can be used with Require.js or other module loaders.
+        define([
+            "jquery"
+            ], function() {
+                return factory.apply(this, arguments);
+            });
+    } else {
+        // A module loader is not available. In this case, we need the
+        // patterns library to be available as a global variable "patterns"
+        factory(root.patterns, root.patterns.Parser, root.patterns.Base);
+    }
+}(this, function($) {
+    // This is the actual module and in here we put the code for the pattern.
+
+    // Tell the interpreter to execute in "strict" mode.
+    // For more info: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode
+    "use strict";
 
     $.fn.bdajax = function() {
         var context = $(this);
@@ -600,4 +613,8 @@ var bdajax;
         }
     };
 
-})(jQuery);
+    bdajax.spinner.hide();
+    $(document).bdajax();
+
+
+}));

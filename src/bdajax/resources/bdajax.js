@@ -20,7 +20,7 @@
         define([
             "jquery"
             ], function() {
-                return factory.apply(this, arguments);
+                return factory.apply(this);
             });
     } else {
         // A module loader is not available. In this case, we need the
@@ -616,5 +616,6 @@
     bdajax.spinner.hide();
     $(document).bdajax();
 
+    }
 
 }));

@@ -66,7 +66,8 @@
     };
 
     // global bdajax object
-    var bdajax = {
+    // XXX this need to be defined clean
+    bdajax = {
 
         // By default, we redirect to the login page on 403 error.
         // That we assume at '/login'.

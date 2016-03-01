@@ -1,9 +1,10 @@
 /* jslint browser: true */
 /* global define, jQuery */
 /*
- * bdajax v1.6.3
+ * bdajax v2.0.0
  *
  * Author: Robert Niederreiter
+ * Contributors: Petyer Holzer, Jens Klein
  * License: Simplified BSD
  *
  * Requires:

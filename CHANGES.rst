@@ -1,6 +1,12 @@
 Changelog
 =========
 
+2.0.0 (unreleased)
+------------------
+
+- Make the module AMD/require.js conform.
+  [agitator, jensens, 2015-03-01]
+
 1.6.3 (2015-11-22)
 ------------------
 

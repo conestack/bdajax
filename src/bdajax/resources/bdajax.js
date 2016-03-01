@@ -1,5 +1,5 @@
 /* jslint browser: true */
-/* global jQuery, bdajax */
+/* global define, jQuery */
 /*
  * bdajax v1.6.3
  *
@@ -26,7 +26,7 @@
             });
     } else {
         // Browser globals => just set it global
-        root.bdajax = factory(jquery);
+        root.bdajax = factory(jQuery);
     }
 }(this, function($) {
     // This is the actual bdajax module.

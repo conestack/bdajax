@@ -19,9 +19,9 @@
         // Make this module AMD (Asynchronous Module Definition) compatible,
         // so that it can be used with Require.js or other module loaders.
         // Register as an anonymous module.
-        define([
-            "jquery"
-            ], function(jquery) {
+        define(
+            ["jquery"],
+            function(jquery) {
                 return (root.bdajax = factory(jquery));
             });
     } else {

@@ -13,28 +13,30 @@
 
 (function (root, factory) {
     "use strict";
-
+    // Use either AMD or browser globals to create a module.
+    // see https://github.com/umdjs/umd for details
     if (typeof define === 'function' && define.amd) {
         // Make this module AMD (Asynchronous Module Definition) compatible,
         // so that it can be used with Require.js or other module loaders.
+        // Register as an anonymous module.
         define([
             "jquery"
-            ], function() {
-                return factory.apply(this);
+            ], function(jquery) {
+                return (root.bdajax = factory(jquery));
             });
     } else {
-        // A module loader is not available. In this case, we need the
-        // patterns library to be available as a global variable "patterns"
-        factory(root.patterns, root.patterns.Parser, root.patterns.Base);
+        // Browser globals => just set it global
+        root.bdajax = factory(jquery);
     }
 }(this, function($) {
-    // This is the actual module and in here we put the code for the pattern.
+    // This is the actual bdajax module.
 
     // Tell the interpreter to execute in "strict" mode.
     // For more info: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode
     "use strict";
 
     $.fn.bdajax = function() {
+        // bind bdajax, mus be called if document loaded or dom changed.
         var context = $(this);
         $('*', context).each(function() {
             for (var i in this.attributes) {
@@ -65,9 +67,8 @@
         return context;
     };
 
-    // global bdajax object
-    // XXX this need to be defined clean
-    bdajax = {
+    // exported bdajax module object
+    var bdajax = {
 
         // By default, we redirect to the login page on 403 error.
         // That we assume at '/login'.
@@ -614,7 +615,12 @@
         }
     };
 
+    // XXX this mus be wrapped in a document ready
     bdajax.spinner.hide();
     $(document).bdajax();
+    // /XXX
+
+    // return the value to define the module export.
+    return bdajax;
 
 }));

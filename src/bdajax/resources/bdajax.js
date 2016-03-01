@@ -66,7 +66,7 @@
     };
 
     // global bdajax object
-    bdajax = {
+    var bdajax = {
 
         // By default, we redirect to the login page on 403 error.
         // That we assume at '/login'.
@@ -615,7 +615,5 @@
 
     bdajax.spinner.hide();
     $(document).bdajax();
-
-    }
 
 }));

@@ -623,11 +623,6 @@
         }
     };
 
-    // XXX this mus be wrapped in a document ready
-    bdajax.spinner.hide();
-    $(document).bdajax();
-    // /XXX
-
     // return the value to define the module export.
     return bdajax;
 

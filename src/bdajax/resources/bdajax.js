@@ -35,40 +35,47 @@
     // For more info: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode
     "use strict";
 
+    // register as jquery plugin, convinience/ BBB
+    // keep in mind that in case of amd this code is executed - and so this bindind set -
+    // at the first time its required!
     $.fn.bdajax = function() {
-        // bind bdajax, mus be called if document loaded or dom changed.
-        var context = $(this);
-        $('*', context).each(function() {
-            for (var i in this.attributes) {
-                var attr = this.attributes[i];
-                if (attr && attr.nodeName) {
-                    var name = attr.nodeName;
-                    if (name.indexOf('ajax:bind') > -1) {
-                        var events = attr.nodeValue;
-                        var ajax = $(this);
-                        ajax.unbind(events);
-                        if (ajax.attr('ajax:action') ||
-                            ajax.attr('ajax:event')  ||
-                            ajax.attr('ajax:overlay')) {
-                            ajax.bind(events, bdajax._dispatching_handler);
-                        }
-                    }
-                    if (name.indexOf('ajax:form') > -1) {
-                        bdajax.prepare_ajax_form($(this));
-                    }
-                }
-            }
-        });
-        // B/C: Ajax forms have a dedicated ``ajax:form`` directive now.
-        bdajax.bind_ajax_form(context);
-        for (var binder in bdajax.binders) {
-            bdajax.binders[binder](context);
-        }
-        return context;
+        bdajax.apply(this);
     };
 
     // exported bdajax module object
     var bdajax = {
+
+        apply: function (element) {
+            // apply bdajax, must be called if document loaded or dom changed.
+            var context = $(element);
+            $('*', context).each(function() {
+                for (var i in this.attributes) {
+                    var attr = this.attributes[i];
+                    if (attr && attr.nodeName) {
+                        var name = attr.nodeName;
+                        if (name.indexOf('ajax:bind') > -1) {
+                            var events = attr.nodeValue;
+                            var ajax = $(this);
+                            ajax.unbind(events);
+                            if (ajax.attr('ajax:action') ||
+                                ajax.attr('ajax:event')  ||
+                                ajax.attr('ajax:overlay')) {
+                                ajax.bind(events, bdajax._dispatching_handler);
+                            }
+                        }
+                        if (name.indexOf('ajax:form') > -1) {
+                            bdajax.prepare_ajax_form($(this));
+                        }
+                    }
+                }
+            });
+            // B/C: Ajax forms have a dedicated ``ajax:form`` directive now.
+            bdajax.bind_ajax_form(context);
+            for (var binder in bdajax.binders) {
+                bdajax.binders[binder](context);
+            }
+            return context;
+        },
 
         // By default, we redirect to the login page on 403 error.
         // That we assume at '/login'.

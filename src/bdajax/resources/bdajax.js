@@ -33,7 +33,7 @@
         // attention, this is kind of hack for BBB reasons only
         jQuery(document).ready(function() {
             root.bdajax.spinner.hide();
-            root.bdajax.apply(this);
+            root.bdajax.apply(document);
         });
     }
 }(this, function($) {
@@ -248,9 +248,8 @@
                     this.apply(document);
                 }
             } else if (mode === 'inner') {
-                var context = $(selector);
-                context.html(payload);
-                this.apply(context);
+                $(selector).html(payload);
+                this.apply($(selector));
             }
         },
 

@@ -28,12 +28,13 @@
     } else {
         // Browser globals => just set it global
         root.bdajax = factory(jQuery);
+
+        // also do a binding on document ready here.
+        // attention, this is kind of hack for BBB reasons only
         jQuery(document).ready(function() {
             root.bdajax.spinner.hide();
             root.bdajax.apply(this);
         });
-        // also do a binding on document ready here.
-        // attention, this is kind of hack for BBB reasons only
     }
 }(this, function($) {
     // This is the actual bdajax module.

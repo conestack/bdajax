@@ -1,15 +1,15 @@
 /* jslint browser: true */
 /* global define, jQuery */
-/*
- * bdajax v2.0.0
+/**
+ * @license
+ * jQuery Tools @VERSION Overlay - Overlay base. Extend it.
  *
- * Author: Robert Niederreiter
- * Contributors: Petyer Holzer, Jens Klein
- * License: Simplified BSD
+ * NO COPYRIGHTS OR LICENSES. DO WHAT YOU LIKE.
  *
- * Requires:
- * - jQuery 1.6.4+
- * - jQuery Tools overlay.js
+ * http://flowplayer.org/tools/overlay/
+ *
+ * Since: March 2008
+ * Date: @DATE
  */
 
 (function (root, factory) {

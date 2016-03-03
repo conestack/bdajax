@@ -242,13 +242,13 @@
                 $(selector).replaceWith(payload);
                 var context = $(selector);
                 if (context.length) {
-                    bdajax.apply(context.parent);
+                    this.apply(context.parent);
                 } else {
-                    bdajax.apply(document);
+                    this.apply(document);
                 }
             } else if (mode === 'inner') {
                 $(selector).html(payload);
-                $(selector).bdajax();
+                this.apply(selector);
             }
         },
 

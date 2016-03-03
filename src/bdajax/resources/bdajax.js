@@ -247,8 +247,9 @@
                     this.apply(document);
                 }
             } else if (mode === 'inner') {
-                $(selector).html(payload);
-                this.apply(selector);
+                var context = $(selector);
+                context.html(payload);
+                this.apply(context);
             }
         },
 

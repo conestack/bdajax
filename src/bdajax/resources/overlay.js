@@ -27,7 +27,7 @@
             });
     } else {
         // Browser globals => just set it global
-        root.bdajax = factory(jQuery);
+        root.overlay = factory(jQuery);
     }
 }(this, function($) {
     // This is the actual bdajax module.

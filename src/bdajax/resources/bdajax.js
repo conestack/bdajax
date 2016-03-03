@@ -14,12 +14,14 @@
 
 (function (root, factory) {
     "use strict";
-    // Use either AMD or browser globals to create a module.
-    // see https://github.com/umdjs/umd for details
+    /* Use either AMD or browser globals to create a module.
+     * see https://github.com/umdjs/umd for details
+     */
     if (typeof define === 'function' && define.amd) {
-        // Make this module AMD (Asynchronous Module Definition) compatible,
-        // so that it can be used with Require.js or other module loaders.
-        // Register as an anonymous module.
+        /* Make this module AMD (Asynchronous Module Definition) compatible,
+         * so that it can be used with Require.js or other module loaders.
+         * Register as an anonymous module.
+         */
         define(
             ["jquery"],
             function(jquery) {

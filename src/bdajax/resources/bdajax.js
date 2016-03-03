@@ -28,6 +28,12 @@
     } else {
         // Browser globals => just set it global
         root.bdajax = factory(jQuery);
+        jQuery(document).ready(function() {
+            root.bdajax.spinner.hide();
+            root.bdajax.apply(this);
+        });
+        // also do a binding on document ready here.
+        // attention, this is kind of hack for BBB reasons only
     }
 }(this, function($) {
     // This is the actual bdajax module.
@@ -236,9 +242,9 @@
                 $(selector).replaceWith(payload);
                 var context = $(selector);
                 if (context.length) {
-                    context.parent().bdajax();
+                    bdajax.apply(context.parent);
                 } else {
-                    $(document).bdajax();
+                    bdajax.apply(document);
                 }
             } else if (mode === 'inner') {
                 $(selector).html(payload);

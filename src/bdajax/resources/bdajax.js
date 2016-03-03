@@ -245,7 +245,7 @@
                 $(selector).replaceWith(payload);
                 var context = $(selector);
                 if (context.length) {
-                    this.apply(context.parent);
+                    this.apply(context.parent());
                 } else {
                     this.apply(document);
                 }

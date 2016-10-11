@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.7.0 (unreleased)
+------------------
+
+- ``bdajax.request`` supports ``method`` in options, defaults to ``GET``.
+  [rnix, 2016-10-11]
+
+
 1.6.3 (2015-11-22)
 ------------------
 

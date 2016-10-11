@@ -156,6 +156,7 @@ var bdajax;
                 if (!options.params) { options.params = {}; }
             }
             if (!options.type) { options.type = 'html'; }
+            if (!options.method) { options.type = 'GET'; }
             if (!options.error) {
                 options.error = function(req, status, exception) {
                     if (parseInt(status, 10) === 403) {
@@ -187,6 +188,7 @@ var bdajax;
                 url: options.url,
                 dataType: options.type,
                 data: options.params,
+                method: options.method,
                 success: wrapped_success,
                 error: wrapped_error,
                 cache: options.cache

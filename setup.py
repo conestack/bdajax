@@ -1,7 +1,7 @@
 from setuptools import find_packages
 from setuptools import setup
 
-version = '1.6.3'
+version = '1.7.0.dev0'
 shortdesc = 'Ajax convenience.'
 
 setup(

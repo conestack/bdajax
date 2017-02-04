@@ -90,7 +90,9 @@ Provide dependencies on server
 
 This package already includes resource configuration for ``Zope`` and
 ``pyramid``. This is done by ZCML. Include the following ZCML include statement
-to your ZCML configuration::
+to your ZCML configuration:
+
+.. code-block:: xml
 
     <include package="bdajax" />
 
@@ -101,7 +103,9 @@ a custom implementation. See 'Perform actions' below.
 Load dependencies in markup
 ---------------------------
 
-Load bdajax related Scripts::
+Load bdajax related Scripts:
+
+.. code-block:: html
 
     <!--
       include jquery 1.6.4+.
@@ -123,7 +127,9 @@ Load bdajax related Scripts::
     -->
     <script src="http://fubar.com/++resource++bdajax/bdajax_bs3.js"></script>
 
-Load bdajax related CSS::
+Load bdajax related CSS:
+
+.. code-block:: html
 
     <!--
       bdajax related default styles.
@@ -146,7 +152,9 @@ Define namespace
 ----------------
 
 In order to keep your XHTML valid when using the XML namespace extension define 
-this namespace in the XHTML document::
+this namespace in the XHTML document:
+
+.. code-block:: html
 
     <html xmlns="http://www.w3.org/1999/xhtml"
           xmlns:ajax="http://namesspaces.bluedynamics.eu/ajax">
@@ -157,7 +165,9 @@ this namespace in the XHTML document::
 Event binding
 -------------
 
-Indicate bdajax behavior on DOM element::
+Indicate bdajax behavior on DOM element:
+
+.. code-block:: html
 
     <a href="http://fubar.com"
        ajax:bind="keydown click">
@@ -170,7 +180,9 @@ Binds this element to events ``keydown`` and ``click``.
 Trigger events
 --------------
 
-Bind event behavior to DOM element::
+Bind event behavior to DOM element:
+
+.. code-block:: html
 
     <a href="http://fubar.com/baz?a=a"
        ajax:bind="click"
@@ -188,7 +200,9 @@ written to the event before it is triggered, containing definitions from
 Set URL path
 ------------
 
-Set path directly::
+Set path directly:
+
+.. code-block:: html
 
     <a href="http://fubar.com/baz?a=a"
        ajax:bind="click"
@@ -196,7 +210,9 @@ Set path directly::
       fubar
     </a>
 
-Take path from target::
+Take path from target:
+
+.. code-block:: html
 
     <a href="http://fubar.com/baz?a=a"
        ajax:bind="click"
@@ -229,7 +245,9 @@ parameters. Three additional arguments are passed:
     (see above).
 
 The resource is responsible to return the requested resource as a JSON
-response in the format as follows.::
+response in the format as follows:
+
+.. code-block:: js
 
     {
         mode: 'inner',             // the passed mode
@@ -246,7 +264,9 @@ The ``continuation`` value is an array of actions and/or events which should
 be performed after performed ajaxaction returns. Available continuation
 definitions are described below.
 
-**actions**::
+**actions**:
+
+.. code-block:: js
 
     {
         'type': 'action',
@@ -256,7 +276,9 @@ definitions are described below.
         'selector': '.foo'
     }
 
-**events**::
+**events**:
+
+.. code-block:: js
 
     {
         'type': 'event',
@@ -265,14 +287,18 @@ definitions are described below.
         'selector': '.foo'
     }
 
-**path**::
+**path**:
+
+.. code-block:: js
 
     {
         'type': 'path',
         'path': '/some/path'
     }
 
-**overlay**::
+**overlay**:
+
+.. code-block:: js
 
     {
         'type': 'overlay',
@@ -290,7 +316,9 @@ content container. ``content_selector`` defines the selector of this container.
 Setting close to ``true`` closes overlay at ``selector``. In this case
 ``action`` and target are ignored.
 
-**messages**::
+**messages**:
+
+.. code-block:: js
 
     {
         'type': 'message',
@@ -314,7 +342,9 @@ events, use this feature sparingly.
 Trigger actions directly
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Bind an action which is triggered directly.::
+Bind an action which is triggered directly:
+
+.. code-block:: html
 
     <a href="http://fubar.com/baz?a=a"
        ajax:bind="click"
@@ -333,7 +363,9 @@ Trigger actions as event listener
 
 Bind an action acting as event listener. See section 'Trigger events'.
 A triggered event indicates change of context on target with params. 
-Hereupon perform some action.::
+Hereupon perform some action:
+
+.. code-block:: html
 
     <div id="content"
          class="contextsensitiv"
@@ -349,7 +381,9 @@ since it is passed along with the event.
 Multiple behaviors
 ------------------
 
-Bind multiple behaviors to the same DOM element::
+Bind multiple behaviors to the same DOM element:
+
+.. code-block:: html
 
     <a href="http://fubar.com/baz?a=a"
        ajax:bind="click"
@@ -368,7 +402,9 @@ Confirm actions
 ---------------
 
 Bdajax can display a confirmation dialog before performing actions or trigger
-events::
+events:
+
+.. code-block:: html
 
     <a href="http://fubar.com/baz?a=a"
        ajax:bind="click"
@@ -386,7 +422,9 @@ performed.
 Overlays
 --------
 
-Ajax actions can be rendered to overlay directly by using ``bdajax:overlay``::
+Ajax actions can be rendered to overlay directly by using ``bdajax:overlay``:
+
+.. code-block:: html
 
     <a href="http://fubar.com/baz?a=a"
        ajax:bind="click"
@@ -399,7 +437,9 @@ This causes bdajax to perform action ``someaction`` on context defined in
 ``ajax:target`` and renders the result to an overlay element.
 
 In addition a selector for the overlay can be defined. This is useful if
-someone needs to display multiple overlays::
+someone needs to display multiple overlays:
+
+.. code-block:: html
 
     <a href="http://fubar.com/baz?a=a"
        ajax:bind="click"
@@ -409,7 +449,9 @@ someone needs to display multiple overlays::
     </a>
 
 Optional to a custom overlay selector a content container selector can be
-defined::
+defined:
+
+.. code-block:: html
 
     <a href="http://fubar.com/baz?a=a"
        ajax:bind="click"
@@ -429,7 +471,9 @@ Messages, infos, warnings and errors
 ``bdajax`` displays application messages in a jQuery tools overlay. 
 
 ``bdajax.message`` displays a plain message. ``bdajax.info`` ``bdajax.warning`` 
-and ``bdajax.error`` decorates message with appropriate icon.::
+and ``bdajax.error`` decorates message with appropriate icon:
+
+.. code-block:: js
 
     bdajax.message('I am an application Message');
 
@@ -437,7 +481,9 @@ and ``bdajax.error`` decorates message with appropriate icon.::
 Overlay
 -------
 
-Load ajax action contents into an overlay.::
+Load ajax action contents into an overlay:
+
+.. code-block:: js
 
     var overlay_api = bdajax.overlay({
         action: 'actionname',
@@ -461,7 +507,9 @@ Modal dialog
 Render a modal dialog inside an overlay. The function expects an options object
 and a callback function, which gets executed if user confirms dialog. The
 callback gets passed the given options object as well. ``message`` is mandatory
-in options.::
+in options:
+
+.. code-block:: js
 
     var options = {
         message: 'I am an application Message'
@@ -472,27 +520,39 @@ in options.::
 URL operations
 --------------
 
-Parse hyperlinks for base URL or request parameters::
+Parse hyperlinks for base URL or request parameters:
+
+.. code-block:: js
 
     bdajax.parseurl('http://fubar.org?param=value');
 
-results in::
+results in:
+
+.. code-block:: js
 
     'http://fubar.org'
 
-while::
+while:
+
+.. code-block:: js
 
     bdajax.parsequery('http://fubar.org?param=value');
 
-results in::
+results in:
+
+.. code-block:: js
 
     { param: 'value' }
 
-Do both at once by calling ``parsetarget``::
+Do both at once by calling ``parsetarget``:
+
+.. code-block:: js
 
     bdajax.parsetarget('http://fubar.org?param=value');
 
-This result in::
+This result in:
+
+.. code-block:: js
 
     {
         url: 'http://fubar.org',
@@ -505,7 +565,9 @@ XMLHTTPRequest convenience
 
 ``bdajax.request`` function is convenience for XMLHTTPRequests. By default 
 it sends requests of type ``html`` and displays a ``bdajax.error`` message if 
-request fails::
+request fails:
+
+.. code-block:: js
 
     bdajax.request({
         success: function(data) {
@@ -551,7 +613,9 @@ Perform action
 --------------
 
 Sometimes actions need to be performed inside JavaScript code. 
-``bdajax.action`` provides this::
+``bdajax.action`` provides this:
+
+.. code-block:: js
 
     var target = bdajax.parsetarget('http://fubar.org?param=value');
     bdajax.action({
@@ -586,12 +650,16 @@ Trigger events
 Sometimes events need to be triggered manually. Since bdajax expects the
 attribute ``ajaxtarget`` on the received event a convenience is provided.
 
-Target might be a URL, then it gets parsed by the trigger function::
+Target might be a URL, then it gets parsed by the trigger function:
+
+.. code-block:: js
 
     var url = 'http://fubar.org?param=value';
     bdajax.trigger('contextchanged', '.contextsensitiv', url);
 
-Target might be object as returned from ``bdajax.parsetarget``::
+Target might be object as returned from ``bdajax.parsetarget``:
+
+.. code-block:: js
 
     var url = 'http://fubar.org?param=value';
     var target = bdajax.parsetarget(url);
@@ -601,7 +669,9 @@ Target might be object as returned from ``bdajax.parsetarget``::
 Set URL path
 ------------
 
-To set URL path::
+To set URL path:
+
+.. code-block:: js
 
     var path = '/some/path';
     bdajax.path(path);
@@ -611,7 +681,9 @@ Ajax forms
 ----------
 
 Forms must have ``ajax:form`` attribute or CSS class ``ajax`` (deprecated)
-set in order to be handled by bdajax::
+set in order to be handled by bdajax:
+
+.. code-block:: html
 
     <form ajax:form="True"
           id="my_ajax_form"
@@ -622,7 +694,9 @@ set in order to be handled by bdajax::
     </form>
 
 Ajax form processing is done using a hidden iframe where the form gets
-triggered to. The server side must return a response like so on form submit::
+triggered to. The server side must return a response like so on form submit:
+
+.. code-block:: html
 
     <div id="ajaxform">
 
@@ -674,7 +748,9 @@ providing this.
 When writing applications, one might use its own set of custom JavaScripts
 where some actions need to be bound in the markup. Therefore the ``binders`` 
 object on ``bdajax`` is intended. Hooking a binding callback to this object 
-results in a call every time bdajax hooks some markup.::
+results in a call every time bdajax hooks some markup:
+
+.. code-block:: js
 
     mybinder = function (context) {
         jQuery('mysel').bind('click', function() { ... });

@@ -1,7 +1,7 @@
 /* jslint browser: true */
 /* global jQuery, bdajax */
 /*
- * bdajax v1.6.3
+ * bdajax v1.7.0
  *
  * Author: Robert Niederreiter
  * License: Simplified BSD
@@ -18,6 +18,7 @@ var bdajax;
 
     $(document).ready(function() {
         bdajax.spinner.hide();
+        bdajax.history.bind();
         $(document).bdajax();
     });
 
@@ -92,6 +93,30 @@ var bdajax;
                 } else if (this._request_count <= 0) {
                     this._request_count = 0;
                     this.elem().hide();
+                }
+            }
+        },
+
+        history: {
+
+            bind: function() {
+                $(window).on('popstate', this.handle);
+            },
+
+            handle: function(evt) {
+                evt.preventDefault();
+                var state = evt.originalEvent.state;
+                if (!state) { return; }
+                var target = bdajax.parsetarget(state.target);
+                target.params.popstate = '1';
+                if (state.action) {
+                    bdajax._handle_ajax_action(target, state.action);
+                }
+                if (state.event) {
+                    bdajax._handle_ajax_event(target, state.event);
+                }
+                if (!state.action && !state.event) {
+                    window.location = state.target;
                 }
             }
         },
@@ -195,14 +220,16 @@ var bdajax;
             });
         },
 
-        path: function(path) {
-            if (typeof(window.history.replaceState) === undefined) {
-                return;
-            }
-            if (path.charAt(0) !== '/') {
-                path = '/' + path;
-            }
-            window.history.replaceState({}, '', path);
+        path: function(path, target, action, event) {
+            if (window.history.pushState === undefined) { return; }
+            if (path.charAt(0) !== '/') { path = '/' + path; }
+            if (!target) { target = window.location.origin + path; }
+            var state = {
+                target: target,
+                action: action,
+                event: event
+            };
+            window.history.pushState(state, '', path);
         },
 
         action: function(options) {
@@ -226,15 +253,18 @@ var bdajax;
         },
 
         continuation: function(definitions) {
-            if (!definitions) {
-                return;
-            }
+            if (!definitions) { return; }
             this.spinner.hide();
             var definition, target;
             for (var idx in definitions) {
                 definition = definitions[idx];
                 if (definition.type === 'path') {
-                    this.path(definition.path);
+                    this.path(
+                        definition.path,
+                        definition.target,
+                        definition.action,
+                        definition.event
+                    );
                 } else if (definition.type === 'action') {
                     target = this.parsetarget(definition.target);
                     this.action({
@@ -460,9 +490,7 @@ var bdajax;
 
         // called by iframe response, renders form (i.e. if validation errors)
         render_ajax_form: function(payload, selector, mode) {
-            if (!payload) {
-                return;
-            }
+            if (!payload) { return; }
             this.spinner.hide();
             this.fiddle(payload, selector, mode);
         },
@@ -483,40 +511,53 @@ var bdajax;
             }
         },
 
+        _get_target: function(elem, event) {
+            // return ajax target. lookup ``ajaxtarget`` on event, fall back to
+            // ``ajax:target`` attribute on elem.
+            if (event.ajaxtarget) { return event.ajaxtarget; }
+            return this.parsetarget(elem.attr('ajax:target'));
+        },
+
         _do_dispatching: function(options) {
             var elem = options.elem;
             var event = options.event;
             if (elem.attr('ajax:action')) {
-                bdajax._handle_ajax_action(elem, event);
+                this._handle_ajax_action(
+                    this._get_target(elem, event),
+                    elem.attr('ajax:action')
+                );
             }
             if (elem.attr('ajax:event')) {
-                bdajax._handle_ajax_event(elem);
+                this._handle_ajax_event(
+                    elem.attr('ajax:target'),
+                    elem.attr('ajax:event')
+                );
             }
             if (elem.attr('ajax:overlay')) {
-                bdajax._handle_ajax_overlay(elem, event);
+                this._handle_ajax_overlay(
+                    this._get_target(elem, event),
+                    elem.attr('ajax:overlay')
+                );
             }
             if (elem.attr('ajax:path')) {
-                bdajax._handle_ajax_path(elem, event);
+                this._handle_ajax_path(
+                    this._get_target(elem, event),
+                    elem.attr('ajax:path'),
+                    elem.attr('ajax:path-target'),
+                    elem.attr('ajax:path-action'),
+                    elem.attr('ajax:path-event')
+                );
             }
         },
 
-        _handle_ajax_path: function(elem, event) {
-            var path = elem.attr('ajax:path');
-            if (path === 'target') {
-                var target;
-                if (event.ajaxtarget) {
-                    target = event.ajaxtarget;
-                } else {
-                    target = this.parsetarget(elem.attr('ajax:target'));
-                }
-                path = target.path;
-            }
-            this.path(path);
+        _handle_ajax_path: function(fb_target, path, target, action, event) {
+            if (path === 'target') { path = fb_target.path; }
+            if (target === 'target') { target = fb_target; }
+            this.path(path, target, action, event);
         },
 
-        _handle_ajax_event: function(elem) {
-            var target = elem.attr('ajax:target');
-            var defs = this._defs_to_array(elem.attr('ajax:event'));
+        _handle_ajax_event: function(target, event) {
+            var defs = this._defs_to_array(event);
             for (var i = 0; i < defs.length; i++) {
                 var def = defs[i];
                 def = def.split(':');
@@ -546,14 +587,8 @@ var bdajax;
             });
         },
 
-        _handle_ajax_action: function(elem, event) {
-            var target;
-            if (event.ajaxtarget) {
-                target = event.ajaxtarget;
-            } else {
-                target = this.parsetarget(elem.attr('ajax:target'));
-            }
-            var actions = this._defs_to_array(elem.attr('ajax:action'));
+        _handle_ajax_action: function(target, action) {
+            var actions = this._defs_to_array(action);
             for (var i = 0; i < actions.length; i++) {
                 var defs = actions[i].split(':');
                 this.action({
@@ -566,16 +601,9 @@ var bdajax;
             }
         },
 
-        _handle_ajax_overlay: function(elem, event) {
-            var target;
-            if (event.ajaxtarget) {
-                target = event.ajaxtarget;
-            } else {
-                target = this.parsetarget(elem.attr('ajax:target'));
-            }
-            var overlay_attr = elem.attr('ajax:overlay');
-            if (overlay_attr.indexOf(':') > -1) {
-                var defs = overlay_attr.split(':');
+        _handle_ajax_overlay: function(target, overlay) {
+            if (overlay.indexOf(':') > -1) {
+                var defs = overlay.split(':');
                 var options = {
                     action: defs[0],
                     selector: defs[1],
@@ -588,7 +616,7 @@ var bdajax;
                 this.overlay(options);
             } else {
                 this.overlay({
-                    action: overlay_attr,
+                    action: overlay,
                     url: target.url,
                     params: target.params
                 });

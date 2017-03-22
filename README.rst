@@ -53,10 +53,6 @@ Following attributes are available:
     Trigger event(s) on selector. The triggered event gets the target
     as additional parameter on event.ajaxtarget.
 
-**ajax:path="/some/path"**
-    Sets the browser URL path. If value is ``target`` path gets taken
-    from ajax target.
-
 **ajax:action="name1:selector1:mode1 name2:selector2:mode2"**
     Perform AJAX action(s) on selector with mode. Selector points to target
     DOM element, mode defines how to modify the DOM tree. Possible
@@ -81,6 +77,32 @@ Following attributes are available:
 
 **ajax:form="True"**
     Indicate AJAX form. Valid only on ``form`` elements. Value gets ignored.
+
+**ajax:path="/some/path"**
+    Sets the browser URL path. If value is ``target`` path gets taken
+    from ``ajax:target``. Browser history state gets written with definitions
+    found on ``ajax:path-target``, ``ajax:path-action`` and ``ajax:path-event``.
+    On ``popstate`` bdajax executes the definitions written to state object.
+    ``ajax:path-target``, ``ajax:path-action`` and ``ajax:path-event``
+    correspond and behave the same way as ``ajax:target``, ``ajax:action`` and
+    ``ajax:event`` definitions. If neither ``ajax:path-action`` and
+    ``ajax:path-event`` is defined for state change, bdajax performs a redirect
+    to target. Bdajax appends the request parameter ``popstate=1`` to
+    requests made by history browsing. This is useful to determine on server
+    side whether to skip setting ajax path as continuation definition.
+
+**ajax:path-target="http://fubar.org?param=value"**
+    Used in conjunction with ``ajax:path``. Defines the target for URL path in
+    browser history. If value is ``target``, target is taken from
+    ``ajax:target`` or received event ajaxtarget.
+
+**ajax:path-action="name1:selector1:mode1"**
+    Used in conjunction with ``ajax:path``. Defines the action to execute for
+    URL path in browser history.
+
+**ajax:path-event="evt1:sel1"**
+    Used in conjunction with ``ajax:path``. Defines the event to trigger for
+    URL path in browser history.
 
 **NOTE** - No selectors containing spaces are supported at the moment!
 
@@ -200,24 +222,26 @@ written to the event before it is triggered, containing definitions from
 Set URL path
 ------------
 
-Set path directly:
+Set path directly, triggers event on history state change:
 
 .. code-block:: html
 
     <a href="http://fubar.com/baz?a=a"
        ajax:bind="click"
-       ajax:path="/some/path">
+       ajax:path="/some/path"
+       ajax:path-event="contextxhanged:#layout">
       fubar
     </a>
 
-Take path from target:
+Take path from target, performs action on history state change:
 
 .. code-block:: html
 
     <a href="http://fubar.com/baz?a=a"
        ajax:bind="click"
        ajax:target="http://fubar.com/baz?a=a"
-       ajax:path="target">
+       ajax:path="target"
+       ajax:path-action="layout:#layout:replace">
       fubar
     </a>
 
@@ -260,8 +284,8 @@ response in the format as follows:
 Action continuation
 ~~~~~~~~~~~~~~~~~~~
 
-The ``continuation`` value is an array of actions and/or events which should
-be performed after performed ajaxaction returns. Available continuation
+The ``continuation`` value defines an array of tasks which should
+be performed after an ajax action returns. Available continuation
 definitions are described below.
 
 **actions**:
@@ -293,7 +317,10 @@ definitions are described below.
 
     {
         'type': 'path',
-        'path': '/some/path'
+        'path': '/some/path',
+        'target': 'http://example.com/some/path',
+        'action': 'actionname:.selector:replace',
+        'event': 'contextchanged:#layout'
     }
 
 **overlay**:
@@ -674,7 +701,10 @@ To set URL path:
 .. code-block:: js
 
     var path = '/some/path';
-    bdajax.path(path);
+    var target = 'http://example.com/some/path';
+    var action = 'layout:#layout:replace'
+    var event = null;
+    bdajax.path(path, target, action, event);
 
 
 Ajax forms

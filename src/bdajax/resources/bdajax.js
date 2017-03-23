@@ -107,7 +107,12 @@ var bdajax;
                 evt.preventDefault();
                 var state = evt.originalEvent.state;
                 if (!state) { return; }
-                var target = bdajax.parsetarget(state.target);
+                var target;
+                if (state.target.url) {
+                    target = state.target;
+                } else {
+                    target = bdajax.parsetarget(state.target);
+                }
                 target.params.popstate = '1';
                 if (state.action) {
                     bdajax._handle_ajax_action(target, state.action);
@@ -116,7 +121,7 @@ var bdajax;
                     bdajax._handle_ajax_event(target, state.event);
                 }
                 if (!state.action && !state.event) {
-                    window.location = state.target;
+                    window.location = state.target.url;
                 }
             }
         },
@@ -560,10 +565,7 @@ var bdajax;
         _handle_ajax_path: function(elem, evt) {
             var path = elem.attr('ajax:path');
             if (path === 'href') {
-                path = elem.attr('href').substring(
-                    window.location.origin.length,
-                    elem.attr('href').length
-                );
+                path = this.parsepath(elem.attr('href'));
             } else if (path === 'target') {
                 path = this._get_target(elem, evt).path;
             }

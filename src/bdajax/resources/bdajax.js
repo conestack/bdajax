@@ -540,19 +540,46 @@ var bdajax;
                 );
             }
             if (elem.attr('ajax:path')) {
-                this._handle_ajax_path(
-                    this._get_target(elem, event),
-                    elem.attr('ajax:path'),
-                    elem.attr('ajax:path-target'),
-                    elem.attr('ajax:path-action'),
-                    elem.attr('ajax:path-event')
-                );
+                this._handle_ajax_path(elem, event);
             }
         },
 
-        _handle_ajax_path: function(fb_target, path, target, action, event) {
-            if (path === 'target') { path = fb_target.path; }
-            if (target === 'target') { target = fb_target; }
+        _has_attr: function(elem, name) {
+            var attr = elem.attr(name);
+            return attr !== undefined && attr !== false;
+        },
+
+        _attr_value_or_fallback: function(elem, name, fallback) {
+            if (this._has_attr(elem, name)) {
+                return elem.attr(name);
+            } else {
+                return elem.attr(fallback);
+            }
+        },
+
+        _handle_ajax_path: function(elem, evt) {
+            var path = elem.attr('ajax:path');
+            if (path === 'href') {
+                path = elem.attr('href').substring(
+                    window.location.origin.length,
+                    elem.attr('href').length
+                );
+            } else if (path === 'target') {
+                path = this._get_target(elem, evt).path;
+            }
+            var target;
+            if (this._has_attr(elem, 'ajax:path-target')) {
+                target = elem.attr('ajax:path-target');
+                if (target) {
+                    target = this.parsetarget(target);
+                }
+            } else {
+                target = this._get_target(elem, evt);
+            }
+            var action = this._attr_value_or_fallback(
+                elem, 'ajax:path-action', 'ajax:action');
+            var event = this._attr_value_or_fallback(
+                elem, 'ajax:path-event', 'ajax:event');
             this.path(path, target, action, event);
         },
 

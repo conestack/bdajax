@@ -63,8 +63,7 @@ Following attributes are available:
     query string used for requests on the target context.
     ``ajax:target`` is mandatory when ``ajax:event`` is defined, and
     optional when ``ajax:action`` is defined (depends on if event is triggered
-    by bdajax or browser event). See below to get a clue what i am
-    talking about.
+    by bdajax or browser event).
 
 **ajax:confirm="Do you really want to do this?"**
     Show confirmation dialog before actually executing actions and trigger
@@ -79,32 +78,49 @@ Following attributes are available:
     Indicate AJAX form. Valid only on ``form`` elements. Value gets ignored.
 
 **ajax:path="/some/path"**
-    Sets the browser URL path. If value is ``target`` path gets taken
-    from ``ajax:target``. Browser history state gets written with definitions
-    found on ``ajax:path-target``, ``ajax:path-action`` and ``ajax:path-event``.
-    On ``popstate`` bdajax executes the definitions written to state object.
-    ``ajax:path-target``, ``ajax:path-action`` and ``ajax:path-event``
-    correspond and behave the same way as ``ajax:target``, ``ajax:action`` and
-    ``ajax:event`` definitions. If neither ``ajax:path-action`` and
-    ``ajax:path-event`` is defined for state change, bdajax performs a redirect
-    to target. Bdajax appends the request parameter ``popstate=1`` to
-    requests made by history browsing. This is useful to determine on server
-    side whether to skip setting ajax path as continuation definition.
+    Sets the browser URL path and pushes history state if supported by browser.
+    If value is ``href``, path gets taken from ``href`` attribute. If value is
+    ``target`` path gets taken from event ``ajaxtarget`` or ``ajax:target``
+    attribute. Otherwise value is taken as defined.
+
+    On ``popstate`` event bdajax executes the definitions written to state
+    object. The state object consists of ``target``, ``action`` and ``event``
+    attributes. Execution behaves the way described at ``ajax:action`` and
+    ``ajax:event``.
+
+    Target gets taken from ``ajax:path-target`` if set, otherwise falls back
+    to target from event ``ajaxtarget`` or ``ajax:target``. If
+    ``ajax:path-target`` set with empty value, target gets taken from ``path``.
+
+    Action gets taken from ``ajax:path-action`` if set, otherwise falls back
+    to ``ajax:action``. If ``ajax:path-action`` set with empty value, action
+    execution on history state change can be suppressed even if ``ajax:action``
+    is set.
+
+    Event gets taken from ``ajax:path-event`` if set, otherwise falls back
+    to ``ajax:event``. If ``ajax:path-event`` set with empty value, event
+    triggering on history state change can be suppressed even if ``ajax:event``
+    is set.
+
+    If no action an no event defined on history state change, bdajax performs a
+    redirect to target.
+
+    Bdajax appends the request parameter ``popstate=1`` to requests made by
+    history browsing. This is useful to determine on server side whether to
+    skip setting ajax path as continuation definition.
 
 **ajax:path-target="http://fubar.org?param=value"**
-    Used in conjunction with ``ajax:path``. Defines the target for URL path in
-    browser history. If value is ``target``, target is taken from
-    ``ajax:target`` or received event ajaxtarget.
+    Can be used in conjunction with ``ajax:path``, see ``ajax:path``.
 
 **ajax:path-action="name1:selector1:mode1"**
-    Used in conjunction with ``ajax:path``. Defines the action to execute for
-    URL path in browser history.
+    Can be used in conjunction with ``ajax:path``, see ``ajax:path``.
 
 **ajax:path-event="evt1:sel1"**
-    Used in conjunction with ``ajax:path``. Defines the event to trigger for
-    URL path in browser history.
+    Can be used in conjunction with ``ajax:path``, see ``ajax:path``.
 
-**NOTE** - No selectors containing spaces are supported at the moment!
+.. warning::
+
+    No selectors containing spaces are supported!
 
 
 Provide dependencies on server

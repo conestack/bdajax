@@ -296,8 +296,8 @@ parameters. Three additional arguments are passed:
     name of the action
 
 **bdajax.selector**
-    given selector must be added to response. could be ``NONE``, which means
-    that no Markup is hooked after action (useful i.e. in combination with
+    given selector must be added to response. Can be ``NONE``, which means
+    that no markup is manipulated after action (useful i.e. in combination with
     continuation actions and events).
 
 **bdajax.mode**
@@ -497,7 +497,7 @@ Ajax actions can be rendered to overlay directly by using ``bdajax:overlay``:
       fubar
     </a>
 
-This causes bdajax to perform action ``someaction`` on context defined in
+This causes bdajax to perform action ``acionname`` on context defined in
 ``ajax:target`` and renders the result to an overlay element.
 
 In addition a selector for the overlay can be defined. This is useful if
@@ -521,6 +521,17 @@ defined:
        ajax:bind="click"
        ajax:target="http://fubar.com/baz?a=a"
        ajax:overlay="acionname:#custom-overlay:.custom_overlay_content">
+      fubar
+    </a>
+
+Overlays can be closed by setting special value ``CLOSE`` at ``bdajax:overlay``,
+optionally with colon seperated overlay selector:
+
+.. code-block:: html
+
+    <a href="http://fubar.com/baz?a=a"
+       ajax:bind="click"
+       ajax:overlay="CLOSE:#custom-overlay">
       fubar
     </a>
 
@@ -557,12 +568,40 @@ Load ajax action contents into an overlay:
     });
 
 ``selector`` is optional and defaults to ``#ajax-overlay``.
+
 ``content_selector`` is optional to ``selector`` and defaults to
 ``overlay_ontent``.
 
+Default overlay and default overlay content selector can be overwritten at
+``bdajax.default_overlay_selector`` respective
+``bdajax.default_overlay_content_selector``.
+
 Optionally to ``target``, ``url`` and ``params`` can be given as options to
-the function. If both, ``target`` and ``url/params`` are given,
-``target`` rules.
+the function. If both, ``target`` and ``url/params`` given, ``target`` is used.
+
+Ajax overlays can be closed by passing ``close`` option to ``bdajax.overlay``.
+When closing an overlay, overlay selector is considered as well from options
+if given, otherwise ``bdajax.default_overlay_selector`` is used.
+
+.. code-block:: js
+
+    bdajax.overlay({
+        close: true,
+        selector: '#ajax-overlay'
+    });
+
+``bdajax.overlay`` supports an ``on_close`` callback in options.
+
+.. code-block:: js
+
+    var on_close = function() {
+        // do something
+    }
+    bdajax.overlay({
+        action: 'actionname',
+        target: 'http://foobar.org?param=value',
+        on_close: on_close
+    });
 
 
 Modal dialog

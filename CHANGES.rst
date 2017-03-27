@@ -4,6 +4,15 @@ Changelog
 1.7.0 (unreleased)
 ------------------
 
+- Handle empty target in ``bdajax.parsetarget``.
+  [rnix, 2017-03-27]
+
+- Introduce ``close`` option in ``bdajax.overlay``.
+  [rnix, 2017-03-27]
+
+- Introduce ``on_close`` callback option in ``bdajax.overlay``.
+  [rnix, 2017-03-27]
+
 - Add support for browser history navigation. Introduce ``ajax:path-target``,
   ``ajax:path-action``, ``ajax:path-event`` and ``ajax:path-overlay``
   attributes.

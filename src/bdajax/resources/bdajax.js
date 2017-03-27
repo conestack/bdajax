@@ -124,7 +124,7 @@ var bdajax;
                     bdajax._handle_ajax_overlay(target, state.overlay);
                 }
                 if (!state.action && !state.event && !state.overlay) {
-                    window.location = state.target.url;
+                    window.location = target.url;
                 }
             }
         },
@@ -166,6 +166,13 @@ var bdajax;
         },
 
         parsetarget: function(target) {
+            if (!target) {
+                return {
+                    url: undefined,
+                    params: {},
+                    path: undefined
+                };
+            }
             var url = this.parseurl(target);
             var params = this.parsequery(target);
             var path = this.parsepath(target);
@@ -295,22 +302,15 @@ var bdajax;
                         definition.target
                     );
                 } else if (definition.type === 'overlay') {
-                    if (definition.close) {
-                        var elem = $(definition.selector);
-                        var overlay = elem.data('overlay');
-                        if (overlay) {
-                            overlay.close();
-                        }
-                    } else {
-                        target = this.parsetarget(definition.target);
-                        this.overlay({
-                            action: definition.action,
-                            selector: definition.selector,
-                            content_selector: definition.content_selector,
-                            url: target.url,
-                            params: target.params
-                        });
-                    }
+                    target = this.parsetarget(definition.target);
+                    this.overlay({
+                        action: definition.action,
+                        selector: definition.selector,
+                        content_selector: definition.content_selector,
+                        url: target.url,
+                        params: target.params,
+                        close: definition.close
+                    });
                 } else if (definition.type === 'message') {
                     if (definition.flavor) {
                         var flavors = ['message', 'info', 'warning', 'error'];
@@ -363,12 +363,23 @@ var bdajax;
             });
         },
 
+        default_overlay_selector: '#ajax-overlay',
+        default_overlay_content_selector: '.overlay_content',
+
         overlay: function(options) {
-            var selector = '#ajax-overlay';
+            var selector = this.default_overlay_selector;
             if (options.selector) {
                 selector = options.selector;
             }
-            var content_selector = '.overlay_content';
+            if (options.close) {
+                var elem = $(selector);
+                var overlay = elem.data('overlay');
+                if (overlay) {
+                    overlay.close();
+                }
+                return;
+            }
+            var content_selector = this.default_overlay_content_selector;
             if (options.content_selector) {
                 content_selector = options.content_selector;
             }
@@ -383,6 +394,12 @@ var bdajax;
                 url = options.url;
                 params = options.params;
             }
+            var on_close = function() {
+                $(content_selector, this.getOverlay()).html('');
+                if (options.on_close) {
+                    options.on_close();
+                }
+            };
             this._perform_ajax_action({
                 name: options.action,
                 selector: selector + ' ' + content_selector,
@@ -400,11 +417,7 @@ var bdajax;
                             color: '#fff',
                             loadSpeed: 200
                         },
-                        onClose: function() {
-                            var content = $(content_selector,
-                                            this.getOverlay());
-                            content.html('');
-                        },
+                        onClose: on_close,
                         oneInstance: false,
                         closeOnClick: true,
                         fixed: false
@@ -648,6 +661,15 @@ var bdajax;
         },
 
         _handle_ajax_overlay: function(target, overlay) {
+            if (overlay.indexOf('CLOSE') > -1) {
+                var options = {};
+                if (overlay.indexOf(':') > -1) {
+                    options.selector = overlay.split(':')[1];
+                }
+                options.close = true;
+                this.overlay(options);
+                return;
+            }
             if (overlay.indexOf(':') > -1) {
                 var defs = overlay.split(':');
                 var options = {
@@ -660,13 +682,13 @@ var bdajax;
                     options.content_selector = defs[2];
                 }
                 this.overlay(options);
-            } else {
-                this.overlay({
-                    action: overlay,
-                    url: target.url,
-                    params: target.params
-                });
+                return;
             }
+            this.overlay({
+                action: overlay,
+                url: target.url,
+                params: target.params
+            });
         },
 
         _defs_to_array: function(str) {

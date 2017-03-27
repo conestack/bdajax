@@ -737,11 +737,13 @@ To set URL path:
 
 .. code-block:: js
 
-    var path = '/some/path';
-    var target = 'http://example.com/some/path';
-    var action = 'layout:#layout:replace'
-    var event = null;
-    bdajax.path(path, target, action, event);
+    bdajax.path({
+        path: '/some/path',
+        target: 'http://example.com/some/path',
+        action: 'layout:#layout:replace',
+        event: null,
+        overlay: null
+    });
 
 
 Ajax forms

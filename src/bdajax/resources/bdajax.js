@@ -228,17 +228,21 @@ var bdajax;
             });
         },
 
-        path: function(path, target, action, event, overlay) {
+        path: function(options) {
             if (window.history.pushState === undefined) { return; }
-            if (path.charAt(0) !== '/') { path = '/' + path; }
-            if (!target) { target = window.location.origin + path; }
+            if (options.path.charAt(0) !== '/') {
+                options.path = '/' + options.path;
+            }
+            if (!options.target) {
+                options.target = window.location.origin + options.path;
+            }
             var state = {
-                target: target,
-                action: action,
-                event: event,
-                overlay: overlay
+                target: options.target,
+                action: options.action,
+                event: options.event,
+                overlay: options.overlay
             };
-            window.history.pushState(state, '', path);
+            window.history.pushState(state, '', options.path);
         },
 
         action: function(options) {
@@ -268,13 +272,13 @@ var bdajax;
             for (var idx in definitions) {
                 definition = definitions[idx];
                 if (definition.type === 'path') {
-                    this.path(
-                        definition.path,
-                        definition.target,
-                        definition.action,
-                        definition.event,
-                        definition.overlay
-                    );
+                    this.path({
+                        path: definition.path,
+                        target: definition.target,
+                        action: definition.action,
+                        event: definition.event,
+                        overlay: definition.overlay
+                    });
                 } else if (definition.type === 'action') {
                     target = this.parsetarget(definition.target);
                     this.action({
@@ -589,7 +593,13 @@ var bdajax;
                 elem, 'ajax:path-event', 'ajax:event');
             var overlay = this._attr_value_or_fallback(
                 elem, 'ajax:path-overlay', 'ajax:overlay');
-            this.path(path, target, action, event, overlay);
+            this.path({
+                path: path,
+                target: target,
+                action: action,
+                event: event,
+                overlay: overlay
+            });
         },
 
         _handle_ajax_event: function(target, event) {

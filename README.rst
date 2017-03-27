@@ -102,23 +102,31 @@ Following attributes are available:
     triggering on history state change can be suppressed even if ``ajax:event``
     is set.
 
-    If no action an no event defined on history state change, bdajax performs a
-    redirect to target.
+    Overlay gets taken from ``ajax:path-overlay`` if set, otherwise falls back
+    to ``ajax:overlay``. If ``ajax:path-overlay`` set with empty value, overlay
+    triggering on history state change can be suppressed even if
+    ``ajax:overlay`` is set.
+
+    If no action and no event and no overlay defined on history state change,
+    bdajax performs a redirect to target.
 
     Bdajax appends the request parameter ``popstate=1`` to requests made by
     history browsing. This is useful to determine on server side whether to
     skip setting ajax path as continuation definition.
 
 **ajax:path-target="http://fubar.org?param=value"**
-    Can be used in conjunction with ``ajax:path``, see ``ajax:path``.
+    Can be used in conjunction with ``ajax:path``.
 
 **ajax:path-action="name1:selector1:mode1"**
-    Can be used in conjunction with ``ajax:path``, see ``ajax:path``.
+    Can be used in conjunction with ``ajax:path``.
 
 **ajax:path-event="evt1:sel1"**
-    Can be used in conjunction with ``ajax:path``, see ``ajax:path``.
+    Can be used in conjunction with ``ajax:path``.
 
-.. warning::
+**ajax:path-overlay="actionname:selector:content_selector"**
+    Can be used in conjunction with ``ajax:path``.
+
+.. note::
 
     No selectors containing spaces are supported!
 
@@ -261,6 +269,18 @@ Take path from target, performs action on history state change:
       fubar
     </a>
 
+Take path from href attribute, trigger overlay:
+
+.. code-block:: html
+
+    <a href="http://fubar.com/baz?a=a"
+       ajax:bind="click"
+       ajax:target="http://fubar.com/baz?a=a"
+       ajax:path="href"
+       ajax:path-overlay="acionname:#custom-overlay:.custom_overlay_content">
+      fubar
+    </a>
+
 
 Perform actions
 ---------------
@@ -336,7 +356,8 @@ definitions are described below.
         'path': '/some/path',
         'target': 'http://example.com/some/path',
         'action': 'actionname:.selector:replace',
-        'event': 'contextchanged:#layout'
+        'event': 'contextchanged:#layout',
+        'overlay': 'acionname:#custom-overlay:.custom_overlay_content'
     }
 
 **overlay**:

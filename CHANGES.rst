@@ -5,7 +5,8 @@ Changelog
 ------------------
 
 - Add support for browser history navigation. Introduce ``ajax:path-target``,
-  ``ajax:path-action`` and ``ajax:path-event`` attributes.
+  ``ajax:path-action``, ``ajax:path-event`` and ``ajax:path-overlay``
+  attributes.
   [rnix, 2017-03-22]
 
 - ``bdajax.request`` supports ``method`` in options, defaults to ``GET``.

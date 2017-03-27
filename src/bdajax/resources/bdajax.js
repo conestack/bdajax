@@ -120,7 +120,10 @@ var bdajax;
                 if (state.event) {
                     bdajax._handle_ajax_event(target, state.event);
                 }
-                if (!state.action && !state.event) {
+                if (state.overlay) {
+                    bdajax._handle_ajax_overlay(target, state.overlay);
+                }
+                if (!state.action && !state.event && !state.overlay) {
                     window.location = state.target.url;
                 }
             }
@@ -225,14 +228,15 @@ var bdajax;
             });
         },
 
-        path: function(path, target, action, event) {
+        path: function(path, target, action, event, overlay) {
             if (window.history.pushState === undefined) { return; }
             if (path.charAt(0) !== '/') { path = '/' + path; }
             if (!target) { target = window.location.origin + path; }
             var state = {
                 target: target,
                 action: action,
-                event: event
+                event: event,
+                overlay: overlay
             };
             window.history.pushState(state, '', path);
         },
@@ -268,7 +272,8 @@ var bdajax;
                         definition.path,
                         definition.target,
                         definition.action,
-                        definition.event
+                        definition.event,
+                        definition.overlay
                     );
                 } else if (definition.type === 'action') {
                     target = this.parsetarget(definition.target);
@@ -582,7 +587,9 @@ var bdajax;
                 elem, 'ajax:path-action', 'ajax:action');
             var event = this._attr_value_or_fallback(
                 elem, 'ajax:path-event', 'ajax:event');
-            this.path(path, target, action, event);
+            var overlay = this._attr_value_or_fallback(
+                elem, 'ajax:path-overlay', 'ajax:overlay');
+            this.path(path, target, action, event, overlay);
         },
 
         _handle_ajax_event: function(target, event) {

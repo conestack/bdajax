@@ -780,8 +780,20 @@ To set URL path:
         path: '/some/path',
         target: 'http://example.com/some/path',
         action: 'layout:#layout:replace',
-        event: null,
-        overlay: null
+        event: 'contextchanged:#layout',
+        overlay: 'actionname'
+    });
+
+``bdajax.path`` also accepts a ``replace`` option. If given browser history
+gets reset.
+
+.. code-block:: js
+
+    bdajax.path({
+        path: '/some/path',
+        target: 'http://example.com/some/path',
+        action: 'layout:#layout:replace',
+        replace: true
     });
 
 

@@ -249,7 +249,11 @@ var bdajax;
                 event: options.event,
                 overlay: options.overlay
             };
-            window.history.pushState(state, '', options.path);
+            if (options.replace) {
+                window.history.replaceState(state, '', options.path);
+            } else {
+                window.history.pushState(state, '', options.path);
+            }
         },
 
         action: function(options) {

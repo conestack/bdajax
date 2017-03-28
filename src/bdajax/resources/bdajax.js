@@ -122,8 +122,6 @@ var bdajax;
                 }
                 if (state.overlay) {
                     bdajax._handle_ajax_overlay(target, state.overlay);
-                } else {
-                    bdajax.overlay({close: true});
                 }
                 if (!state.action && !state.event && !state.overlay) {
                     window.location = target.url;

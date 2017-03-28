@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.7.0 (unreleased)
-------------------
+1.7 (2017-03-28)
+----------------
 
 - ``target`` option passed to ``bdajax.overlay`` is also accepted as JS object.
   [rnix, 2017-03-28]

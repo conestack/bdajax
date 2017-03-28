@@ -387,7 +387,10 @@ var bdajax;
             elem.removeData('overlay');
             var url, params;
             if (options.target) {
-                var target = this.parsetarget(options.target);
+                var target = options.target;
+                if (!target.url) {
+                    target = this.parsetarget(target);
+                }
                 url = target.url;
                 params = target.params;
             } else {

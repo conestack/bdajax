@@ -4,6 +4,9 @@ Changelog
 1.7.0 (unreleased)
 ------------------
 
+- ``target`` option passed to ``bdajax.overlay`` is also accepted as JS object.
+  [rnix, 2017-03-28]
+
 - Handle empty target in ``bdajax.parsetarget``.
   [rnix, 2017-03-27]
 

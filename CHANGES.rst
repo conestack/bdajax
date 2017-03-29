@@ -1,10 +1,12 @@
 Changelog
 =========
 
-1.7.1 (unreleased)
+1.7.1 (2017-03-29)
 ------------------
 
-- No changes yet
+- Use ``bdajax`` object instead of ``this`` in ``bdajax._do_dispatching``.
+  If called as callback by ``bdajax.dialog``, ``this`` is undefined.
+  [rnix, 2017-03-29]
 
 
 1.7 (2017-03-28)

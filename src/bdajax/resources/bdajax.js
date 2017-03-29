@@ -1,7 +1,7 @@
 /* jslint browser: true */
 /* global jQuery, bdajax */
 /*
- * bdajax v1.7.1.dev0
+ * bdajax v1.7.1
  *
  * Author: Robert Niederreiter
  * License: Simplified BSD
@@ -553,28 +553,30 @@ var bdajax;
         },
 
         _do_dispatching: function(options) {
+            // use ``bdajax`` instead of ``this`` in this function. If called
+            // as callback via ``bdajax.dialog``, ``this`` is undefined.
             var elem = options.elem;
             var event = options.event;
             if (elem.attr('ajax:action')) {
-                this._handle_ajax_action(
-                    this._get_target(elem, event),
+                bdajax._handle_ajax_action(
+                    bdajax._get_target(elem, event),
                     elem.attr('ajax:action')
                 );
             }
             if (elem.attr('ajax:event')) {
-                this._handle_ajax_event(
+                bdajax._handle_ajax_event(
                     elem.attr('ajax:target'),
                     elem.attr('ajax:event')
                 );
             }
             if (elem.attr('ajax:overlay')) {
-                this._handle_ajax_overlay(
-                    this._get_target(elem, event),
+                bdajax._handle_ajax_overlay(
+                    bdajax._get_target(elem, event),
                     elem.attr('ajax:overlay')
                 );
             }
             if (elem.attr('ajax:path')) {
-                this._handle_ajax_path(elem, event);
+                bdajax._handle_ajax_path(elem, event);
             }
         },
 

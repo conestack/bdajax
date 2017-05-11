@@ -8,7 +8,7 @@ def read_file(name):
         return f.read()
 
 
-version = '1.7.2'
+version = '1.7.3.dev0'
 shortdesc = 'Ajax convenience.'
 longdesc = '\n\n'.join([read_file(name) for name in [
     'README.rst',

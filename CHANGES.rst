@@ -1,10 +1,12 @@
 Changelog
 =========
 
-1.7.2 (unreleased)
+1.7.2 (2017-05-11)
 ------------------
 
-- No changes yet.
+- Reset ``window.location.hash`` if ``bdajax.request`` error callback gets
+  unauthorized HTTP response code when redirecting to login page.
+  [rnix, 2017-05-11]
 
 
 1.7.1 (2017-03-29)

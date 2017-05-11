@@ -1,7 +1,7 @@
 /* jslint browser: true */
 /* global jQuery, bdajax */
 /*
- * bdajax v1.7.2.dev0
+ * bdajax v1.7.2
  *
  * Author: Robert Niederreiter
  * License: Simplified BSD
@@ -200,6 +200,7 @@ var bdajax;
             if (!options.error) {
                 options.error = function(req, status, exception) {
                     if (parseInt(status, 10) === 403) {
+                        window.location.hash = '';
                         window.location.pathname = bdajax.default_403;
                     } else {
                         var message = '<strong>' + status + '</strong> ';

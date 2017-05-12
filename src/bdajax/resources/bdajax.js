@@ -592,7 +592,7 @@ var bdajax;
                 bdajax._handle_ajax_overlay(
                     bdajax._get_target(elem, event),
                     elem.attr('ajax:overlay'),
-                    elem.attr('ajax:overlay-css'),
+                    elem.attr('ajax:overlay-css')
                 );
             }
             if (elem.attr('ajax:path')) {

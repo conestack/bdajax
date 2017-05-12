@@ -74,6 +74,10 @@ Following attributes are available:
     defaults to ``#ajax-overlay``. ``content_selector`` is optional to 
     ``selector`` and defaults to ``.overlay_content``.
 
+**ajax:overlay-css**
+    Additional CSS class which is added when overlay is opened and removed
+    as soon as overlay is closed.
+
 **ajax:form="True"**
     Indicate AJAX form. Valid only on ``form`` elements. Value gets ignored.
 
@@ -107,6 +111,9 @@ Following attributes are available:
     triggering on history state change can be suppressed even if
     ``ajax:overlay`` is set.
 
+    Additional CSS class for overlay gets taken from ``ajax:path-overlay-css``
+    if set, otherwise falls back to ``ajax:overlay-css``.
+
     If no action and no event and no overlay defined on history state change,
     bdajax performs a redirect to target.
 
@@ -124,6 +131,9 @@ Following attributes are available:
     Can be used in conjunction with ``ajax:path``.
 
 **ajax:path-overlay="actionname:selector:content_selector"**
+    Can be used in conjunction with ``ajax:path``.
+
+**ajax:path-overlay-css="actionname:selector:content_selector"**
     Can be used in conjunction with ``ajax:path``.
 
 .. note::
@@ -357,7 +367,8 @@ definitions are described below.
         'target': 'http://example.com/some/path',
         'action': 'actionname:.selector:replace',
         'event': 'contextchanged:#layout',
-        'overlay': 'acionname:#custom-overlay:.custom_overlay_content'
+        'overlay': 'acionname:#custom-overlay:.custom_overlay_content',
+        'overlay_css': 'some-css-class'
     }
 
 **overlay**:
@@ -366,9 +377,10 @@ definitions are described below.
 
     {
         'type': 'overlay',
+        'action': 'actionname',
         'selector': '#ajax-overlay',
         'content_selector': '.overlay_content',
-        'action': 'actionname',
+        'css': 'some-css-class',
         'target': 'http://example.com',
         'close': false
     }
@@ -564,7 +576,8 @@ Load ajax action contents into an overlay:
         action: 'actionname',
         target: 'http://foobar.org?param=value',
         selector: '#ajax-overlay',
-        content_selector: '.overlay_ontent'
+        content_selector: '.overlay_ontent',
+        css: 'additional_overlay_css_class'
     });
 
 ``selector`` is optional and defaults to ``#ajax-overlay``.
@@ -575,6 +588,9 @@ Load ajax action contents into an overlay:
 Default overlay and default overlay content selector can be overwritten at
 ``bdajax.default_overlay_selector`` respective
 ``bdajax.default_overlay_content_selector``.
+
+``css`` is optional and can be used to set a CSS class to overlay
+DOM element on open. This class gets removed as soon as overlay is closed.
 
 Optionally to ``target``, ``url`` and ``params`` can be given as options to
 the function. If both, ``target`` and ``url/params`` given, ``target`` is used.
@@ -781,7 +797,8 @@ To set URL path:
         target: 'http://example.com/some/path',
         action: 'layout:#layout:replace',
         event: 'contextchanged:#layout',
-        overlay: 'actionname'
+        overlay: 'actionname',
+        overlay_css: 'additional-overlay-css-class'
     });
 
 ``bdajax.path`` also accepts a ``replace`` option. If given browser history

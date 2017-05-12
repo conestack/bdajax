@@ -1,10 +1,11 @@
 Changelog
 =========
 
-1.7.3 (unreleased)
-------------------
+1.8 (unreleased)
+----------------
 
-- No changes yet.
+- Add support for setting additional CSS classes to overlays.
+  [rnix, 2017-05-12]
 
 
 1.7.2 (2017-05-11)

@@ -1,7 +1,7 @@
 /* jslint browser: true */
 /* global jQuery, bdajax */
 /*
- * bdajax v1.7.3.dev0
+ * bdajax v1.8.dev0
  *
  * Author: Robert Niederreiter
  * License: Simplified BSD
@@ -121,7 +121,11 @@ var bdajax;
                     bdajax._handle_ajax_event(target, state.event);
                 }
                 if (state.overlay) {
-                    bdajax._handle_ajax_overlay(target, state.overlay);
+                    bdajax._handle_ajax_overlay(
+                        target,
+                        state.overlay,
+                        state.overlay_css
+                    );
                 }
                 if (!state.action && !state.event && !state.overlay) {
                     window.location = target.url;
@@ -248,7 +252,8 @@ var bdajax;
                 target: options.target,
                 action: options.action,
                 event: options.event,
-                overlay: options.overlay
+                overlay: options.overlay,
+                overlay_css: options.overlay_css
             };
             if (options.replace) {
                 window.history.replaceState(state, '', options.path);
@@ -289,7 +294,8 @@ var bdajax;
                         target: definition.target,
                         action: definition.action,
                         event: definition.event,
-                        overlay: definition.overlay
+                        overlay: definition.overlay,
+                        overlay_css: definition.overlay_css
                     });
                 } else if (definition.type === 'action') {
                     target = this.parsetarget(definition.target);
@@ -312,6 +318,7 @@ var bdajax;
                         action: definition.action,
                         selector: definition.selector,
                         content_selector: definition.content_selector,
+                        css: definition.css,
                         url: target.url,
                         params: target.params,
                         close: definition.close
@@ -402,8 +409,16 @@ var bdajax;
                 url = options.url;
                 params = options.params;
             }
+            var css;
+            if (options.css) {
+                css = options.css;
+            }
             var on_close = function() {
-                $(content_selector, this.getOverlay()).html('');
+                var overlay = this.getOverlay();
+                $(content_selector, overlay).html('');
+                if (css) {
+                    overlay.removeClass(css);
+                }
                 if (options.on_close) {
                     options.on_close();
                 }
@@ -419,6 +434,9 @@ var bdajax;
                     // overlays are not displayed if no payload is received.
                     if (!data.payload) {
                         return;
+                    }
+                    if (css) {
+                        elem.addClass(css);
                     }
                     elem.overlay({
                         mask: {
@@ -573,7 +591,8 @@ var bdajax;
             if (elem.attr('ajax:overlay')) {
                 bdajax._handle_ajax_overlay(
                     bdajax._get_target(elem, event),
-                    elem.attr('ajax:overlay')
+                    elem.attr('ajax:overlay'),
+                    elem.attr('ajax:overlay-css'),
                 );
             }
             if (elem.attr('ajax:path')) {
@@ -616,12 +635,15 @@ var bdajax;
                 elem, 'ajax:path-event', 'ajax:event');
             var overlay = this._attr_value_or_fallback(
                 elem, 'ajax:path-overlay', 'ajax:overlay');
+            var overlay_css = this._attr_value_or_fallback(
+                elem, 'ajax:path-overlay-css', 'ajax:overlay-css');
             this.path({
                 path: path,
                 target: target,
                 action: action,
                 event: event,
-                overlay: overlay
+                overlay: overlay,
+                overlay_css: overlay_css
             });
         },
 
@@ -670,7 +692,7 @@ var bdajax;
             }
         },
 
-        _handle_ajax_overlay: function(target, overlay) {
+        _handle_ajax_overlay: function(target, overlay, css) {
             if (overlay.indexOf('CLOSE') > -1) {
                 var options = {};
                 if (overlay.indexOf(':') > -1) {
@@ -686,7 +708,8 @@ var bdajax;
                     action: defs[0],
                     selector: defs[1],
                     url: target.url,
-                    params: target.params
+                    params: target.params,
+                    css: css
                 };
                 if (defs.length === 3) {
                     options.content_selector = defs[2];
@@ -697,7 +720,8 @@ var bdajax;
             this.overlay({
                 action: overlay,
                 url: target.url,
-                params: target.params
+                params: target.params,
+                css: css
             });
         },
 

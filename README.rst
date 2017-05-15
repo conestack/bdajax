@@ -74,7 +74,7 @@ Following attributes are available:
     defaults to ``#ajax-overlay``. ``content_selector`` is optional to 
     ``selector`` and defaults to ``.overlay_content``.
 
-**ajax:overlay-css**
+**ajax:overlay-css="additional-overlay-css-class"**
     Additional CSS class which is added when overlay is opened and removed
     as soon as overlay is closed.
 

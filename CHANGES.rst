@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.8 (unreleased)
+1.8 (2017-05-15)
 ----------------
 
 - Add support for setting additional CSS classes to overlays.

@@ -616,7 +616,11 @@ var bdajax;
         _handle_ajax_path: function(elem, evt) {
             var path = elem.attr('ajax:path');
             if (path === 'href') {
-                path = this.parsepath(elem.attr('href'));
+                var href = elem.attr('href');
+                path = this.parsepath(href);
+                if (href.indexOf('?') !== -1) {
+                    path += href.substring(href.indexOf('?'), href.lenght);
+                }
             } else if (path === 'target') {
                 path = this._get_target(elem, evt).path;
             }

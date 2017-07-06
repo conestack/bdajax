@@ -4,7 +4,9 @@ Changelog
 1.8.1 (unreleased)
 ------------------
 
-- No changes yet.
+- Consider query string in ``bdajax._handle_ajax_path`` if ``ajax:path`` is
+  ``href``.
+  [rnix, 2017-07-06]
 
 
 1.8 (2017-05-15)

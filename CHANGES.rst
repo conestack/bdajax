@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.8.1 (unreleased)
+1.8.1 (2017-07-18)
 ------------------
 
 - Consider query string in ``bdajax._handle_ajax_path`` if ``ajax:path`` is

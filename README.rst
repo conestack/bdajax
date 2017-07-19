@@ -25,10 +25,6 @@ and available through browser URL.
 Dispatching
 -----------
 
-For those who know KSS (Kinetic Style Sheets) and TAL (Tag Attribute Language);
-The syntax reminds of TAL - attributes are interpreted by JS instead of a TAL
-interpreter - while the functionality is inspired by KSS.
-
 The main paradigm is the use of an ``event/listener`` model. It enables bdajax 
 to ``listen`` to ``events`` and trigger ``events`` on ajaxified DOM components.
 

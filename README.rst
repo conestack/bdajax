@@ -936,28 +936,76 @@ providing this.
 3rd party javascript
 --------------------
 
-When writing applications, one might use its own set of custom JavaScripts
-where some actions need to be bound in the markup. Therefore the ``binders`` 
-object on ``bdajax`` is intended. Hooking a binding callback to this object 
-results in a call every time bdajax hooks some markup:
+Integration of custom JavaScript to the binding mechanism of bdajax is
+done via ``bdajax.register``. The register function takes a function and
+a boolean flag whether to immediately execute this function as arguments.
+
+The passed binder function gets called every time bdajax hooks up some markup
+and gets passed the changed DOM part as ``context``::
 
 .. code-block:: js
 
-    mybinder = function (context) {
-        jQuery('mysel').bind('click', function() { ... });
-    }
-    bdajax.binders.mybinder = mybinder;
+    (function($) {
+
+        var custom_binder = function(context) {
+            $('mysel', context).on('click', function() { ... });
+        };
+
+        $(document).ready(function() {
+            bdajax.register(custom_binder, true);
+        });
+
+    })(jQuery);
+
+
+Migration from old style registered binders
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Prior to bdajax 1.9, binder functions were registered by directly manipulating
+``bdajax.binders`` object. While this still works, it's not supposed to be
+used any more.
+
+When migrating to ``bdajax.register``, be aware that the context of ``this``
+changes if binder function is member of a global object. To ensure proper
+execution, the binder function should be bound manually to the object it gets
+executed in, or the code should be adopted.
+
+Thus, migrating code registering ``myob.binder`` as bdajax binder looks like
+so:
+
+.. code-block:: js
+
+    (function($) {
+
+        var myob = {
+            binder: function(context) {
+                // ``this`` is expected to refer to ``myob``
+            }
+        }
+
+        $(document).ready(function() {
+            // old way of binding
+            bdajax.binders.myob_binder = myob.binder;
+
+            // new way of binding if context of ``this`` should be kept
+            bdajax.register(myob.binder.bind(myob));
+        });
+
+    })(jQuery);
 
 
 Browsers
 ========
 
-bdajax is tested with:
+bdajax is tested with common modern browsers:
 
-- Firefox 3.5, 3.6 and up
-- IE 7, 8
-- Chome 7
-- Safari 5
+- Firefox
+- IE
+- Edge
+- Chome
+- Safari
+
+If you find bugs or inconsistencies please report them on github.
 
 
 Contributors

@@ -4,6 +4,18 @@ Changelog
 1.9 (unreleased)
 ----------------
 
+- Introduce ``bdajax.register`` which should be used for registering
+  binder functions instead of manipulating ``bdajax.binders`` manually.
+  [rnix, 2017-07-19]
+
+- Catch and log exceptions thrown when executing bdajax binder callback
+  functions.
+  [rnix, 2017-07-19]
+
+- Use ``jQuery.on`` and ``jQuery.off`` for event binding instead of ``bind``
+  and ``unbind`` (jQuery 1.7+ required).
+  [rnix, 2017-07-19]
+
 - ``bdajax.parsetarget`` includes ``query`` as string in returned object.
   [rnix, 2017-07-19]
 

@@ -7,7 +7,7 @@
  * License: Simplified BSD
  *
  * Requires:
- * - jQuery 1.6.4+
+ * - jQuery 1.7+
  * - jQuery Tools overlay.js
  */
 
@@ -32,11 +32,11 @@ var bdajax;
                     if (name.indexOf('ajax:bind') > -1) {
                         var events = attr.nodeValue;
                         var ajax = $(this);
-                        ajax.unbind(events);
+                        ajax.off(events);
                         if (ajax.attr('ajax:action') ||
                             ajax.attr('ajax:event')  ||
                             ajax.attr('ajax:overlay')) {
-                            ajax.bind(events, bdajax._dispatching_handler);
+                            ajax.on(events, bdajax._dispatching_handler);
                         }
                     }
                     if (name.indexOf('ajax:form') > -1) {
@@ -48,7 +48,11 @@ var bdajax;
         // B/C: Ajax forms have a dedicated ``ajax:form`` directive now.
         bdajax.bind_ajax_form(context);
         for (var binder in bdajax.binders) {
-            bdajax.binders[binder](context);
+            try {
+                bdajax.binders[binder](context);
+            } catch(err) {
+                console.log(err);
+            }
         }
         return context;
     };
@@ -61,7 +65,24 @@ var bdajax;
         default_403: '/login',
 
         // object for hooking up JS binding functions after ajax calls
+        // B/C, use ``bdajax.register`` instead of direct extension
         binders: {},
+
+        // function for registering bdajax binder functions
+        register: function(func, instant) {
+            var func_name = this._random_id();
+            while (true) {
+                if (this.binders[func_name] !== undefined) {
+                    func_name = this._random_id();
+                } else {
+                    break;
+                }
+            }
+            this.binders[func_name] = func;
+            if (instant) {
+                func();
+            }
+        },
 
         // ajax spinner handling
         spinner: {
@@ -97,6 +118,7 @@ var bdajax;
             }
         },
 
+        // browser history handling
         history: {
 
             bind: function() {
@@ -521,12 +543,12 @@ var bdajax;
                     var overlay = this.getOverlay();
                     var closefunc = this.close;
                     $('.text', overlay).html(options.message);
-                    $('button', overlay).unbind();
-                    $('button.submit', overlay).bind('click', function() {
+                    $('button', overlay).off();
+                    $('button.submit', overlay).on('click', function() {
                         closefunc();
                         callback(options);
                     });
-                    $('button.cancel', overlay).bind('click', function() {
+                    $('button.cancel', overlay).on('click', function() {
                         closefunc();
                     });
                 },
@@ -547,7 +569,7 @@ var bdajax;
         prepare_ajax_form: function(form) {
             form.append('<input type="hidden" name="ajax" value="1" />');
             form.attr('target', 'ajaxformresponse');
-            form.unbind().bind('submit', function(event) {
+            form.off().on('submit', function(event) {
                 bdajax.spinner.show();
             });
         },
@@ -557,6 +579,19 @@ var bdajax;
             if (!payload) { return; }
             this.spinner.hide();
             this.fiddle(payload, selector, mode);
+        },
+
+        _random_id: function(id_len) {
+            if (!id_len) {
+                id_len = 8;
+            }
+            var ret = '';
+            var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
+                        'abcdefghijklmnopqrstuvwxyz';
+            for (var i = 0; i < id_len; i++) {
+                ret += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return ret;
         },
 
         _dispatching_handler: function(event) {

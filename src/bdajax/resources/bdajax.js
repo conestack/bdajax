@@ -1,7 +1,7 @@
 /* jslint browser: true */
 /* global jQuery, bdajax */
 /*
- * bdajax v1.8.1
+ * bdajax v1.9.dev0
  *
  * Author: Robert Niederreiter
  * License: Simplified BSD
@@ -148,11 +148,14 @@ var bdajax;
             return url;
         },
 
-        parsequery: function(url) {
+        parsequery: function(url, as_string) {
             var parser = document.createElement('a');
             parser.href = url;
-            var params = {};
             var search = parser.search;
+            if (as_string) {
+                return search ? search : '';
+            }
+            var params = {};
             if (search) {
                 var parameters = search.substring(1, search.length).split('&');
                 for (var i = 0; i < parameters.length; i++) {
@@ -163,9 +166,12 @@ var bdajax;
             return params;
         },
 
-        parsepath: function(url) {
+        parsepath: function(url, include_query) {
             var parser = document.createElement('a');
             parser.href = url;
+            if (include_query) {
+                return parser.pathname + this.parsequery(url, true);
+            }
             return parser.pathname;
         },
 
@@ -174,17 +180,22 @@ var bdajax;
                 return {
                     url: undefined,
                     params: {},
-                    path: undefined
+                    path: undefined,
+                    query: undefined
                 };
             }
             var url = this.parseurl(target);
             var params = this.parsequery(target);
             var path = this.parsepath(target);
-            if (!params) { params = {}; }
+            var query = this.parsequery(target, true);
+            if (!params) {
+                params = {};
+            }
             return {
                 url: url,
                 params: params,
-                path: path
+                path: path,
+                query: query
             };
         },
 
@@ -567,7 +578,9 @@ var bdajax;
         _get_target: function(elem, event) {
             // return ajax target. lookup ``ajaxtarget`` on event, fall back to
             // ``ajax:target`` attribute on elem.
-            if (event.ajaxtarget) { return event.ajaxtarget; }
+            if (event.ajaxtarget) {
+                return event.ajaxtarget;
+            }
             return this.parsetarget(elem.attr('ajax:target'));
         },
 
@@ -617,12 +630,10 @@ var bdajax;
             var path = elem.attr('ajax:path');
             if (path === 'href') {
                 var href = elem.attr('href');
-                path = this.parsepath(href);
-                if (href.indexOf('?') !== -1) {
-                    path += href.substring(href.indexOf('?'), href.lenght);
-                }
+                path = this.parsepath(href, true);
             } else if (path === 'target') {
-                path = this._get_target(elem, evt).path;
+                var tgt = this._get_target(elem, evt).path
+                path = tgt.path + tgt.query;
             }
             var target;
             if (this._has_attr(elem, 'ajax:path-target')) {

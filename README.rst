@@ -639,43 +639,97 @@ in options:
 URL operations
 --------------
 
-Parse hyperlinks for base URL or request parameters:
+parseurl
+~~~~~~~~
+
+Parse hyperlinks for base URL:
 
 .. code-block:: js
 
     bdajax.parseurl('http://fubar.org?param=value');
 
-results in:
+This results in:
 
 .. code-block:: js
 
     'http://fubar.org'
 
-while:
+
+parsequery
+~~~~~~~~~~
+
+Parse hyperlinks for request parameters:
 
 .. code-block:: js
 
     bdajax.parsequery('http://fubar.org?param=value');
 
-results in:
+This results in:
 
 .. code-block:: js
 
     { param: 'value' }
 
-Do both at once by calling ``parsetarget``:
+The raw query as string can be parsed by additionally passing ``true`` to
+``parsequery``::
 
 .. code-block:: js
 
-    bdajax.parsetarget('http://fubar.org?param=value');
+    bdajax.parsequery('http://fubar.org?param=value', true);
+
+This results in::
+
+.. code-block:: js
+
+    '?param=value'
+
+
+parsepath
+~~~~~~~~~
+
+Parse hyperlinks for path without base URL::
+
+.. code-block:: js
+
+    bdajax.parsepath('http://fubar.org/some/path?param=value');
+
+This results in::
+
+.. code-block:: js
+
+    '/some/path'
+
+The query can be included by additionally passing ``true`` to ``parsepath``::
+
+.. code-block:: js
+
+    bdajax.parsepath('http://fubar.org/some/path?param=value', true);
+
+This results in::
+
+.. code-block:: js
+
+    '/some/path?param=value'
+
+
+parsetarget
+~~~~~~~~~~~
+
+Parse all information at once by calling ``parsetarget``:
+
+.. code-block:: js
+
+    bdajax.parsetarget('http://fubar.org/some/path?param=value');
 
 This result in:
 
 .. code-block:: js
 
     {
-        url: 'http://fubar.org',
-        params: { param: 'value' }
+        url: 'http://fubar.org/some/path',
+        params: { param: 'value' },
+        path: '/some/path',
+        query: '?param=value'
     }
 
 

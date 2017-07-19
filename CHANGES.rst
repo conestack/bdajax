@@ -1,6 +1,23 @@
 Changelog
 =========
 
+1.9 (unreleased)
+----------------
+
+- ``bdajax.parsetarget`` includes ``query`` as string in returned object.
+  [rnix, 2017-07-19]
+
+- ``bdajax.parsepath`` accepts optional ``include_query`` boolean argument.
+  [rnix, 2017-07-19]
+
+- ``bdajax.parsequery`` accepts optional ``as_string`` boolean argument.
+  [rnix, 2017-07-19]
+
+- Consider query string in ``bdajax._handle_ajax_path`` if ``ajax:path`` is
+  ``target``.
+  [rnix, 2017-07-19]
+
+
 1.8.1 (2017-07-18)
 ------------------
 

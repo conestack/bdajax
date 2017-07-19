@@ -160,9 +160,9 @@ Load bdajax related Scripts:
 .. code-block:: html
 
     <!--
-      include jquery 1.6.4+.
+      include jquery 1.7+.
     -->
-    <script src="http://code.jquery.com/jquery-1.6.4.js"></script>
+    <script src="http://code.jquery.com/jquery-1.7.js"></script>
 
     <!--
       overlay could be included via jquerytools bundle or overlay.js directly

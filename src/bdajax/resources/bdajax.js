@@ -667,7 +667,7 @@ var bdajax;
                 var href = elem.attr('href');
                 path = this.parsepath(href, true);
             } else if (path === 'target') {
-                var tgt = this._get_target(elem, evt).path
+                var tgt = this._get_target(elem, evt);
                 path = tgt.path + tgt.query;
             }
             var target;

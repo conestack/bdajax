@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.9 (unreleased)
+1.9 (2017-08-28)
 ----------------
 
 - Introduce ``bdajax.register`` which should be used for registering

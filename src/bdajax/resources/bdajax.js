@@ -567,6 +567,16 @@ var bdajax;
 
         // prepare form desired to be an ajax form
         prepare_ajax_form: function(form) {
+            if (!$('#ajaxformresponse').length) {
+                $('body').append(
+                    '<iframe ' +
+                        'id="ajaxformresponse"' +
+                        'name="ajaxformresponse"' +
+                        'src="about:blank"' +
+                        'style="width:0px;height:0px;display:none">' +
+                    '</iframe>'
+                );
+            }
             form.append('<input type="hidden" name="ajax" value="1" />');
             form.attr('target', 'ajaxformresponse');
             form.off().on('submit', function(event) {
@@ -574,11 +584,14 @@ var bdajax;
             });
         },
 
-        // called by iframe response, renders form (i.e. if validation errors)
-        render_ajax_form: function(payload, selector, mode) {
-            if (!payload) { return; }
+        // called by iframe response
+        render_ajax_form: function(payload, selector, mode, next) {
+            $('#ajaxformresponse').remove();
             this.spinner.hide();
-            this.fiddle(payload, selector, mode);
+            if (payload) {
+                this.fiddle(payload, selector, mode);
+            }
+            this.continuation(next);
         },
 
         _random_id: function(id_len) {

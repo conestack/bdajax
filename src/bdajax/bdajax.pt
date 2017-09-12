@@ -37,10 +37,4 @@
     <div class="message">Message</div>
     <button class="close allowMultiSubmit">OK</button>
   </div>
-
-  <iframe id="ajaxformresponse"
-          name="ajaxformresponse"
-          src="about:blank"
-          style="width:0px;height:0px;display:none">
-  </iframe>
 </div>

@@ -4,7 +4,15 @@ Changelog
 1.10 (unreleased)
 -----------------
 
-- No changes yet.
+- Hidden form response iframe gets created on the fly and removed after form
+  processing. This is necessary to prevent a useless entry in browser history.
+
+  WARNING: This change breaks the server implementation. Take a look at
+  Ajax forms documentation how to adopt your code to this change. Also make
+  sure to remove the hidden iframe from bdajax markup if you don't use the
+  templates shipped with this package.
+  [rnix, 2017-09-12]
+
 
 1.9 (2017-08-28)
 ----------------

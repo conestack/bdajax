@@ -909,24 +909,29 @@ triggered to. The server side must return a response like so on form submit:
             child = child.nextSibling;
         }
 
-        // call ``bdajax.render_ajax_form`` and ``bdajax.continuation`` on
-        // parent frame (remember, we're in iframe here). ``render_ajax_form``
-        // expects the result DOM element, the ``selector`` and the fiddle
-        // ``mode``. ``continuation`` may be used to perform ajax
-        // continuation as described earlier in this document.
-        parent.bdajax.render_ajax_form(child, '#my_ajax_form', 'replace');
-        parent.bdajax.continuation({});
+        // call ``bdajax.render_ajax_form`` on parent frame (remember, we're in
+        // iframe here). ``render_ajax_form`` expects the result DOM element,
+        // the ``selector``, the fiddle ``mode`` and ``continuation``
+        // definitions which may be used to perform ajax continuation.
+        parent.bdajax.render_ajax_form(child, '#my_ajax_form', 'replace', {});
 
     </script>
 
 If ``div`` with id ``ajaxform`` contains markup, it gets rendered to
 ``selector`` (#my_ajax_form) with ``mode`` (replace). This makes it possible
 to rerender forms on validation error or display a success page or similar.
-Optional bdajax continuation definitions can be given to
-``parent.bdajax.continuation``.
+Optional bdajax continuation definitions can be given.
 
 Again, bdajax does not provide any server side implementation, it's up to you
 providing this.
+
+.. warning::
+
+    As of bdajax 1.10 the continuation definitions are passed directly
+    to ``render_ajax_form`` instead of calling ``bdajax.continuation``. This is
+    necessary because ``render_ajax_form`` removes the hidden iframe after
+    processing to prevent useless browser history entries. Please adopt your
+    server side code when updating to version 1.10.
 
 
 3rd party javascript

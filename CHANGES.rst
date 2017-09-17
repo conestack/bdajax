@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.10 (unreleased)
+1.10 (2017-09-17)
 -----------------
 
 - Hidden form response iframe gets created on the fly and removed after form

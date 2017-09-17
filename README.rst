@@ -925,13 +925,11 @@ Optional bdajax continuation definitions can be given.
 Again, bdajax does not provide any server side implementation, it's up to you
 providing this.
 
-.. warning::
-
-    As of bdajax 1.10 the continuation definitions are passed directly
-    to ``render_ajax_form`` instead of calling ``bdajax.continuation``. This is
-    necessary because ``render_ajax_form`` removes the hidden iframe after
-    processing to prevent useless browser history entries. Please adopt your
-    server side code when updating to version 1.10.
+**NOTE** - As of bdajax 1.10 the continuation definitions are passed directly
+to ``render_ajax_form`` instead of calling ``bdajax.continuation``. This is
+necessary because ``render_ajax_form`` removes the hidden iframe after
+processing to prevent useless browser history entries. Please adopt your server
+side code when updating to version 1.10.
 
 
 3rd party javascript

@@ -5,7 +5,8 @@ Changelog
 1.11 (unreleased)
 -----------------
 
-- No changes yet.
+- Center overlay vertically
+  [agitator]
 
 
 1.10 (2017-09-17)

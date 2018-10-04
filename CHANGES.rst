@@ -5,7 +5,9 @@ Changelog
 1.11 (unreleased)
 -----------------
 
-- No changes yet.
+- Prevent X scrolling when overlay is shown in conjunction with bootstrap
+  styles.
+  [rnix, 2018-10-04]
 
 
 1.10 (2017-09-17)

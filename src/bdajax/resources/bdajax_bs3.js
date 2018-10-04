@@ -14,11 +14,17 @@
 
     $.tools.overlay.addEffect('bs3',
         function(pos, onLoad) {
-            $('body').css('padding-right', '13px').addClass('modal-open');
+            $('body')
+                .css('padding-right', '13px')
+                .css('overflow-x', 'hidden')
+                .addClass('modal-open');
             this.getOverlay().fadeIn(300, onLoad);
         }, function(onClose) {
             if ($('.modal:visible').length === 1) {
-                $('body').css('padding-right', '').removeClass('modal-open');
+                $('body')
+                    .css('padding-right', '')
+                    .css('overflow-x', 'auto')
+                    .removeClass('modal-open');
             }
             this.getOverlay().fadeOut(300, onClose);
         }

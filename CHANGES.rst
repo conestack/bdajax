@@ -2,7 +2,7 @@
 Changelog
 =========
 
-1.11 (unreleased)
+1.11 (2018-11-07)
 -----------------
 
 - Prevent X scrolling when overlay is shown in conjunction with bootstrap

@@ -5,7 +5,8 @@ Changelog
 1.12 (unreleased)
 -----------------
 
-- No changes yet.
+- Add jquerytools to be included with bda.plone.ajax
+  [agitator]
 
 
 1.11 (2018-11-07)

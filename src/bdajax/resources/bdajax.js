@@ -16,11 +16,6 @@ var bdajax;
 (function($) {
     "use strict";
 
-    $(document).ready(function() {
-        bdajax.spinner.hide();
-        bdajax.history.bind();
-        $(document).bdajax();
-    });
 
     $.fn.bdajax = function() {
         var context = $(this);
@@ -794,5 +789,11 @@ var bdajax;
             return arr;
         }
     };
+
+    $(document).ready(function() {
+        bdajax.spinner.hide();
+        bdajax.history.bind();
+        $(document).bdajax();
+    });
 
 })(jQuery);

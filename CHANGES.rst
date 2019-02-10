@@ -2,8 +2,11 @@
 Changelog
 =========
 
-1.12 (unreleased)
+2.0.0 (unreleased)
 -----------------
+
+- Support for async loading
+  [agitator]
 
 - Add jquerytools to be included with bda.plone.ajax
   [agitator]

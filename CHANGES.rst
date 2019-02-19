@@ -8,9 +8,6 @@ Changelog
 - Support for async loading
   [agitator]
 
-- Add jquerytools to be included with bda.plone.ajax
-  [agitator]
-
 
 1.11 (2018-11-07)
 -----------------

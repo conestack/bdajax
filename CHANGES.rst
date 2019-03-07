@@ -2,7 +2,7 @@
 Changelog
 =========
 
-2.0.0 (unreleased)
+1.12 (unreleased)
 -----------------
 
 - Support for async loading

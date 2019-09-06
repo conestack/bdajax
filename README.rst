@@ -1,8 +1,8 @@
 Overview
 ========
 
-``bdajax`` provides JavaScript helper functions and a simple dispatcher system 
-driven by XML-attributes. Attributes are defined in its own XML namespace, 
+``bdajax`` provides JavaScript helper functions and a simple dispatcher system
+driven by XML-attributes. Attributes are defined in its own XML namespace,
 placed in the XHTML markup.
 
 The dispatcher basically provides two behaviors
@@ -14,7 +14,7 @@ Behaviors are bound to JavaScript events.
 
 This package bundles required resources for the use of bdajax inside a
 ``pyramid`` or ``zope`` application. It does NOT include the
-required server implementations. bdajax can be used with other Python or 
+required server implementations. bdajax can be used with other Python or
 non-Python server backends too as long as action performing code is implemented
 and available through browser URL.
 
@@ -25,12 +25,13 @@ and available through browser URL.
 Dispatching
 -----------
 
-The main paradigm is the use of an ``event/listener`` model. It enables bdajax 
+The main paradigm is the use of an ``event/listener`` model. It enables bdajax
 to ``listen`` to ``events`` and trigger ``events`` on ajaxified DOM components.
 
-Consider a navtree as example; the idea is to trigger an event when a navigation
-item gets clicked. Click semantically indicates a changed context. Then listen 
-to this event on all DOM elements to get notified on changing server context.
+Consider a navtree as example; the idea is to trigger an event when a
+navigation item gets clicked. Click semantically indicates a changed context.
+Then listen to this event on all DOM elements to get notified on changing
+server context.
 
 This makes it possible to have completely decoupled "sub-applications" knowing
 nothing but an event contract from each other.
@@ -67,7 +68,7 @@ Following attributes are available:
 
 **ajax:overlay="actionname:selector:content_selector"**
     Renders ajax action to overlay with selector. ``selector`` is optional and
-    defaults to ``#ajax-overlay``. ``content_selector`` is optional to 
+    defaults to ``#ajax-overlay``. ``content_selector`` is optional to
     ``selector`` and defaults to ``.overlay_content``.
 
 **ajax:overlay-css="additional-overlay-css-class"**
@@ -148,8 +149,8 @@ to your ZCML configuration:
 
     <include package="bdajax" />
 
-The expected ``ajaxaction`` view is not provided. Its intended to be provided by 
-a custom implementation. See 'Perform actions' below.
+The expected ``ajaxaction`` view is not provided. Its intended to be provided
+by a custom implementation. See 'Perform actions' below.
 
 
 Load dependencies in markup
@@ -203,7 +204,7 @@ Markup.
 Define namespace
 ----------------
 
-In order to keep your XHTML valid when using the XML namespace extension define 
+In order to keep your XHTML valid when using the XML namespace extension define
 this namespace in the XHTML document:
 
 .. code-block:: html
@@ -294,8 +295,8 @@ Perform actions
 An action performs a JSON request to the server and modifies the DOM tree as
 defined.
 
-bdajax expects a resource (i.e a zope/pyramid view or some script) named  
-``ajaxaction`` on server. Resource is called on target url with target query 
+bdajax expects a resource (i.e a zope/pyramid view or some script) named
+``ajaxaction`` on server. Resource is called on target url with target query
 parameters. Three additional arguments are passed:
 
 **bdajax.action**
@@ -425,8 +426,8 @@ Bind an action which is triggered directly:
       fubar
     </a>
 
-On click the DOM element with id ``fubar`` will be replaced by the results of 
-action ``renderfubar``. Request context and request params are taken from 
+On click the DOM element with id ``fubar`` will be replaced by the results of
+action ``renderfubar``. Request context and request params are taken from
 ``ajax:target`` definition.
 
 
@@ -434,7 +435,7 @@ Trigger actions as event listener
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Bind an action acting as event listener. See section 'Trigger events'.
-A triggered event indicates change of context on target with params. 
+A triggered event indicates change of context on target with params.
 Hereupon perform some action:
 
 .. code-block:: html
@@ -532,8 +533,8 @@ defined:
       fubar
     </a>
 
-Overlays can be closed by setting special value ``CLOSE`` at ``bdajax:overlay``,
-optionally with colon seperated overlay selector:
+Overlays can be closed by setting special value ``CLOSE`` at
+``bdajax:overlay``, optionally with colon seperated overlay selector:
 
 .. code-block:: html
 
@@ -551,9 +552,9 @@ JavaScript API
 Messages, infos, warnings and errors
 ------------------------------------
 
-``bdajax`` displays application messages in a jQuery tools overlay. 
+``bdajax`` displays application messages in a jQuery tools overlay.
 
-``bdajax.message`` displays a plain message. ``bdajax.info`` ``bdajax.warning`` 
+``bdajax.message`` displays a plain message. ``bdajax.info`` ``bdajax.warning``
 and ``bdajax.error`` decorates message with appropriate icon:
 
 .. code-block:: js
@@ -732,8 +733,8 @@ This result in:
 XMLHTTPRequest convenience
 --------------------------
 
-``bdajax.request`` function is convenience for XMLHTTPRequests. By default 
-it sends requests of type ``html`` and displays a ``bdajax.error`` message if 
+``bdajax.request`` function is convenience for XMLHTTPRequests. By default
+it sends requests of type ``html`` and displays a ``bdajax.error`` message if
 request fails:
 
 .. code-block:: js
@@ -753,8 +754,8 @@ request fails:
         }
     });
 
-Given ``url`` might contain a query string. It gets parsed and written to 
-request parameters. If same request parameter is defined in URL query AND 
+Given ``url`` might contain a query string. It gets parsed and written to
+request parameters. If same request parameter is defined in URL query AND
 params object, latter one rules.
 
 Options:
@@ -766,7 +767,7 @@ Options:
     Request url as string.
 
 **params (optional)**
-    Query parameters for request as Object. 
+    Query parameters for request as Object.
 
 **type (optional)**
     ``xml``, ``json``, ``script``, or ``html``.
@@ -781,7 +782,7 @@ consider ajax spinner handling automatically.
 Perform action
 --------------
 
-Sometimes actions need to be performed inside JavaScript code. 
+Sometimes actions need to be performed inside JavaScript code.
 ``bdajax.action`` provides this:
 
 .. code-block:: js
@@ -799,16 +800,16 @@ Options:
 
 **name**
     Action name
-    
+
 **selector**
     result selector
-    
+
 **mode**
     action mode
-    
+
 **url**
     target url
-    
+
 **params**
     query params
 
@@ -940,7 +941,7 @@ done via ``bdajax.register``. The register function takes a function and
 a boolean flag whether to immediately execute this function as arguments.
 
 The passed binder function gets called every time bdajax hooks up some markup
-and gets passed the changed DOM part as ``context``::
+and gets passed the changed DOM part as ``context``:
 
 .. code-block:: js
 

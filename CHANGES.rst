@@ -1,6 +1,5 @@
-
-Changelog
-=========
+Changes
+=======
 
 1.13 (unreleased)
 -----------------

@@ -4,7 +4,9 @@ Changes
 1.13 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- ``bdajax.trigger`` accepts optional ``data`` argument. Can be used by
+  continuation events to pass additional data from server to event handler.
+  [rnix]
 
 
 1.12 (2019-09-06)

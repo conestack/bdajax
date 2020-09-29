@@ -1,7 +1,7 @@
 /* jslint browser: true */
 /* global jQuery, bdajax */
 /*
- * bdajax v1.9.dev0
+ * bdajax v1.13
  *
  * Author: Robert Niederreiter
  * License: Simplified BSD
@@ -15,7 +15,6 @@ var bdajax;
 
 (function($) {
     "use strict";
-
 
     $.fn.bdajax = function() {
         var context = $(this);
@@ -338,7 +337,8 @@ var bdajax;
                     this.trigger(
                         definition.name,
                         definition.selector,
-                        definition.target
+                        definition.target,
+                        definition.data
                     );
                 } else if (definition.type === 'overlay') {
                     target = this.parsetarget(definition.target);
@@ -381,7 +381,7 @@ var bdajax;
             }
         },
 
-        trigger: function(name, selector, target) {
+        trigger: function(name, selector, target, data) {
             var create_event = function() {
                 var evt = $.Event(name);
                 if (target.url) {
@@ -389,6 +389,7 @@ var bdajax;
                 } else {
                     evt.ajaxtarget = bdajax.parsetarget(target);
                 }
+                evt.ajaxdata = data;
                 return evt;
             };
             // _dispatching_handler calls stopPropagation on event which is

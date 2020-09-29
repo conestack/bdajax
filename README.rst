@@ -317,7 +317,7 @@ response in the format as follows:
         mode: 'inner',             // the passed mode
         selector: '#someid',       // the passed selector
         payload: '<div>...</div>', // the rendered action
-        continuation: [{}],        // continuation actions, events and messages
+        continuation: [{}],        // continuation definitions
     }
 
 
@@ -348,7 +348,8 @@ definitions are described below.
         'type': 'event',
         'target': 'http://example.com',
         'name': 'eventname',
-        'selector': '.foo'
+        'selector': '.foo',
+        'data': {}
     }
 
 **path**:
@@ -831,6 +832,15 @@ Target might be object as returned from ``bdajax.parsetarget``:
     var url = 'http://fubar.org?param=value';
     var target = bdajax.parsetarget(url);
     bdajax.trigger('contextchanged', '.contextsensitiv', target);
+
+Optionally, a data argument can be passed to ``bdajax.trigger``, which gets set
+at the ``ajaxdata`` attribute of the event:
+
+.. code-block:: js
+
+    var url = 'http://fubar.org?param=value';
+    var data = { opt: 'val' };
+    bdajax.trigger('contextchanged', '.contextsensitiv', url, data);
 
 
 Set URL path

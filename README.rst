@@ -1,3 +1,6 @@
+Overview
+========
+
 ``bdajax`` provides JavaScript helper functions and a simple dispatcher system
 driven by XML-attributes. Attributes are defined in its own XML namespace,
 placed in the XHTML markup.

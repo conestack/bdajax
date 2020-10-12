@@ -1,7 +1,7 @@
 Changes
 =======
 
-1.13 (unreleased)
+1.13 (2020-10-12)
 -----------------
 
 - ``bdajax.trigger`` accepts optional ``data`` argument. Can be used by

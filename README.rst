@@ -210,7 +210,7 @@ this namespace in the XHTML document:
 .. code-block:: html
 
     <html xmlns="http://www.w3.org/1999/xhtml"
-          xmlns:ajax="http://namesspaces.bluedynamics.eu/ajax">
+          xmlns:ajax="http://namespaces.conestack.org/ajax">
         ...
     </html>
 

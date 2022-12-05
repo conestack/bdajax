@@ -1,8 +1,8 @@
 License
 =======
 
-Copyright (c) 2010-2022, BlueDynamics Alliance, Austria
-Copyright (c) 2021, Cone Contributors
+Copyright (c) 2010-2021, BlueDynamics Alliance, Austria
+Copyright (c) 2021-2022, Cone Contributors
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

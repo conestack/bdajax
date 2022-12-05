@@ -4,7 +4,8 @@ Changes
 1.14 (unreleased)
 -----------------
 
-- No changes yet.
+- Release wheel.
+  [rnix]
 
 
 1.13 (2020-10-12)

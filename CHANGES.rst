@@ -1,7 +1,7 @@
 Changes
 =======
 
-1.14 (unreleased)
+1.14 (2022-12-05)
 -----------------
 
 - Release wheel.
